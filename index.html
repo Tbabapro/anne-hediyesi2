@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aynur'a Özel ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #5a2940;
+    background: linear-gradient(135deg, #ffd6e7, #fff0f7, #ffe4c4);
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.heart {
+    font-size: 90px;
+    animation: heartbeat 1.2s infinite;
+}
+
+h1 {
+    font-size: 55px;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.message {
+    max-width: 750px;
+    background: rgba(255,255,255,0.85);
+    padding: 30px;
+    border-radius: 25px;
+    font-size: 21px;
+    line-height: 1.7;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+button {
+    margin-top: 30px;
+    padding: 16px 35px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4f91;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.gallery {
+    padding: 70px 20px;
+    background: rgba(255,255,255,0.4);
+}
+
+.gallery h2 {
+    font-size: 40px;
+}
+
+.photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.photos img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.photos img:hover {
+    transform: scale(1.05);
+}
+
+.photos img.buyuk {
+    position: fixed;
+    width: 80vw;
+    height: 80vh;
+    max-width: 900px;
+    max-height: 900px;
+    object-fit: contain;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+footer {
+    padding: 45px;
+    font-size: 20px;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 38px;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    .message {
+        font-size: 18px;
+        padding: 22px;
+    }
+
+    .photos img {
+        width: 90%;
+        height: 300px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="heart">❤️</div>
+
+<h1>İyi ki Doğdun Anne!</h1>
+
+<h2>Aynur 🌸</h2>
+
+<div class="message">
+
+Canım annem ❤️
+
+<br><br>
+
+Bugün senin özel günün! 🎂
+
+<br><br>
+
+Bana verdiğin sevgi, destek ve güzel anılar
+için sana çok teşekkür ederim.
+
+<br><br>
+
+Seni çok seviyorum! 💖
+
+<br><br>
+
+Nice mutlu ve güzel yıllara! 🎉
+
+</div>
+
+<button onclick="surprise()">
+🎁 Sürprize Tıkla
+</button>
+
+</section>
+
+<section class="gallery">
+
+<h2>📸 Güzel Anılarımız</h2>
+
+<div class="photos">
+
+<img src="foto1.jpeg" onclick="buyut(this)">
+<img src="foto2.jpeg" onclick="buyut(this)">
+<img src="foto3.jpeg" onclick="buyut(this)">
+<img src="foto4.jpeg" onclick="buyut(this)">
+
+</div>
+
+</section>
+
+<footer>
+❤️ Bu site Talha tarafından annesi Aynur için hazırlandı. ❤️
+</footer>
+
+<script>
+
+function surprise() {
+    alert(
+        "🎉 İYİ Kİ DOĞDUN ANNE! 🎉\n\n" +
+        "Seni çok seviyorum ❤️"
+    );
+}
+
+function buyut(resim) {
+    resim.classList.toggle("buyuk");
+}
+
+</script>
+
+</body>
+</html>

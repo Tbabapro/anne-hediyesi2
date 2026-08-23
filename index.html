@@ -422,48 +422,7 @@ grid-template-columns:repeat(2,1fr)
 </head>
 
 <body>
-
-<!-- GİRİŞ -->
-
-<div id="login">
-
-<div class="loginBox">
-
-<h1>🎮 Mini Oyun Merkezi</h1>
-
-<div id="register">
-
-<h2>Yeni Hesap</h2>
-
-<input
-id="newName"
-class="input"
-maxlength="20"
-placeholder="Oyuncu adı"
->
-
-<br>
-
-<input
-id="newPassword"
-class="input"
-type="password"
-placeholder="Şifre"
->
-
-<br><br>
-
-<button
-class="btn"
-onclick="createAccount()">
-Hesap Oluştur
-</button>
-
-</div>
-
-<div id="enter" class="hidden">
-
-<h2>🔐 Giriş Yap</h2>
+.>
 
 <p id="hello"></p>
 
@@ -552,10 +511,10 @@ Oyuncu
 
 <section id="home">
 
-<div class="panel">
+<div 
+class="panel">
 
 <h2>🎮 Oyunlar</h2>
-
 <div class="games">
 
 <div class="card">
@@ -988,6 +947,63 @@ function createAccount(){
 }
 
 
+/
+/* =========================
+   SAYFA AÇILIŞI
+========================= */
+
+if(data.name && data.password){
+
+    document
+        .getElementById("register")
+        .classList.add("hidden");
+
+    document
+        .getElementById("enter")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("hello")
+        .textContent =
+        "Hoş geldin, " + data.name + "!";
+
+/* =========================
+   ŞİFREMİ UNUTTUM
+========================= */
+
+function forgotPassword(){
+
+    const name = prompt("Oyuncu adını yaz:");
+
+    if(name === null) return;
+
+    if(name.trim() !== data.name){
+
+        alert("❌ Oyuncu adı yanlış!");
+        return;
+
+    }
+
+    const newPassword = prompt("Yeni şifreni yaz:");
+
+    if(newPassword === null) return;
+
+    if(newPassword.length < 4){
+
+        alert("❌ Yeni şifre en az 4 karakter olmalı!");
+        return;
+
+    }
+
+    data.password = newPassword;
+
+    save();
+
+    alert("✅ Şifren başarıyla değiştirildi!");
+
+}
+
+
 /* =========================
    GİRİŞ
 ========================= */
@@ -1012,28 +1028,6 @@ function login(){
         .classList.add("hidden");
 
     updateUI();
-
-}
-
-
-/* =========================
-   SAYFA AÇILIŞI
-========================= */
-
-if(data.name && data.password){
-
-    document
-        .getElementById("register")
-        .classList.add("hidden");
-
-    document
-        .getElementById("enter")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("hello")
-        .textContent =
-        "Hoş geldin, " + data.name + "!";
 
 }
 
@@ -2275,7 +2269,1341 @@ if(data.name && data.password){
 
 }
   </script>
+/* =========================
+   HESAP SİSTEMİ
+========================= */
+
+const KEY = "miniOyunMerkezi_v4";
+
+let data = {
+    name: "",
+    password: "",
+    coins: 0,
+    records: [],
+    owned: [],
+    equipped: {
+        hat: "",
+        glasses: "",
+        shirt: "",
+        pants: "",
+        shoes: ""
+    }
+};
+
+
+/* KAYITLI VERİ */
+
+const saved = localStorage.getItem(KEY);
+
+if(saved){
+
+    try{
+
+        const oldData = JSON.parse(saved);
+
+        data = {
+            ...data,
+            ...oldData,
+            equipped:{
+                ...data.equipped,
+                ...(oldData.equipped || {})
+            }
+        };
+
+    }catch(e){
+
+        console.log("Kayıt okunamadı.");
+
+    }
+
+}
+
+
+/* KAYDET */
+
+function save(){
+
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================
+   HESAP OLUŞTUR
+========================= */
+
+function createAccount(){
+
+    const name =
+        document.getElementById("newName")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("newPassword")
+        .value;
+
+    if(name.length < 2){
+
+        alert("❌ En az 2 karakterlik bir isim yaz.");
+
+        return;
+
+    }
+
+    if(password.length < 4){
+
+        alert("❌ Şifre en az 4 karakter olmalı.");
+
+        return;
+
+    }
+
+    data.name = name;
+    data.password = password;
+
+    save();
+
+    document
+        .getElementById("register")
+        .classList.add("hidden");
+
+    document
+        .getElementById("enter")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("hello")
+        .textContent =
+        "Hoş geldin, " + name + "!";
+
+}
+
+
+/* =========================
+   GİRİŞ
+========================= */
+
+function login(){
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+    if(password !== data.password){
+
+        alert("❌ Şifre yanlış!");
+
+        return;
+
+    }
+
+    document
+        .getElementById("login")
+        .classList.add("hidden");
+
+    updateUI();
+
+}
+
+
+/* =========================
+   ŞİFREMİ UNUTTUM
+========================= */
+
+function forgotPassword(){
+
+    if(!data.name){
+
+        alert(
+            "❌ Henüz kayıtlı bir hesap yok."
+        );
+
+        return;
+
+    }
+
+    const newPassword =
+        prompt(
+            "🔐 Yeni şifreni yaz:\n\n" +
+            "En az 4 karakter olmalı."
+        );
+
+    if(newPassword === null){
+
+        return;
+
+    }
+
+    if(newPassword.length < 4){
+
+        alert(
+            "❌ Şifre en az 4 karakter olmalı."
+        );
+
+        return;
+
+    }
+
+    data.password = newPassword;
+
+    save();
+
+    document
+        .getElementById("password")
+        .value = "";
+
+    alert(
+        "✅ Şifren başarıyla değiştirildi!"
+    );
+
+}
+
+
+/* =========================
+   SAYFA AÇILIŞI
+========================= */
+
+if(data.name && data.password){
+
+    document
+        .getElementById("register")
+        .classList.add("hidden");
+
+    document
+        .getElementById("enter")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("hello")
+        .textContent =
+        "Hoş geldin, " + data.name + "!";
+
+}
+
+
+/* =========================
+   MARKET
+========================= */
+
+const items = [
+
+    ["hat1","hat","🎩","Şapka",50],
+    ["hat2","hat","👑","Taç",150],
+    ["hat3","hat","🧢","Kep",250],
+
+    ["glasses1","glasses","😎","Güneş Gözlüğü",75],
+    ["glasses2","glasses","🤓","Gözlük",125],
+
+    ["shirt1","shirt","👕","Tişört",100],
+    ["shirt2","shirt","👔","Gömlek",200],
+    ["shirt3","shirt","🧥","Mont",350],
+
+    ["pants1","pants","👖","Pantolon",150],
+    ["pants2","pants","🩳","Şort",100],
+
+    ["shoes1","shoes","👟","Spor Ayakkabı",200],
+    ["shoes2","shoes","🥾","Bot",300]
+
+];
+
+
+function getItemIcon(type){
+
+    const id =
+        data.equipped[type];
+
+    const item =
+        items.find(
+            x => x[0] === id
+        );
+
+    return item
+        ? item[2]
+        : "";
+
+}
+
+
+function updateUI(){
+
+    document
+        .getElementById("player")
+        .textContent =
+        "👤 " + (data.name || "Oyuncu");
+
+    document
+        .getElementById("coins")
+        .textContent =
+        data.coins;
+
+    document
+        .getElementById("hat")
+        .textContent =
+        getItemIcon("hat");
+
+    document
+        .getElementById("glasses")
+        .textContent =
+        getItemIcon("glasses");
+
+    document
+        .getElementById("shirt")
+        .textContent =
+        getItemIcon("shirt");
+
+    document
+        .getElementById("pants")
+        .textContent =
+        getItemIcon("pants");
+
+    document
+        .getElementById("shoes")
+        .textContent =
+        getItemIcon("shoes");
+
+    renderShop();
+    renderRecords();
+
+}
+
+
+/* =========================
+   MAĞAZA
+========================= */
+
+function renderShop(){
+
+    const shop =
+        document.getElementById("shop");
+
+    if(!shop)return;
+
+    shop.innerHTML = "";
+
+    items.forEach(item => {
+
+        const id = item[0];
+        const type = item[1];
+        const icon = item[2];
+        const name = item[3];
+        const price = item[4];
+
+        const owned =
+            data.owned.includes(id);
+
+        const equipped =
+            data.equipped[type] === id;
+
+        const box =
+            document.createElement("div");
+
+        box.className = "item";
+
+        let buttonText;
+
+        if(equipped){
+
+            buttonText = "Çıkar";
+
+        }else if(owned){
+
+            buttonText = "Giy";
+
+        }else{
+
+            buttonText =
+                "Satın Al • " + price;
+
+        }
+
+        box.innerHTML = `
+
+            <div class="itemIcon">
+                ${icon}
+            </div>
+
+            <b>${name}</b>
+
+            <p>
+                ${
+                    owned
+                    ? "Sahipsin"
+                    : price + " puan"
+                }
+            </p>
+
+            <button class="btn">
+                ${buttonText}
+            </button>
+
+        `;
+
+        box
+            .querySelector("button")
+            .onclick =
+            () => shopAction(id);
+
+        shop.appendChild(box);
+
+    });
+
+}
+
+
+function shopAction(id){
+
+    const item =
+        items.find(
+            x => x[0] === id
+        );
+
+    if(!item)return;
+
+    const type = item[1];
+    const price = item[4];
+
+    if(data.equipped[type] === id){
+
+        data.equipped[type] = "";
+
+        save();
+        updateUI();
+
+        return;
+
+    }
+
+    if(data.owned.includes(id)){
+
+        data.equipped[type] = id;
+
+        save();
+        updateUI();
+
+        return;
+
+    }
+
+    if(data.coins < price){
+
+        alert(
+            "💰 Yeterli puanın yok!"
+        );
+
+        return;
+
+    }
+
+    data.coins -= price;
+
+    data.owned.push(id);
+
+    data.equipped[type] = id;
+
+    save();
+    updateUI();
+
+}
+
+
+/* =========================
+   REKOR SİSTEMİ
+========================= */
+
+function addRecord(points, game){
+
+    points =
+        Math.max(
+            0,
+            Math.floor(points)
+        );
+
+    if(points <= 0)return;
+
+    data.coins += points;
+
+    data.records.push({
+        game: game,
+        points: points
+    });
+
+    data.records.sort(
+        (a,b) =>
+        b.points - a.points
+    );
+
+    data.records =
+        data.records.slice(0,3);
+
+    save();
+    updateUI();
+
+}
+
+
+function renderRecords(){
+
+    const records =
+        document.getElementById("records");
+
+    if(!records)return;
+
+    records.innerHTML = "";
+
+    const medals = [
+        "🥇",
+        "🥈",
+        "🥉"
+    ];
+
+    for(let i = 0; i < 3; i++){
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "record";
+
+        if(data.records[i]){
+
+            const record =
+                data.records[i];
+
+            box.innerHTML = `
+
+                <div class="medal">
+                    ${medals[i]}
+                </div>
+
+                <b>${record.game}</b>
+
+                <div style="
+                    font-size:25px;
+                    margin-top:5px;
+                ">
+                    ${record.points}
+                </div>
+
+                <small>puan</small>
+
+            `;
+
+        }else{
+
+            box.innerHTML = `
+
+                <div class="medal">
+                    ${medals[i]}
+                </div>
+
+                <div>
+                    Henüz rekor yok
+                </div>
+
+            `;
+
+        }
+
+        records.appendChild(box);
+
+    }
+
+}
+
+
+/* =========================
+   OYUN AÇMA
+========================= */
+
+function openGame(id){
+
+    document
+        .getElementById("home")
+        .classList.add("hidden");
+
+    document
+        .querySelectorAll(".game")
+        .forEach(game => {
+
+            game.classList.remove("active");
+
+        });
+
+    const game =
+        document.getElementById(id);
+
+    if(game){
+
+        game.classList.add("active");
+
+    }
+
+    if(id === "memory"){
+
+        startMemory();
+
+    }
+
+}
+
+
+/* =========================
+   ANA MENÜ
+========================= */
+
+function backHome(){
+
+    clearInterval(clickTimer);
+    clearInterval(targetTimer);
+    clearInterval(snakeTimer);
+
+    clickRun = false;
+    targetRun = false;
+    snakeRun = false;
+
+    const button =
+        document.getElementById("clickButton");
+
+    if(button){
+
+        button.disabled = true;
+
+    }
+
+    document
+        .querySelectorAll(".game")
+        .forEach(game => {
+
+            game.classList.remove("active");
+
+        });
+
+    document
+        .getElementById("home")
+        .classList.remove("hidden");
+
+    updateUI();
+
+}
+
+
+/* =========================
+   HAFIZA
+========================= */
+
+const memorySymbols = [
+    "🍎","🍎",
+    "🚀","🚀",
+    "🐱","🐱",
+    "⚽","⚽",
+    "🎮","🎮",
+    "🍕","🍕",
+    "⭐","⭐",
+    "🔥","🔥"
+];
+
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLock = false;
+let memoryMovesN = 0;
+let memoryMatched = 0;
+
+
+function startMemory(){
+
+    const board =
+        document.getElementById(
+            "memoryBoard"
+        );
+
+    if(!board)return;
+
+    board.innerHTML = "";
+
+    memoryFirst = null;
+    memorySecond = null;
+    memoryLock = false;
+    memoryMovesN = 0;
+    memoryMatched = 0;
+
+    document
+        .getElementById("moves")
+        .textContent = "0";
+
+    const shuffled =
+        [...memorySymbols].sort(
+            () => Math.random() - 0.5
+        );
+
+    shuffled.forEach(symbol => {
+
+        const card =
+            document.createElement("button");
+
+        card.className = "mcard";
+
+        card.textContent = "?";
+
+        card.dataset.symbol =
+            symbol;
+
+        card.dataset.open = "no";
+
+        card.onclick =
+            () => flipMemory(card);
+
+        board.appendChild(card);
+
+    });
+
+}
+
+
+function flipMemory(card){
+
+    if(memoryLock)return;
+
+    if(card.dataset.open === "yes")
+        return;
+
+    if(card.classList.contains("done"))
+        return;
+
+    card.dataset.open = "yes";
+
+    card.classList.add("open");
+
+    card.textContent =
+        card.dataset.symbol;
+
+    if(!memoryFirst){
+
+        memoryFirst = card;
+
+        return;
+
+    }
+
+    memorySecond = card;
+
+    memoryMovesN++;
+
+    document
+        .getElementById("moves")
+        .textContent =
+        memoryMovesN;
+
+    if(
+        memoryFirst.dataset.symbol ===
+        memorySecond.dataset.symbol
+    ){
+
+        memoryFirst.classList.add("done");
+        memorySecond.classList.add("done");
+
+        memoryMatched += 2;
+
+        memoryFirst = null;
+        memorySecond = null;
+
+        if(
+            memoryMatched ===
+            memorySymbols.length
+        ){
+
+            const points =
+                Math.max(
+                    20,
+                    150 -
+                    memoryMovesN * 5
+                );
+
+            setTimeout(() => {
+
+                addRecord(
+                    points,
+                    "Hafıza"
+                );
+
+                alert(
+                    "🧠 Tebrikler!\n\n" +
+                    "Hamle: " +
+                    memoryMovesN +
+                    "\nPuan: " +
+                    points
+                );
+
+            },500);
+
+        }
+
+    }else{
+
+        memoryLock = true;
+
+        memoryFirst.classList.add("wrong");
+        memorySecond.classList.add("wrong");
+
+        setTimeout(() => {
+
+            memoryFirst.textContent = "?";
+            memorySecond.textContent = "?";
+
+            memoryFirst.classList.remove(
+                "open",
+                "wrong"
+            );
+
+            memorySecond.classList.remove(
+                "open",
+                "wrong"
+            );
+
+            memoryFirst.dataset.open =
+                "no";
+
+            memorySecond.dataset.open =
+                "no";
+
+            memoryFirst = null;
+            memorySecond = null;
+
+            memoryLock = false;
+
+        },700);
+
+    }
+
+}
+
+
+/* =========================
+   HIZLI TIKLA
+========================= */
+
+let clickTimer = null;
+let clickRun = false;
+let clickN = 0;
+
+function startClicker(){
+
+    clearInterval(clickTimer);
+
+    clickRun = true;
+    clickN = 0;
+
+    let time = 10;
+
+    document
+        .getElementById("clickScore")
+        .textContent = "0";
+
+    document
+        .getElementById("clickTime")
+        .textContent = time;
+
+    document
+        .getElementById("clickButton")
+        .disabled = false;
+
+    clickTimer =
+        setInterval(() => {
+
+            time--;
+
+            document
+                .getElementById("clickTime")
+                .textContent = time;
+
+            if(time <= 0){
+
+                finishClicker();
+
+            }
+
+        },1000);
+
+}
+
+
+function clickFast(){
+
+    if(!clickRun)return;
+
+    clickN++;
+
+    document
+        .getElementById("clickScore")
+        .textContent =
+        clickN;
+
+}
+
+
+function finishClicker(){
+
+    clearInterval(clickTimer);
+
+    clickRun = false;
+
+    document
+        .getElementById("clickButton")
+        .disabled = true;
+
+    const points =
+        clickN * 5;
+
+    addRecord(
+        points,
+        "Hızlı Tıkla"
+    );
+
+    alert(
+        "⚡ Bitti!\n\n" +
+        "Tıklama: " +
+        clickN +
+        "\nPuan: " +
+        points
+    );
+
+}
+
+
+/* =========================
+   HEDEF
+========================= */
+
+let targetTimer = null;
+let targetRun = false;
+let targetN = 0;
+
+function startTarget(){
+
+    clearInterval(targetTimer);
+
+    targetRun = true;
+    targetN = 0;
+
+    let time = 20;
+
+    document
+        .getElementById("targetScore")
+        .textContent = "0";
+
+    document
+        .getElementById("targetTime")
+        .textContent = time;
+
+    moveTarget();
+
+    targetTimer =
+        setInterval(() => {
+
+            time--;
+
+            document
+                .getElementById("targetTime")
+                .textContent = time;
+
+            if(time <= 0){
+
+                finishTarget();
+
+            }
+
+        },1000);
+
+}
+
+
+function moveTarget(){
+
+    if(!targetRun)return;
+
+    const area =
+        document.getElementById(
+            "targetArea"
+        );
+
+    area.innerHTML = "";
+
+    const target =
+        document.createElement("button");
+
+    target.className = "target";
+
+    const maxX =
+        Math.max(
+            0,
+            area.clientWidth - 55
+        );
+
+    const maxY =
+        Math.max(
+            0,
+            area.clientHeight - 55
+        );
+
+    target.style.left =
+        Math.random() * maxX + "px";
+
+    target.style.top =
+        Math.random() * maxY + "px";
+
+    target.onclick = () => {
+
+        if(!targetRun)return;
+
+        targetN++;
+
+        document
+            .getElementById("targetScore")
+            .textContent =
+            targetN;
+
+        moveTarget();
+
+    };
+
+    area.appendChild(target);
+
+}
+
+
+function finishTarget(){
+
+    clearInterval(targetTimer);
+
+    targetRun = false;
+
+    document
+        .getElementById("targetArea")
+        .innerHTML = "";
+
+    const points =
+        targetN * 10;
+
+    addRecord(
+        points,
+        "Hedef"
+    );
+
+    alert(
+        "🎯 Bitti!\n\n" +
+        "Hedef: " +
+        targetN +
+        "\n" +
+        "Puan: " +
+        points
+    );
+
+}
+
+
+/* =========================
+   YILAN
+========================= */
+
+let snakeTimer = null;
+let snakeRun = false;
+let snakeScore = 0;
+let snakeDirection = "right";
+
+function startSnake(){
+
+    clearInterval(snakeTimer);
+
+    snakeRun = true;
+    snakeScore = 0;
+    snakeDirection = "right";
+
+    document
+        .getElementById("snakeScore")
+        .textContent = "0";
+
+    /* Yılan başlangıcı */
+
+    snake = [
+        {x:10,y:10},
+        {x:9,y:10},
+        {x:8,y:10}
+    ];
+
+    snakeFood();
+
+    drawSnake();
+
+    snakeTimer =
+        setInterval(
+            snakeMove,
+            120
+        );
+
+}
+
+
+let snake = [];
+
+let food = {
+    x:15,
+    y:15
+};
+
+
+function snakeFood(){
+
+    food = {
+        x:
+            Math.floor(
+                Math.random()*20
+            ),
+
+        y:
+            Math.floor(
+                Math.random()*20
+            )
+    };
+
+}
+
+
+function changeDirection(dir){
+
+    if(dir === "up" &&
+       snakeDirection !== "down"){
+
+        snakeDirection = "up";
+
+    }
+
+    if(dir === "down" &&
+       snakeDirection !== "up"){
+
+        snakeDirection = "down";
+
+    }
+
+    if(dir === "left" &&
+       snakeDirection !== "right"){
+
+        snakeDirection = "left";
+
+    }
+
+    if(dir === "right" &&
+       snakeDirection !== "left"){
+
+        snakeDirection = "right";
+
+    }
+
+}
+
+
+function snakeMove(){
+
+    if(!snakeRun)return;
+
+    const head = {
+        x:snake[0].x,
+        y:snake[0].y
+    };
+
+    if(snakeDirection === "up")
+        head.y--;
+
+    if(snakeDirection === "down")
+        head.y++;
+
+    if(snakeDirection === "left")
+        head.x--;
+
+    if(snakeDirection === "right")
+        head.x++;
+
+    /* Duvara çarpma */
+
+    if(
+        head.x < 0 ||
+        head.x >= 20 ||
+        head.y < 0 ||
+        head.y >= 20
+    ){
+
+        finishSnake();
+
+        return;
+
+    }
+
+    /* Kendine çarpma */
+
+    if(
+        snake.some(
+            part =>
+            part.x === head.x &&
+            part.y === head.y
+        )
+    ){
+
+        finishSnake();
+
+        return;
+
+    }
+
+    snake.unshift(head);
+
+    /* Yem */
+
+    if(
+        head.x === food.x &&
+        head.y === food.y
+    ){
+
+        snakeScore++;
+
+        document
+            .getElementById("snakeScore")
+            .textContent =
+            snakeScore;
+
+        snakeFood();
+
+    }else{
+
+        snake.pop();
+
+    }
+
+    drawSnake();
+
+}
+
+
+function drawSnake(){
+
+    const canvas =
+        document.getElementById(
+            "snakeCanvas"
+        );
+
+    if(!canvas)return;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const size = 20;
+
+    /* Yem */
+
+    ctx.fillStyle = "#ff4757";
+
+    ctx.fillRect(
+        food.x * size,
+        food.y * size,
+        size-2,
+        size-2
+    );
+
+    /* Yılan */
+
+    ctx.fillStyle = "#2ed573";
+
+    snake.forEach(part => {
+
+        ctx.fillRect(
+            part.x * size,
+            part.y * size,
+            size-2,
+            size-2
+        );
+
+    });
+
+}
+
+
+function finishSnake(){
+
+    clearInterval(snakeTimer);
+
+    snakeRun = false;
+
+    const points =
+        snakeScore * 15;
+
+    addRecord(
+        points,
+        "Mini Yılan"
+    );
+
+    alert(
+        "🐍 Oyun bitti!\n\n" +
+        "Skor: " +
+        snakeScore +
+        "\nPuan: " +
+        points
+    );
+
+}
+
+
+/* =========================
+   KLAVYE
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "ArrowUp"
+        )
+            changeDirection("up");
+
+        if(
+            e.key === "ArrowDown"
+        )
+            changeDirection("down");
+
+        if(
+            e.key === "ArrowLeft"
+        )
+            changeDirection("left");
+
+        if(
+            e.key === "ArrowRight"
+        )
+            changeDirection("right");
+
+    }
+);
+
+
+/* =========================
+   BAŞLANGIÇ
+========================= */
+
+updateUI();
+
+
+</script>
 
 </body>
 </html>
+ 
+
   

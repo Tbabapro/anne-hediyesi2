@@ -112,7 +112,6 @@ input:focus{
 
 <body>
 
-
 <!-- =========================
      GİRİŞ
 ========================= -->
@@ -159,7 +158,6 @@ input:focus{
 
 <div class="container">
 
-
     <!-- PROFİL -->
 
     <div class="panel">
@@ -173,6 +171,8 @@ input:focus{
         <h2>
             💰 <span id="coins">0</span> puan
         </h2>
+
+        <!-- SADECE EKLENEN TUŞ -->
 
         <button
             class="reset"
@@ -253,23 +253,14 @@ input:focus{
 
     </div>
 
-
 </div>
 
 </div>
 
-
-<!-- =====================================================
-     2. PARÇAYI BURAYA KOY
-===================================================== -->
 
 <script>
 
-/* JAVASCRIPT 2. PARÇADA */
-
-</script>
-
-    /* =====================================================
+/* =====================================================
    HESAP SİSTEMİ
 ===================================================== */
 
@@ -334,8 +325,6 @@ function login(){
         localStorage.getItem("miniGameAccount");
 
 
-    /* İLK HESAP */
-
     if(!saved){
 
         if(name.length < 2){
@@ -344,9 +333,7 @@ function login(){
                 "❌ İsim en az 2 karakter olmalı.";
 
             return;
-
         }
-
 
         if(password.length < 4){
 
@@ -354,16 +341,13 @@ function login(){
                 "❌ Şifre en az 4 karakter olmalı.";
 
             return;
-
         }
 
 
         account = {
 
             name:name,
-
             password:password,
-
             coins:0
 
         };
@@ -374,11 +358,8 @@ function login(){
         enterGame();
 
         return;
-
     }
 
-
-    /* MEVCUT HESAP */
 
     try{
 
@@ -391,7 +372,6 @@ function login(){
             "❌ Hesap verisi bozulmuş.";
 
         return;
-
     }
 
 
@@ -401,7 +381,6 @@ function login(){
             "❌ Oyuncu adı yanlış.";
 
         return;
-
     }
 
 
@@ -411,7 +390,6 @@ function login(){
             "❌ Şifre yanlış.";
 
         return;
-
     }
 
 
@@ -540,7 +518,7 @@ function addCoins(amount){
 
 
 /* =====================================================
-   HESAP VERİLERİNİ SIFIRLA
+   🔄 HESABI SIFIRLA
    İSİM VE ŞİFRE KALIR
 ===================================================== */
 
@@ -551,7 +529,7 @@ function resetAccountData(){
 
             "⚠️ EMİN MİSİN?\n\n" +
 
-            "Puanların ve tüm oyun rekorların " +
+            "Puanların ve oyun rekorların " +
             "sıfırlanacak.\n\n" +
 
             "İsmin ve şifren KORUNACAK.\n\n" +
@@ -568,16 +546,12 @@ function resetAccountData(){
     }
 
 
-    /* İsim ve şifreyi sakla */
-
     const oldName =
         account.name;
 
     const oldPassword =
         account.password;
 
-
-    /* Yeni temiz hesap */
 
     account = {
 
@@ -590,8 +564,6 @@ function resetAccountData(){
     };
 
 
-    /* Rekorları sil */
-
     localStorage.removeItem(
         "snakeBest"
     );
@@ -601,19 +573,11 @@ function resetAccountData(){
     );
 
 
-    /* Hesabı kaydet */
-
     saveAccount();
 
-
-    /* Sayfayı güncelle */
+    stopSnake();
 
     updatePage();
-
-
-    /* Yılanı durdur */
-
-    stopSnake();
 
 
     document
@@ -708,15 +672,6 @@ function startSnake(){
 
     drawSnake();
 
-
-    /*
-       SAYI BÜYÜDÜKÇE YILAN YAVAŞLAR.
-
-       80  = hızlı
-       160 = normal/yavaş
-       250 = daha yavaş
-       350 = çok yavaş
-    */
 
     snakeTimer =
         setInterval(
@@ -850,8 +805,6 @@ function snakeLoop(){
     }
 
 
-    /* DUVARA ÇARPTI */
-
     if(
 
         head.x < 0 ||
@@ -870,8 +823,6 @@ function snakeLoop(){
 
     }
 
-
-    /* KENDİNE ÇARPTI */
 
     const hitSelf =
         snake.some(
@@ -900,8 +851,6 @@ function snakeLoop(){
 
     snake.unshift(head);
 
-
-    /* YEMEĞİ YEDİ */
 
     if(
 
@@ -952,8 +901,6 @@ function drawSnake(){
     );
 
 
-    /* YILAN */
-
     ctx.fillStyle =
         "#2ed573";
 
@@ -976,8 +923,6 @@ function drawSnake(){
         }
     );
 
-
-    /* YEMEK */
 
     ctx.fillStyle =
         "#ff4757";
@@ -1019,14 +964,10 @@ function finishSnake(){
         snakeScore * 80;
 
 
-    /* PUAN VER */
-
     addCoins(
         reward
     );
 
-
-    /* YILAN REKORU */
 
     const oldBest =
         Number(
@@ -1039,17 +980,12 @@ function finishSnake(){
     if(snakeScore > oldBest){
 
         localStorage.setItem(
-
             "snakeBest",
-
             snakeScore
-
         );
 
     }
 
-
-    /* TOPLAM REKOR */
 
     const oldTotalBest =
         Number(
@@ -1062,17 +998,13 @@ function finishSnake(){
     if(
 
         Number(account.coins) >
-
         oldTotalBest
 
     ){
 
         localStorage.setItem(
-
             "bestScore",
-
             account.coins
-
         );
 
     }
@@ -1086,7 +1018,6 @@ function finishSnake(){
             "snakeMsg"
         )
         .textContent =
-
         "🏁 Oyun bitti! +" +
         reward +
         " puan!";
@@ -1109,7 +1040,7 @@ function finishSnake(){
 
 
 /* =====================================================
-   KLAVYE KONTROLLERİ
+   KLAVYE
 ===================================================== */
 
 document.addEventListener(
@@ -1121,27 +1052,20 @@ document.addEventListener(
         const keys = {
 
             ArrowUp:"up",
-
             ArrowDown:"down",
-
             ArrowLeft:"left",
-
             ArrowRight:"right",
 
             w:"up",
-
             W:"up",
 
             s:"down",
-
             S:"down",
 
             a:"left",
-
             A:"left",
 
             d:"right",
-
             D:"right"
 
         };
@@ -1164,11 +1088,8 @@ document.addEventListener(
         const opposite = {
 
             up:"down",
-
             down:"up",
-
             left:"right",
-
             right:"left"
 
         };
@@ -1189,5 +1110,10 @@ document.addEventListener(
     }
 
 );
+
+</script>
+
+    
+
 </body>
 </html>

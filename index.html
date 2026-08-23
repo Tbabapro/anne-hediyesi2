@@ -1705,6 +1705,45 @@ function addCoins(amount){
 
 }
 
+function resetAccountData(){
+
+    const answer = confirm(
+        "⚠️ EMİN MİSİN?\n\n" +
+        "Puanların ve tüm oyun rekorların sıfırlanacak.\n\n" +
+        "İsmin ve şifren KORUNACAK.\n\n" +
+        "Devam etmek istiyor musun?"
+    );
+
+    if(!answer){
+        return;
+    }
+
+    const oldName = account.name;
+    const oldPassword = account.password;
+
+    account = {
+        name: oldName,
+        password: oldPassword,
+        coins: 0
+    };
+
+    localStorage.removeItem("snakeBest");
+    localStorage.removeItem("bestScore");
+
+    saveAccount();
+    updatePage();
+
+    stopSnake();
+
+    document.getElementById("snakeScore").textContent = "0";
+    document.getElementById("snakeMsg").textContent = "";
+
+    alert(
+        "✅ Veriler sıfırlandı!\n\n" +
+        "İsmin ve şifren korundu."
+    );
+}
+
 
 function updateCoins(){
 

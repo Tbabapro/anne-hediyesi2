@@ -3,29 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MiniGame 2.0</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-}
-
 body{
     margin:0;
     font-family:Arial,sans-serif;
     background:linear-gradient(135deg,#dff6ff,#f4e1ff);
     color:#222;
-}
-
-button,input{
-    font:inherit;
-}
-
-button{
-    border:0;
-    cursor:pointer;
+    text-align:center;
 }
 
 .container{
@@ -41,13 +27,11 @@ button{
     box-shadow:0 8px 25px #0002;
 }
 
-.hidden{
-    display:none!important;
-}
-
 button{
+    border:0;
     padding:12px 18px;
     border-radius:12px;
+    cursor:pointer;
     font-weight:bold;
     margin:5px;
 }
@@ -57,27 +41,15 @@ button{
     color:white;
 }
 
-.reset{
-    background:#ff4757;
-    color:white;
-}
-
-.back{
-    background:#ddd;
-    color:#222;
-}
-
 input{
-    width:min(350px,90%);
-    padding:13px;
+    padding:12px;
     border:2px solid #ddd;
     border-radius:10px;
     margin:5px;
-    outline:none;
 }
 
-input:focus{
-    border-color:#675cff;
+.hidden{
+    display:none;
 }
 
 .game{
@@ -88,101 +60,56 @@ input:focus{
 }
 
 #snakeCanvas{
-    display:block;
-    margin:15px auto;
     border:4px solid #222;
     background:#eee;
     max-width:100%;
 }
-
-.stats{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.message{
-    min-height:25px;
-    font-weight:bold;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     GİRİŞ
-========================= -->
+<!-- GİRİŞ -->
 
 <div id="login" class="panel container">
 
     <h1>🎮 MiniGame 2.0</h1>
 
-    <p>
-        Oyuncu adını ve şifreni gir.
-    </p>
-
-    <input
-        id="name"
-        maxlength="20"
-        placeholder="Oyuncu adı">
-
-    <br>
+    <input id="name" placeholder="Oyuncu adı">
 
     <input
         id="password"
         type="password"
-        maxlength="40"
         placeholder="Şifre">
 
-    <br>
-
-    <button
-        class="btn"
-        onclick="login()">
+    <button class="btn" onclick="login()">
         🎮 Oyuna Gir
     </button>
 
-    <p id="loginMsg" class="message"></p>
+    <p id="loginMsg"></p>
 
 </div>
 
 
-<!-- =========================
-     ANA SAYFA
-========================= -->
+<!-- ANA SAYFA -->
 
 <div id="main" class="hidden">
 
 <div class="container">
-
-    <!-- PROFİL -->
 
     <div class="panel">
 
         <h1>🎮 MiniGame 2.0</h1>
 
         <h2>
-            👤 <span id="playerName">Oyuncu</span>
+            👤 <span id="playerName"></span>
         </h2>
 
         <h2>
             💰 <span id="coins">0</span> puan
         </h2>
 
-        <!-- SADECE EKLENEN TUŞ -->
-
-        <button
-            class="reset"
-            onclick="resetAccountData()">
-            🔄 Verileri Sıfırla
-        </button>
-
-        <button
-            class="back"
-            onclick="logout()">
+        <button onclick="logout()">
             🚪 Çıkış
         </button>
 
@@ -199,25 +126,13 @@ input:focus{
 
             <h3>🐍 Yılan</h3>
 
-            <div class="stats">
-
-                <b>
-                    🐍 Puan:
-                    <span id="snakeScore">0</span>
-                </b>
-
-                <b>
-                    💰 Toplam:
-                    <span id="gameCoins">0</span>
-                </b>
-
-            </div>
-
             <canvas
                 id="snakeCanvas"
                 width="400"
                 height="400">
             </canvas>
+
+            <br>
 
             <button
                 class="btn"
@@ -225,9 +140,9 @@ input:focus{
                 🐍 Başlat
             </button>
 
-            <p
-                id="snakeMsg"
-                class="message">
+            <p>
+                Puan:
+                <b id="snakeScore">0</b>
             </p>
 
         </div>
@@ -261,7 +176,7 @@ input:focus{
 <script>
 
 /* =====================================================
-   HESAP SİSTEMİ
+   HESAP
 ===================================================== */
 
 let account = {
@@ -272,7 +187,7 @@ let account = {
 
 
 /* =====================================================
-   YILAN DEĞİŞKENLERİ
+   YILAN
 ===================================================== */
 
 let snake = [];
@@ -318,26 +233,32 @@ function login(){
         .getElementById("password")
         .value;
 
-    const msg =
-        document.getElementById("loginMsg");
-
     const saved =
-        localStorage.getItem("miniGameAccount");
+        localStorage.getItem(
+            "miniGameAccount"
+        );
 
+
+    /* İLK HESAP */
 
     if(!saved){
 
         if(name.length < 2){
 
-            msg.textContent =
+            document
+            .getElementById("loginMsg")
+            .textContent =
                 "❌ İsim en az 2 karakter olmalı.";
 
             return;
         }
 
+
         if(password.length < 4){
 
-            msg.textContent =
+            document
+            .getElementById("loginMsg")
+            .textContent =
                 "❌ Şifre en az 4 karakter olmalı.";
 
             return;
@@ -361,24 +282,18 @@ function login(){
     }
 
 
-    try{
+    /* MEVCUT HESAP */
 
-        account =
-            JSON.parse(saved);
-
-    }catch(error){
-
-        msg.textContent =
-            "❌ Hesap verisi bozulmuş.";
-
-        return;
-    }
+    account =
+        JSON.parse(saved);
 
 
     if(name !== account.name){
 
-        msg.textContent =
-            "❌ Oyuncu adı yanlış.";
+        document
+        .getElementById("loginMsg")
+        .textContent =
+            "❌ İsim yanlış.";
 
         return;
     }
@@ -386,7 +301,9 @@ function login(){
 
     if(password !== account.password){
 
-        msg.textContent =
+        document
+        .getElementById("loginMsg")
+        .textContent =
             "❌ Şifre yanlış.";
 
         return;
@@ -433,14 +350,6 @@ function logout(){
         .getElementById("login")
         .classList.remove("hidden");
 
-    document
-        .getElementById("password")
-        .value = "";
-
-    document
-        .getElementById("loginMsg")
-        .textContent = "";
-
 }
 
 
@@ -449,10 +358,6 @@ function logout(){
 ===================================================== */
 
 function updatePage(){
-
-    const coins =
-        Number(account.coins || 0);
-
 
     document
         .getElementById("playerName")
@@ -463,25 +368,23 @@ function updatePage(){
     document
         .getElementById("coins")
         .textContent =
-        coins;
-
-
-    document
-        .getElementById("gameCoins")
-        .textContent =
-        coins;
+        account.coins;
 
 
     document
         .getElementById("snakeBest")
         .textContent =
-        localStorage.getItem("snakeBest") || 0;
+        localStorage.getItem(
+            "snakeBest"
+        ) || 0;
 
 
     document
         .getElementById("bestScore")
         .textContent =
-        localStorage.getItem("bestScore") || 0;
+        localStorage.getItem(
+            "bestScore"
+        ) || 0;
 
 }
 
@@ -492,23 +395,7 @@ function updatePage(){
 
 function addCoins(amount){
 
-    amount =
-        Number(amount);
-
-
-    if(!Number.isFinite(amount)){
-        return;
-    }
-
-
-    amount =
-        Math.max(0,amount);
-
-
-    account.coins =
-        Number(account.coins || 0)
-        + amount;
-
+    account.coins += amount;
 
     saveAccount();
 
@@ -518,104 +405,7 @@ function addCoins(amount){
 
 
 /* =====================================================
-   🔄 HESABI SIFIRLA
-   İSİM VE ŞİFRE KALIR
-===================================================== */
-
-function resetAccountData(){
-
-    const answer =
-        confirm(
-
-            "⚠️ EMİN MİSİN?\n\n" +
-
-            "Puanların ve oyun rekorların " +
-            "sıfırlanacak.\n\n" +
-
-            "İsmin ve şifren KORUNACAK.\n\n" +
-
-            "Devam etmek istiyor musun?"
-
-        );
-
-
-    if(!answer){
-
-        return;
-
-    }
-
-
-    const oldName =
-        account.name;
-
-    const oldPassword =
-        account.password;
-
-
-    account = {
-
-        name:oldName,
-
-        password:oldPassword,
-
-        coins:0
-
-    };
-
-
-    localStorage.removeItem(
-        "snakeBest"
-    );
-
-    localStorage.removeItem(
-        "bestScore"
-    );
-
-
-    saveAccount();
-
-    stopSnake();
-
-    updatePage();
-
-
-    document
-        .getElementById("snakeScore")
-        .textContent = "0";
-
-
-    document
-        .getElementById("snakeMsg")
-        .textContent = "";
-
-
-    alert(
-
-        "✅ Veriler sıfırlandı!\n\n" +
-
-        "İsmin ve şifren korundu."
-
-    );
-
-}
-
-
-/* =====================================================
-   YILAN
-===================================================== */
-
-const canvas =
-    document.getElementById(
-        "snakeCanvas"
-    );
-
-const ctx =
-    canvas.getContext("2d");
-
-
-/* =====================================================
-   YILANI BAŞLAT
+   YILAN BAŞLAT
 ===================================================== */
 
 function startSnake(){
@@ -643,29 +433,16 @@ function startSnake(){
     ];
 
 
-    direction =
-        "right";
+    direction = "right";
+    nextDirection = "right";
 
-    nextDirection =
-        "right";
-
-    snakeScore =
-        0;
-
-    snakeRunning =
-        true;
+    snakeScore = 0;
+    snakeRunning = true;
 
 
     document
         .getElementById("snakeScore")
-        .textContent =
-        "0";
-
-
-    document
-        .getElementById("snakeMsg")
-        .textContent =
-        "🐍 Başladın!";
+        .textContent = "0";
 
 
     createFood();
@@ -676,14 +453,14 @@ function startSnake(){
     snakeTimer =
         setInterval(
             snakeLoop,
-            250
+            160
         );
 
 }
 
 
 /* =====================================================
-   YILANI DURDUR
+   YILAN DURDUR
 ===================================================== */
 
 function stopSnake(){
@@ -698,9 +475,7 @@ function stopSnake(){
 
     }
 
-
-    snakeRunning =
-        false;
+    snakeRunning = false;
 
 }
 
@@ -715,34 +490,24 @@ function createFood(){
 
         x:
             Math.floor(
-                Math.random() * 20
-            ) * 20,
+                Math.random()*20
+            )*20,
 
         y:
             Math.floor(
-                Math.random() * 20
-            ) * 20
+                Math.random()*20
+            )*20
 
     };
 
 
-    const onSnake =
+    if(
         snake.some(
-            function(part){
-
-                return (
-
-                    part.x === food.x &&
-
-                    part.y === food.y
-
-                );
-
-            }
-        );
-
-
-    if(onSnake){
+            part =>
+                part.x === food.x &&
+                part.y === food.y
+        )
+    ){
 
         createFood();
 
@@ -757,13 +522,6 @@ function createFood(){
 
 function snakeLoop(){
 
-    if(!snakeRunning){
-
-        return;
-
-    }
-
-
     direction =
         nextDirection;
 
@@ -771,50 +529,31 @@ function snakeLoop(){
     const head = {
 
         x:snake[0].x,
-
         y:snake[0].y
 
     };
 
 
-    if(direction === "up"){
-
+    if(direction === "up")
         head.y -= 20;
 
-    }
-
-
-    if(direction === "down"){
-
+    if(direction === "down")
         head.y += 20;
 
-    }
-
-
-    if(direction === "left"){
-
+    if(direction === "left")
         head.x -= 20;
 
-    }
-
-
-    if(direction === "right"){
-
+    if(direction === "right")
         head.x += 20;
 
-    }
 
+    /* DUVAR */
 
     if(
-
         head.x < 0 ||
-
         head.x >= 400 ||
-
         head.y < 0 ||
-
         head.y >= 400
-
     ){
 
         finishSnake();
@@ -824,23 +563,15 @@ function snakeLoop(){
     }
 
 
-    const hitSelf =
+    /* KENDİNE ÇARPMA */
+
+    if(
         snake.some(
-            function(part){
-
-                return (
-
-                    part.x === head.x &&
-
-                    part.y === head.y
-
-                );
-
-            }
-        );
-
-
-    if(hitSelf){
+            part =>
+                part.x === head.x &&
+                part.y === head.y
+        )
+    ){
 
         finishSnake();
 
@@ -852,21 +583,18 @@ function snakeLoop(){
     snake.unshift(head);
 
 
+    /* YEMEK */
+
     if(
-
         head.x === food.x &&
-
         head.y === food.y
-
     ){
 
         snakeScore++;
 
 
         document
-            .getElementById(
-                "snakeScore"
-            )
+            .getElementById("snakeScore")
             .textContent =
             snakeScore;
 
@@ -874,7 +602,6 @@ function snakeLoop(){
         createFood();
 
     }
-
     else{
 
         snake.pop();
@@ -893,6 +620,15 @@ function snakeLoop(){
 
 function drawSnake(){
 
+    const canvas =
+        document.getElementById(
+            "snakeCanvas"
+        );
+
+    const ctx =
+        canvas.getContext("2d");
+
+
     ctx.clearRect(
         0,
         0,
@@ -901,28 +637,27 @@ function drawSnake(){
     );
 
 
+    /* YILAN */
+
     ctx.fillStyle =
         "#2ed573";
 
 
     snake.forEach(
-        function(part){
+        part => {
 
             ctx.fillRect(
-
-                part.x + 1,
-
-                part.y + 1,
-
+                part.x+1,
+                part.y+1,
                 18,
-
                 18
-
             );
 
         }
     );
 
+
+    /* YEMEK */
 
     ctx.fillStyle =
         "#ff4757";
@@ -930,21 +665,13 @@ function drawSnake(){
 
     ctx.beginPath();
 
-
     ctx.arc(
-
-        food.x + 10,
-
-        food.y + 10,
-
+        food.x+10,
+        food.y+10,
         8,
-
         0,
-
-        Math.PI * 2
-
+        Math.PI*2
     );
-
 
     ctx.fill();
 
@@ -964,10 +691,14 @@ function finishSnake(){
         snakeScore * 80;
 
 
+    /* PUAN VER */
+
     addCoins(
         reward
     );
 
+
+    /* YILAN REKORU */
 
     const oldBest =
         Number(
@@ -987,7 +718,9 @@ function finishSnake(){
     }
 
 
-    const oldTotalBest =
+    /* TOPLAM REKOR */
+
+    const total =
         Number(
             localStorage.getItem(
                 "bestScore"
@@ -995,12 +728,7 @@ function finishSnake(){
         );
 
 
-    if(
-
-        Number(account.coins) >
-        oldTotalBest
-
-    ){
+    if(account.coins > total){
 
         localStorage.setItem(
             "bestScore",
@@ -1013,27 +741,13 @@ function finishSnake(){
     updatePage();
 
 
-    document
-        .getElementById(
-            "snakeMsg"
-        )
-        .textContent =
-        "🏁 Oyun bitti! +" +
-        reward +
-        " puan!";
-
-
     alert(
-
         "🐍 Oyun bitti!\n\n" +
-
         snakeScore +
-        " elma topladın!\n\n" +
-
+        " elma topladın!\n" +
         "+" +
         reward +
-        " puan kazandın!"
-
+        " puan!"
     );
 
 }
@@ -1044,9 +758,7 @@ function finishSnake(){
 ===================================================== */
 
 document.addEventListener(
-
     "keydown",
-
     function(event){
 
         const keys = {
@@ -1058,13 +770,10 @@ document.addEventListener(
 
             w:"up",
             W:"up",
-
             s:"down",
             S:"down",
-
             a:"left",
             A:"left",
-
             d:"right",
             D:"right"
 
@@ -1075,14 +784,8 @@ document.addEventListener(
             keys[event.key];
 
 
-        if(!newDirection){
-
+        if(!newDirection)
             return;
-
-        }
-
-
-        event.preventDefault();
 
 
         const opposite = {
@@ -1096,10 +799,8 @@ document.addEventListener(
 
 
         if(
-
             opposite[newDirection] !==
             direction
-
         ){
 
             nextDirection =
@@ -1108,12 +809,9 @@ document.addEventListener(
         }
 
     }
-
 );
 
 </script>
-
-    
 
 </body>
 </html>

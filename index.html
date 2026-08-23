@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
 
 <title>Mini Oyun Merkezi</title>
 
 <style>
+
+/* =========================
+   TEMEL
+========================= */
 
 *{
     box-sizing:border-box;
@@ -15,7 +22,11 @@
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#dff6ff,#f4e1ff);
+    background:linear-gradient(
+        135deg,
+        #dff6ff,
+        #f4e1ff
+    );
     color:#222;
 }
 
@@ -43,7 +54,7 @@ button{
 }
 
 .hidden{
-    display:none !important;
+    display:none!important;
 }
 
 .btn{
@@ -54,15 +65,40 @@ button{
     font-weight:700;
 }
 
+.btn:hover{
+    opacity:.9;
+}
+
 .back{
-    background:#eeeeee;
+    background:#eee;
     color:#222;
     padding:10px 15px;
     border-radius:12px;
 }
 
+.input{
+    width:90%;
+    max-width:320px;
+    padding:13px;
+    margin:6px 0;
+    border:2px solid #ddd;
+    border-radius:12px;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#675cff;
+}
+
+.msg{
+    text-align:center;
+    font-weight:bold;
+    min-height:25px;
+}
+
+
 /* =========================
-   GİRİŞ EKRANI
+   GİRİŞ / KAYIT
 ========================= */
 
 #login{
@@ -71,8 +107,13 @@ button{
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#dff6ff,#f4e1ff);
-    z-index:1000;
+    background:linear-gradient(
+        135deg,
+        #dff6ff,
+        #f4e1ff
+    );
+    z-index:100;
+    padding:20px;
 }
 
 .loginBox{
@@ -80,7 +121,7 @@ button{
     padding:30px;
     border-radius:22px;
     text-align:center;
-    width:min(420px,92%);
+    width:min(420px,100%);
     box-shadow:0 10px 35px #0003;
 }
 
@@ -88,13 +129,33 @@ button{
     margin-top:0;
 }
 
-.input{
-    padding:12px;
-    border:2px solid #ddd;
-    border-radius:12px;
-    width:90%;
-    margin:6px;
+.loginBox h2{
+    margin-bottom:8px;
 }
+
+.loginBox p{
+    color:#555;
+}
+
+.loginButtons{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.smallBtn{
+    background:none;
+    color:#675cff;
+    font-weight:bold;
+    padding:8px;
+}
+
+.smallBtn:hover{
+    text-decoration:underline;
+}
+
 
 /* =========================
    ANA SAYFA
@@ -108,6 +169,11 @@ header{
 header h1{
     margin-bottom:8px;
 }
+
+header p{
+    margin-top:0;
+}
+
 
 /* =========================
    PROFİL
@@ -222,8 +288,17 @@ header h1{
     font-size:38px;
 }
 
+.stats2{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:12px;
+}
+
+
 /* =========================
-   OYUNLAR
+   OYUN KARTLARI
 ========================= */
 
 .games{
@@ -244,6 +319,11 @@ header h1{
     font-size:50px;
 }
 
+
+/* =========================
+   OYUN EKRANLARI
+========================= */
+
 .game{
     display:none;
 }
@@ -259,19 +339,6 @@ header h1{
     gap:10px;
 }
 
-.stats2{
-    display:flex;
-    gap:15px;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin:12px;
-}
-
-.msg{
-    text-align:center;
-    font-weight:bold;
-    min-height:25px;
-}
 
 /* =========================
    HAFIZA
@@ -299,6 +366,7 @@ header h1{
     color:#222;
 }
 
+
 /* =========================
    TIKLA
 ========================= */
@@ -322,6 +390,7 @@ header h1{
     font-weight:bold;
 }
 
+
 /* =========================
    HEDEF
 ========================= */
@@ -341,6 +410,7 @@ header h1{
     border-radius:50%;
     background:#ff4757;
 }
+
 
 /* =========================
    YILAN
@@ -391,6 +461,7 @@ header h1{
     grid-row:2;
 }
 
+
 /* =========================
    MARKET
 ========================= */
@@ -411,6 +482,7 @@ header h1{
 .itemIcon{
     font-size:42px;
 }
+
 
 /* =========================
    REKORLAR
@@ -435,6 +507,7 @@ header h1{
     font-size:32px;
 }
 
+
 /* =========================
    MOBİL
 ========================= */
@@ -457,67 +530,715 @@ header h1{
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- =========================
-     GİRİŞ
-========================= -->
+
+<!-- =====================================================
+     GİRİŞ / KAYIT SİSTEMİ
+===================================================== -->
 
 <div id="login">
 
     <div class="loginBox">
 
-        <h1>🎮 Mini Oyun Merkezi</h1>
+        <!-- KAYIT EKRANI -->
 
-        <p>Oyuna girmek için bilgilerini yaz.</p>
+        <div id="registerScreen">
 
-        <input
-            id="username"
-            class="input"
-            type="text"
-            placeholder="İsmin"
-            maxlength="20"
-        >
+            <h1>🎮 Mini Oyun Merkezi</h1>
 
-        <input
-            id="password"
-            class="input"
-            type="password"
-            placeholder="Şifren"
-        >
+            <h2>İlk Kez mi Geliyorsun?</h2>
 
-        <br>
+            <p>
+                Önce ismini ve kendi şifreni belirle.
+            </p>
 
-        <button
-            class="btn"
-            onclick="login()">
-            Giriş Yap
-        </button>
+            <input
+                id="registerName"
+                class="input"
+                type="text"
+                placeholder="İsmin"
+                maxlength="20"
+            >
 
-        <br><br>
+            <br>
 
-        <button
-            onclick="forgotPassword()">
-            Şifremi Unuttum
-        </button>
+            <input
+                id="registerPassword"
+                class="input"
+                type="password"
+                placeholder="Yeni şifren"
+            >
 
-        <p
-            id="loginMsg"
-            class="msg">
-        </p>
+            <br>
+
+            <input
+                id="registerPassword2"
+                class="input"
+                type="password"
+                placeholder="Şifreni tekrar yaz"
+            >
+
+            <br><br>
+
+            <button
+                class="btn"
+                onclick="registerUser()">
+
+                Hesap Oluştur
+
+            </button>
+
+            <div class="loginButtons">
+
+                <button
+                    class="smallBtn"
+                    onclick="showLogin()">
+
+                    Zaten hesabım var
+
+                </button>
+
+            </div>
+
+            <p
+                id="registerMsg"
+                class="msg">
+            </p>
+
+        </div>
+
+
+        <!-- GİRİŞ EKRANI -->
+
+        <div
+            id="loginScreen"
+            class="hidden">
+
+            <h1>🎮 Mini Oyun Merkezi</h1>
+
+            <h2>Hoş Geldin!</h2>
+
+            <p id="welcomeName">
+                Giriş yapmak için bilgilerini gir.
+            </p>
+
+            <input
+                id="loginName"
+                class="input"
+                type="text"
+                placeholder="İsmin"
+            >
+
+            <br>
+
+            <input
+                id="loginPassword"
+                class="input"
+                type="password"
+                placeholder="Şifren"
+            >
+
+            <br><br>
+
+            <button
+                class="btn"
+                onclick="login()">
+
+                Giriş Yap
+
+            </button>
+
+            <div class="loginButtons">
+
+                <button
+                    class="smallBtn"
+                    onclick="showForgot()">
+
+                    Şifremi Unuttum
+
+                </button>
+
+            </div>
+
+            <p
+                id="loginMsg"
+                class="msg">
+            </p>
+
+        </div>
+
+
+        <!-- ŞİFRE DEĞİŞTİRME -->
+
+        <div
+            id="forgotScreen"
+            class="hidden">
+
+            <h1>🔑 Şifre Değiştir</h1>
+
+            <p>
+                Yeni şifreni aşağıya yaz.
+            </p>
+
+            <input
+                id="forgotName"
+                class="input"
+                type="text"
+                placeholder="İsmin"
+            >
+
+            <br>
+
+            <input
+                id="newPassword"
+                class="input"
+                type="password"
+                placeholder="Yeni şifre"
+            >
+
+            <br>
+
+            <input
+                id="newPassword2"
+                class="input"
+                type="password"
+                placeholder="Yeni şifre tekrar"
+            >
+
+            <br><br>
+
+            <button
+                class="btn"
+                onclick="changePassword()">
+
+                Şifreyi Değiştir
+
+            </button>
+
+            <div class="loginButtons">
+
+                <button
+                    class="smallBtn"
+                    onclick="showLogin()">
+
+                    Girişe Dön
+
+                </button>
+
+            </div>
+
+            <p
+                id="forgotMsg"
+                class="msg">
+            </p>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- BURADAN SONRA 2. PARÇAYI EKLE -->
-    <!-- =========================
+
+<!-- =====================================================
+     ANA SAYFA
+===================================================== -->
+
+<header>
+
+    <h1>🎮 Mini Oyun Merkezi</h1>
+
+    <p>
+        Oyna • Puan kazan • Avatarını giydir
+    </p>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     PROFİL
+===================================================== -->
+
+<section class="panel">
+
+    <div class="profile">
+
+        <div class="avatar">
+
+            <div class="head">🙂</div>
+
+            <div class="body"></div>
+
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+
+            <div class="leg left"></div>
+            <div class="leg right"></div>
+
+            <div
+                id="hat"
+                class="wear hat">
+            </div>
+
+            <div
+                id="glasses"
+                class="wear glasses">
+            </div>
+
+            <div
+                id="shirt"
+                class="wear shirt">
+            </div>
+
+            <div
+                id="pants"
+                class="wear pants">
+            </div>
+
+            <div
+                id="shoes"
+                class="wear shoes">
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <h2>👤 Profil</h2>
+
+            <h2 id="player">
+                Oyuncu
+            </h2>
+
+            <div class="stats2">
+
+                <b>
+                    💰
+                    <span id="coins">0</span>
+                    puan
+                </b>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OYUNLAR
+===================================================== -->
+
+<section class="panel">
+
+    <h2>🎮 Oyunlar</h2>
+
+    <div class="games">
+
+        <div class="card">
+
+            <div class="emoji">
+                🧠
+            </div>
+
+            <h3>
+                Hafıza Oyunu
+            </h3>
+
+            <p>
+                Kartların eşlerini bul!
+            </p>
+
+            <button
+                class="btn"
+                onclick="openGame('memoryGame')">
+
+                Oyna
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="emoji">
+                👆
+            </div>
+
+            <h3>
+                Tıkla Kazan
+            </h3>
+
+            <p>
+                30 saniyede ne kadar hızlısın?
+            </p>
+
+            <button
+                class="btn"
+                onclick="openGame('clickGame')">
+
+                Oyna
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="emoji">
+                🎯
+            </div>
+
+            <h3>
+                Hedefi Vur
+            </h3>
+
+            <p>
+                Hedeflere hızlıca tıkla!
+            </p>
+
+            <button
+                class="btn"
+                onclick="openGame('targetGame')">
+
+                Oyna
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="emoji">
+                🐍
+            </div>
+
+            <h3>
+                Yılan
+            </h3>
+
+            <p>
+                Yılanı kontrol et ve puan topla!
+            </p>
+
+            <button
+                class="btn"
+                onclick="openGame('snakeGame')">
+
+                Oyna
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OYUN EKRANLARI
+===================================================== -->
+
+<section class="panel">
+
+    <!-- HAFIZA -->
+
+    <div
+        id="memoryGame"
+        class="game">
+
+        <div class="gamehead">
+
+            <h2>
+                🧠 Hafıza Oyunu
+            </h2>
+
+            <button
+                class="back"
+                onclick="closeGames()">
+
+                ← Geri
+
+            </button>
+
+        </div>
+
+        <div class="stats2">
+
+            <b>
+                Hamle:
+                <span id="memoryMoves">
+                    0
+                </span>
+            </b>
+
+            <b>
+                Puan:
+                <span id="memoryScore">
+                    0
+                </span>
+            </b>
+
+        </div>
+
+        <div
+            id="memoryBoard"
+            class="memory">
+        </div>
+
+        <p
+            id="memoryMsg"
+            class="msg">
+        </p>
+
+        <button
+            class="btn"
+            onclick="startMemory()">
+
+            Yeniden Başlat
+
+        </button>
+
+    </div>
+
+
+    <!-- TIKLA -->
+
+    <div
+        id="clickGame"
+        class="game">
+
+        <div class="gamehead">
+
+            <h2>
+                👆 Tıkla Kazan
+            </h2>
+
+            <button
+                class="back"
+                onclick="closeGames()">
+
+                ← Geri
+
+            </button>
+
+        </div>
+
+        <div class="stats2">
+
+            <b>
+                Süre:
+                <span id="clickTime">
+                    30
+                </span>
+            </b>
+
+            <b>
+                Tıklama:
+                <span id="clickScore">
+                    0
+                </span>
+            </b>
+
+        </div>
+
+        <div class="clickarea">
+
+            <button
+                id="clickButton"
+                class="clickbtn"
+                onclick="clickGameAction()">
+
+                BAŞLA
+
+            </button>
+
+        </div>
+
+        <p
+            id="clickMsg"
+            class="msg">
+        </p>
+
+    </div>
+
+
+    <!-- HEDEF -->
+
+    <div
+        id="targetGame"
+        class="game">
+
+        <div class="gamehead">
+
+            <h2>
+                🎯 Hedefi Vur
+            </h2>
+
+            <button
+                class="back"
+                onclick="closeGames()">
+
+                ← Geri
+
+            </button>
+
+        </div>
+
+        <div class="stats2">
+
+            <b>
+                Süre:
+                <span id="targetTime">
+                    30
+                </span>
+            </b>
+
+            <b>
+                Puan:
+                <span id="targetScore">
+                    0
+                </span>
+            </b>
+
+        </div>
+
+        <div
+            id="targetArea"
+            class="targetarea">
+
+            <button
+                id="target"
+                class="target"
+                onclick="hitTarget()">
+            </button>
+
+        </div>
+
+        <p
+            id="targetMsg"
+            class="msg">
+        </p>
+
+        <button
+            class="btn"
+            onclick="startTarget()">
+
+            Başlat
+
+        </button>
+
+    </div>
+
+
+    <!-- YILAN -->
+
+    <div
+        id="snakeGame"
+        class="game">
+
+        <div class="gamehead">
+
+            <h2>
+                🐍 Yılan
+            </h2>
+
+            <button
+                class="back"
+                onclick="closeGames()">
+
+                ← Geri
+
+            </button>
+
+        </div>
+
+        <div class="stats2">
+
+            <b>
+                Puan:
+                <span id="snakeScore">
+                    0
+                </span>
+            </b>
+
+        </div>
+
+        <canvas
+            id="snakeCanvas"
+            width="400"
+            height="400">
+        </canvas>
+
+        <div class="controls">
+
+            <button
+                class="up"
+                onclick="changeDirection('up')">
+
+                ⬆️
+
+            </button>
+
+            <button
+                class="left"
+                onclick="changeDirection('left')">
+
+                ⬅️
+
+            </button>
+
+            <button
+                class="down"
+                onclick="changeDirection('down')">
+
+                ⬇️
+
+            </button>
+
+            <button
+                class="right"
+                onclick="changeDirection('right')">
+
+                ➡️
+
+            </button>
+
+        </div>
+
+        <button
+            class="btn"
+            onclick="startSnake()">
+
+            Oyunu Başlat
+
+        </button>
+
+        <p
+            id="snakeMsg"
+            class="msg">
+        </p>
+
+    </div
+
+        <!-- =========================
      ANA SAYFA
 ========================= -->
 
-<header>
+<header style="text-align:center;padding:25px 10px">
 
     <h1>🎮 Mini Oyun Merkezi</h1>
 
@@ -559,7 +1280,9 @@ header h1{
 
                 <h2>👤 Profil</h2>
 
-                <h2 id="player">Oyuncu</h2>
+                <h2 id="player">
+                    Oyuncu
+                </h2>
 
                 <div class="stats2">
 
@@ -594,12 +1317,16 @@ header h1{
 
                 <h3>Hafıza Oyunu</h3>
 
-                <p>Kartların eşlerini bul!</p>
+                <p>
+                    Kartların eşlerini bul!
+                </p>
 
                 <button
                     class="btn"
                     onclick="openGame('memoryGame')">
+
                     Oyna
+
                 </button>
 
             </div>
@@ -611,12 +1338,16 @@ header h1{
 
                 <h3>Tıkla Kazan</h3>
 
-                <p>30 saniyede ne kadar hızlısın?</p>
+                <p>
+                    30 saniyede ne kadar hızlısın?
+                </p>
 
                 <button
                     class="btn"
                     onclick="openGame('clickGame')">
+
                     Oyna
+
                 </button>
 
             </div>
@@ -628,12 +1359,16 @@ header h1{
 
                 <h3>Hedefi Vur</h3>
 
-                <p>Hedeflere hızlıca tıkla!</p>
+                <p>
+                    Hedeflere hızlıca tıkla!
+                </p>
 
                 <button
                     class="btn"
                     onclick="openGame('targetGame')">
+
                     Oyna
+
                 </button>
 
             </div>
@@ -645,12 +1380,17 @@ header h1{
 
                 <h3>Yılan</h3>
 
-                <p>Yılanı kontrol et ve puan topla!</p>
+                <p>
+                    Yılanı kontrol et ve
+                    puan topla!
+                </p>
 
                 <button
                     class="btn"
                     onclick="openGame('snakeGame')">
+
                     Oyna
+
                 </button>
 
             </div>
@@ -668,9 +1408,7 @@ header h1{
 
         <!-- HAFIZA -->
 
-        <div
-            id="memoryGame"
-            class="game">
+        <div id="memoryGame" class="game">
 
             <div class="gamehead">
 
@@ -679,10 +1417,13 @@ header h1{
                 <button
                     class="back"
                     onclick="closeGames()">
+
                     ← Geri
+
                 </button>
 
             </div>
+
 
             <div class="stats2">
 
@@ -698,20 +1439,25 @@ header h1{
 
             </div>
 
+
             <div
                 id="memoryBoard"
                 class="memory">
             </div>
+
 
             <p
                 id="memoryMsg"
                 class="msg">
             </p>
 
+
             <button
                 class="btn"
                 onclick="startMemory()">
+
                 Yeniden Başlat
+
             </button>
 
         </div>
@@ -719,9 +1465,7 @@ header h1{
 
         <!-- TIKLA KAZAN -->
 
-        <div
-            id="clickGame"
-            class="game">
+        <div id="clickGame" class="game">
 
             <div class="gamehead">
 
@@ -730,10 +1474,13 @@ header h1{
                 <button
                     class="back"
                     onclick="closeGames()">
+
                     ← Geri
+
                 </button>
 
             </div>
+
 
             <div class="stats2">
 
@@ -749,16 +1496,20 @@ header h1{
 
             </div>
 
+
             <div class="clickarea">
 
                 <button
                     id="clickButton"
                     class="clickbtn"
                     onclick="clickGameAction()">
+
                     BAŞLA
+
                 </button>
 
             </div>
+
 
             <p
                 id="clickMsg"
@@ -770,9 +1521,7 @@ header h1{
 
         <!-- HEDEFİ VUR -->
 
-        <div
-            id="targetGame"
-            class="game">
+        <div id="targetGame" class="game">
 
             <div class="gamehead">
 
@@ -781,10 +1530,13 @@ header h1{
                 <button
                     class="back"
                     onclick="closeGames()">
+
                     ← Geri
+
                 </button>
 
             </div>
+
 
             <div class="stats2">
 
@@ -800,6 +1552,7 @@ header h1{
 
             </div>
 
+
             <div
                 id="targetArea"
                 class="targetarea">
@@ -812,15 +1565,19 @@ header h1{
 
             </div>
 
+
             <p
                 id="targetMsg"
                 class="msg">
             </p>
 
+
             <button
                 class="btn"
                 onclick="startTarget()">
+
                 Başlat
+
             </button>
 
         </div>
@@ -828,9 +1585,7 @@ header h1{
 
         <!-- YILAN -->
 
-        <div
-            id="snakeGame"
-            class="game">
+        <div id="snakeGame" class="game">
 
             <div class="gamehead">
 
@@ -839,10 +1594,13 @@ header h1{
                 <button
                     class="back"
                     onclick="closeGames()">
+
                     ← Geri
+
                 </button>
 
             </div>
+
 
             <div class="stats2">
 
@@ -853,45 +1611,59 @@ header h1{
 
             </div>
 
+
             <canvas
                 id="snakeCanvas"
                 width="400"
                 height="400">
             </canvas>
 
+
             <div class="controls">
 
                 <button
                     class="up"
                     onclick="changeDirection('up')">
+
                     ⬆️
+
                 </button>
 
                 <button
                     class="left"
                     onclick="changeDirection('left')">
+
                     ⬅️
+
                 </button>
 
                 <button
                     class="down"
                     onclick="changeDirection('down')">
+
                     ⬇️
+
                 </button>
 
                 <button
                     class="right"
                     onclick="changeDirection('right')">
+
                     ➡️
+
                 </button>
 
             </div>
 
+
             <button
                 class="btn"
                 onclick="startSnake()">
+
                 Oyunu Başlat
+
             </button>
+
 
             <p
                 id="snakeMsg"
@@ -912,8 +1684,10 @@ header h1{
         <h2>🛍️ Avatar Marketi</h2>
 
         <p>
-            Puanlarını kullanarak avatarını giydirebilirsin.
+            Puanlarını kullanarak
+            avatarını giydirebilirsin.
         </p>
+
 
         <div class="shop">
 
@@ -928,7 +1702,9 @@ header h1{
                 <button
                     class="btn"
                     onclick="buyItem('hat',50,'🎩')">
+
                     Satın Al
+
                 </button>
 
             </div>
@@ -945,7 +1721,9 @@ header h1{
                 <button
                     class="btn"
                     onclick="buyItem('glasses',40,'🕶️')">
+
                     Satın Al
+
                 </button>
 
             </div>
@@ -962,7 +1740,9 @@ header h1{
                 <button
                     class="btn"
                     onclick="buyItem('shirt',60,'👕')">
+
                     Satın Al
+
                 </button>
 
             </div>
@@ -979,7 +1759,9 @@ header h1{
                 <button
                     class="btn"
                     onclick="buyItem('pants',70,'👖')">
+
                     Satın Al
+
                 </button>
 
             </div>
@@ -996,12 +1778,15 @@ header h1{
                 <button
                     class="btn"
                     onclick="buyItem('shoes',80,'👟')">
+
                     Satın Al
+
                 </button>
 
             </div>
 
         </div>
+
 
         <p
             id="shopMsg"
@@ -1070,36 +1855,36 @@ header h1{
 
 </main>
 
-<!-- BURADAN SONRA 3. PARÇAYI EKLE -->
     <script>
 
 /* =========================
-   GENEL DEĞİŞKENLER
+   GENEL SİSTEM
 ========================= */
 
 let coins = 0;
 
+let memoryTimer = null;
+let clickTimer = null;
+let targetTimer = null;
+let snakeTimer = null;
+
 let memoryFirst = null;
 let memorySecond = null;
 let memoryLock = false;
-let memoryTimer = null;
 
 let clickScore = 0;
-let clickTime = 30;
 let clickStarted = false;
-let clickTimer = null;
+let clickTime = 30;
 
 let targetScore = 0;
-let targetTime = 30;
 let targetStarted = false;
-let targetTimer = null;
+let targetTime = 30;
 
 let snake = [];
 let snakeFood = {};
 let snakeDirection = "right";
 let snakeNextDirection = "right";
 let snakeRunning = false;
-let snakeTimer = null;
 let snakeScore = 0;
 
 
@@ -1109,8 +1894,11 @@ let snakeScore = 0;
 
 function login(){
 
+    const passwordInput =
+        document.getElementById("password");
+
     const password =
-        document.getElementById("password").value.trim();
+        passwordInput.value.trim();
 
     if(password === ""){
 
@@ -1128,7 +1916,7 @@ function login(){
         .textContent = "Oyuncu";
 
     localStorage.setItem(
-        "miniGameLoggedIn",
+        "loggedIn",
         "true"
     );
 }
@@ -1136,9 +1924,75 @@ function login(){
 
 function forgotPassword(){
 
-    alert(
-        "Şifreni unuttuysan yeni bir şifre belirleyebilirsin."
+    const newPassword =
+        prompt(
+            "Yeni şifreni belirle:"
+        );
+
+    if(newPassword === null){
+
+        return;
+    }
+
+    if(newPassword.trim() === ""){
+
+        alert(
+            "Şifre boş bırakılamaz!"
+        );
+
+        return;
+    }
+
+    localStorage.setItem(
+        "gamePassword",
+        newPassword.trim()
     );
+
+    alert(
+        "Yeni şifren kaydedildi!"
+    );
+}
+
+
+/* =========================
+   PUAN SİSTEMİ
+========================= */
+
+function addCoins(amount){
+
+    amount = Number(amount) || 0;
+
+    coins += amount;
+
+    document
+        .getElementById("coins")
+        .textContent = coins;
+
+    updateBestScore();
+}
+
+
+function updateBestScore(){
+
+    const oldBest =
+        Number(
+            localStorage.getItem(
+                "bestScore"
+            ) || 0
+        );
+
+    if(coins > oldBest){
+
+        localStorage.setItem(
+            "bestScore",
+            coins
+        );
+    }
+
+    document
+        .getElementById("bestScore")
+        .textContent =
+        Math.max(coins, oldBest);
 }
 
 
@@ -1156,17 +2010,22 @@ function openGame(gameId){
 
         });
 
-    const selected =
+
+    const selectedGame =
         document.getElementById(gameId);
 
-    if(!selected){
+    if(!selectedGame){
+
         return;
     }
 
-    selected.classList.add("active");
+    selectedGame.classList.add("active");
+
 
     if(gameId === "memoryGame"){
+
         startMemory();
+
     }
 
 }
@@ -1193,47 +2052,6 @@ function closeGames(){
 
 
 /* =========================
-   PUAN
-========================= */
-
-function addCoins(amount){
-
-    amount = Number(amount) || 0;
-
-    coins += amount;
-
-    document
-        .getElementById("coins")
-        .textContent = coins;
-
-    updateBestScore();
-}
-
-
-function updateBestScore(){
-
-    const best =
-        Number(
-            localStorage.getItem("bestScore") || 0
-        );
-
-    if(coins > best){
-
-        localStorage.setItem(
-            "bestScore",
-            coins
-        );
-
-    }
-
-    document
-        .getElementById("bestScore")
-        .textContent =
-            Math.max(coins,best);
-}
-
-
-/* =========================
    HAFIZA OYUNU
 ========================= */
 
@@ -1249,6 +2067,7 @@ const memoryEmojis = [
     "🎮","🎮"
 
 ];
+
 
 let memoryMoves = 0;
 let memoryScore = 0;
@@ -1280,12 +2099,16 @@ function startMemory(){
         .textContent = "";
 
     const board =
-        document.getElementById("memoryBoard");
+        document.getElementById(
+            "memoryBoard"
+        );
 
     board.innerHTML = "";
 
+
     const cards =
         [...memoryEmojis];
+
 
     cards.sort(function(){
 
@@ -1294,17 +2117,20 @@ function startMemory(){
     });
 
 
-    cards.forEach(function(emoji,index){
+    cards.forEach(function(emoji){
 
         const card =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
         card.className = "mcard";
 
-        card.dataset.value = emoji;
-        card.dataset.index = index;
+        card.dataset.value =
+            emoji;
 
         card.textContent = "?";
+
 
         card.addEventListener(
             "click",
@@ -1314,6 +2140,7 @@ function startMemory(){
 
             }
         );
+
 
         board.appendChild(card);
 
@@ -1325,6 +2152,7 @@ function startMemory(){
 function memoryClick(card){
 
     if(memoryLock){
+
         return;
     }
 
@@ -1332,8 +2160,10 @@ function memoryClick(card){
         card.classList.contains("open") ||
         card.classList.contains("done")
     ){
+
         return;
     }
+
 
     card.classList.add("open");
 
@@ -1353,10 +2183,13 @@ function memoryClick(card){
 
     memoryMoves++;
 
+
     document
-        .getElementById("memoryMoves")
+        .getElementById(
+            "memoryMoves"
+        )
         .textContent =
-            memoryMoves;
+        memoryMoves;
 
 
     if(
@@ -1364,19 +2197,31 @@ function memoryClick(card){
         memorySecond.dataset.value
     ){
 
-        memoryFirst.classList.add("done");
-        memorySecond.classList.add("done");
+        memoryFirst.classList.add(
+            "done"
+        );
+
+        memorySecond.classList.add(
+            "done"
+        );
+
 
         memoryScore += 10;
+
         memoryMatched += 2;
 
+
         document
-            .getElementById("memoryScore")
+            .getElementById(
+                "memoryScore"
+            )
             .textContent =
-                memoryScore;
+            memoryScore;
+
 
         memoryFirst = null;
         memorySecond = null;
+
 
         if(
             memoryMatched ===
@@ -1391,14 +2236,25 @@ function memoryClick(card){
 
         memoryLock = true;
 
+
         memoryTimer =
             setTimeout(function(){
 
-                memoryFirst.classList.remove("open");
-                memorySecond.classList.remove("open");
+                memoryFirst.classList.remove(
+                    "open"
+                );
 
-                memoryFirst.textContent = "?";
-                memorySecond.textContent = "?";
+                memorySecond.classList.remove(
+                    "open"
+                );
+
+
+                memoryFirst.textContent =
+                    "?";
+
+                memorySecond.textContent =
+                    "?";
+
 
                 memoryFirst = null;
                 memorySecond = null;
@@ -1415,27 +2271,38 @@ function memoryClick(card){
 function finishMemory(){
 
     const bonus =
-        Math.max(0,50 - memoryMoves);
+        Math.max(
+            0,
+            50 - memoryMoves
+        );
+
 
     const total =
         memoryScore + bonus;
 
+
     addCoins(total);
 
+
     document
-        .getElementById("memoryMsg")
+        .getElementById(
+            "memoryMsg"
+        )
         .textContent =
-            "🎉 Tebrikler! +" +
-            total +
-            " puan kazandın!";
+        "🎉 Tebrikler! +" +
+        total +
+        " puan kazandın!";
 
 
-    const best =
+    const oldBest =
         Number(
-            localStorage.getItem("memoryBest") || 0
+            localStorage.getItem(
+                "memoryBest"
+            ) || 0
         );
 
-    if(total > best){
+
+    if(total > oldBest){
 
         localStorage.setItem(
             "memoryBest",
@@ -1444,10 +2311,14 @@ function finishMemory(){
 
     }
 
+
     document
-        .getElementById("memoryBest")
+        .getElementById(
+            "memoryBest"
+        )
         .textContent =
-            Math.max(total,best);
+        Math.max(total,oldBest);
+
 }
 
 
@@ -1463,20 +2334,35 @@ function resetClickGame(){
     clickTime = 30;
     clickStarted = false;
 
-    document
-        .getElementById("clickTime")
-        .textContent = "30";
 
     document
-        .getElementById("clickScore")
-        .textContent = "0";
+        .getElementById(
+            "clickTime"
+        )
+        .textContent =
+        "30";
+
 
     document
-        .getElementById("clickButton")
-        .textContent = "BAŞLA";
+        .getElementById(
+            "clickScore"
+        )
+        .textContent =
+        "0";
+
 
     document
-        .getElementById("clickMsg")
+        .getElementById(
+            "clickButton"
+        )
+        .textContent =
+        "BAŞLA";
+
+
+    document
+        .getElementById(
+            "clickMsg"
+        )
         .textContent = "";
 
 }
@@ -1491,12 +2377,17 @@ function clickGameAction(){
         return;
     }
 
+
     clickScore++;
 
+
     document
-        .getElementById("clickScore")
+        .getElementById(
+            "clickScore"
+        )
         .textContent =
-            clickScore;
+        clickScore;
+
 }
 
 
@@ -1508,22 +2399,37 @@ function startClickGame(){
     clickTime = 30;
     clickStarted = true;
 
-    document
-        .getElementById("clickScore")
-        .textContent = "0";
 
     document
-        .getElementById("clickTime")
-        .textContent = "30";
-
-    document
-        .getElementById("clickButton")
-        .textContent = "TIKLA!";
-
-    document
-        .getElementById("clickMsg")
+        .getElementById(
+            "clickScore"
+        )
         .textContent =
-            "🔥 Hızlı tıkla!";
+        "0";
+
+
+    document
+        .getElementById(
+            "clickTime"
+        )
+        .textContent =
+        "30";
+
+
+    document
+        .getElementById(
+            "clickButton"
+        )
+        .textContent =
+        "TIKLA!";
+
+
+    document
+        .getElementById(
+            "clickMsg"
+        )
+        .textContent =
+        "🔥 Hızlı tıkla!";
 
 
     clickTimer =
@@ -1531,10 +2437,14 @@ function startClickGame(){
 
             clickTime--;
 
+
             document
-                .getElementById("clickTime")
+                .getElementById(
+                    "clickTime"
+                )
                 .textContent =
-                    clickTime;
+                clickTime;
+
 
             if(clickTime <= 0){
 
@@ -1553,27 +2463,37 @@ function finishClickGame(){
 
     clickStarted = false;
 
-    document
-        .getElementById("clickButton")
-        .textContent =
-            "TEKRAR";
 
     document
-        .getElementById("clickMsg")
+        .getElementById(
+            "clickButton"
+        )
         .textContent =
-            "⏰ Süre bitti! " +
-            clickScore +
-            " tıklama yaptın.";
+        "TEKRAR";
+
+
+    document
+        .getElementById(
+            "clickMsg"
+        )
+        .textContent =
+        "⏰ Süre bitti! " +
+        clickScore +
+        " tıklama yaptın.";
+
 
     addCoins(clickScore);
 
 
-    const best =
+    const oldBest =
         Number(
-            localStorage.getItem("clickBest") || 0
+            localStorage.getItem(
+                "clickBest"
+            ) || 0
         );
 
-    if(clickScore > best){
+
+    if(clickScore > oldBest){
 
         localStorage.setItem(
             "clickBest",
@@ -1582,10 +2502,17 @@ function finishClickGame(){
 
     }
 
+
     document
-        .getElementById("clickBest")
+        .getElementById(
+            "clickBest"
+        )
         .textContent =
-            Math.max(clickScore,best);
+        Math.max(
+            clickScore,
+            oldBest
+        );
+
 }
 
 
@@ -1601,18 +2528,30 @@ function startTarget(){
     targetTime = 30;
     targetStarted = true;
 
-    document
-        .getElementById("targetScore")
-        .textContent = "0";
 
     document
-        .getElementById("targetTime")
-        .textContent = "30";
-
-    document
-        .getElementById("targetMsg")
+        .getElementById(
+            "targetScore"
+        )
         .textContent =
-            "🎯 Hedefleri vur!";
+        "0";
+
+
+    document
+        .getElementById(
+            "targetTime"
+        )
+        .textContent =
+        "30";
+
+
+    document
+        .getElementById(
+            "targetMsg"
+        )
+        .textContent =
+        "🎯 Hedefleri vur!";
+
 
     moveTarget();
 
@@ -1622,10 +2561,14 @@ function startTarget(){
 
             targetTime--;
 
+
             document
-                .getElementById("targetTime")
+                .getElementById(
+                    "targetTime"
+                )
                 .textContent =
-                    targetTime;
+                targetTime;
+
 
             if(targetTime <= 0){
 
@@ -1641,18 +2584,25 @@ function startTarget(){
 function moveTarget(){
 
     const area =
-        document.getElementById("targetArea");
+        document.getElementById(
+            "targetArea"
+        );
 
     const target =
-        document.getElementById("target");
+        document.getElementById(
+            "target"
+        );
+
 
     const maxX =
         area.clientWidth -
         target.offsetWidth;
 
+
     const maxY =
         area.clientHeight -
         target.offsetHeight;
+
 
     const x =
         Math.floor(
@@ -1660,11 +2610,13 @@ function moveTarget(){
             Math.max(maxX,1)
         );
 
+
     const y =
         Math.floor(
             Math.random() *
             Math.max(maxY,1)
         );
+
 
     target.style.left =
         x + "px";
@@ -1678,15 +2630,21 @@ function moveTarget(){
 function hitTarget(){
 
     if(!targetStarted){
+
         return;
     }
 
+
     targetScore++;
 
+
     document
-        .getElementById("targetScore")
+        .getElementById(
+            "targetScore"
+        )
         .textContent =
-            targetScore;
+        targetScore;
+
 
     moveTarget();
 
@@ -1699,22 +2657,29 @@ function finishTarget(){
 
     targetStarted = false;
 
+
     document
-        .getElementById("targetMsg")
+        .getElementById(
+            "targetMsg"
+        )
         .textContent =
-            "🏁 Süre bitti! " +
-            targetScore +
-            " hedef vurdun.";
+        "🏁 Süre bitti! " +
+        targetScore +
+        " hedef vurdun.";
+
 
     addCoins(targetScore);
 
 
-    const best =
+    const oldBest =
         Number(
-            localStorage.getItem("targetBest") || 0
+            localStorage.getItem(
+                "targetBest"
+            ) || 0
         );
 
-    if(targetScore > best){
+
+    if(targetScore > oldBest){
 
         localStorage.setItem(
             "targetBest",
@@ -1723,10 +2688,67 @@ function finishTarget(){
 
     }
 
+
     document
-        .getElementById("targetBest")
+        .getElementById(
+            "targetBest"
+        )
         .textContent =
-            Math.max(targetScore,best);
+        Math.max(
+            targetScore,
+            oldBest
+        );
+
+}
+
+
+/* =========================
+   AVATAR MARKETİ
+========================= */
+
+function buyItem(item,price,icon){
+
+    if(coins < price){
+
+        document
+            .getElementById(
+                "shopMsg"
+            )
+            .textContent =
+            "❌ Bu eşyayı almak için yeterli puanın yok.";
+
+        return;
+    }
+
+
+    coins -= price;
+
+
+    document
+        .getElementById(
+            "coins"
+        )
+        .textContent =
+        coins;
+
+
+    document
+        .getElementById(item)
+        .textContent =
+        icon;
+
+
+    document
+        .getElementById(
+            "shopMsg"
+        )
+        .textContent =
+        "✅ " +
+        icon +
+        " satın alındı!";
+
+
+    updateBestScore();
 
 }
 
@@ -1735,43 +2757,79 @@ function finishTarget(){
    YILAN OYUNU
 ========================= */
 
-const snakeGrid = 20;
-const snakeCell = 20;
+const snakeCanvas =
+    document.getElementById(
+        "snakeCanvas"
+    );
+
+const snakeCtx =
+    snakeCanvas.getContext(
+        "2d"
+    );
+
+
+const snakeSize = 20;
+
+const snakeCells = 20;
 
 
 function startSnake(){
 
     clearInterval(snakeTimer);
 
+
     snake = [
 
-        {x:10,y:10},
-        {x:9,y:10},
-        {x:8,y:10}
+        {
+            x:10,
+            y:10
+        },
+
+        {
+            x:9,
+            y:10
+        },
+
+        {
+            x:8,
+            y:10
+        }
 
     ];
+
 
     snakeDirection = "right";
     snakeNextDirection = "right";
 
     snakeScore = 0;
+
     snakeRunning = true;
 
-    document
-        .getElementById("snakeScore")
-        .textContent = "0";
 
     document
-        .getElementById("snakeMsg")
+        .getElementById(
+            "snakeScore"
+        )
         .textContent =
-            "🐍 Başladı!";
+        "0";
+
+
+    document
+        .getElementById(
+            "snakeMsg"
+        )
+        .textContent =
+        "🐍 Yılanı hareket ettir!";
+
 
     createSnakeFood();
+
     drawSnake();
+
 
     snakeTimer =
         setInterval(
-            moveSnake,
+            snakeStep,
             120
         );
 
@@ -1786,24 +2844,34 @@ function createSnakeFood(){
 
         snakeFood = {
 
-            x:Math.floor(
-                Math.random() * snakeGrid
-            ),
+            x:
+                Math.floor(
+                    Math.random() *
+                    snakeCells
+                ),
 
-            y:Math.floor(
-                Math.random() * snakeGrid
-            )
+            y:
+                Math.floor(
+                    Math.random() *
+                    snakeCells
+                )
 
         };
 
-        valid = !snake.some(function(part){
 
-            return(
-                part.x === snakeFood.x &&
-                part.y === snakeFood.y
+        valid =
+            !snake.some(
+                function(part){
+
+                    return (
+                        part.x ===
+                        snakeFood.x &&
+                        part.y ===
+                        snakeFood.y
+                    );
+
+                }
             );
-
-        });
 
     }
 
@@ -1821,6 +2889,7 @@ function changeDirection(direction){
 
     }
 
+
     if(
         direction === "down" &&
         snakeDirection !== "up"
@@ -1830,6 +2899,7 @@ function changeDirection(direction){
 
     }
 
+
     if(
         direction === "left" &&
         snakeDirection !== "right"
@@ -1838,6 +2908,7 @@ function changeDirection(direction){
         snakeNextDirection = "left";
 
     }
+
 
     if(
         direction === "right" &&
@@ -1851,65 +2922,90 @@ function changeDirection(direction){
 }
 
 
-function moveSnake(){
+function snakeStep(){
 
     if(!snakeRunning){
+
         return;
     }
+
 
     snakeDirection =
         snakeNextDirection;
 
+
     const head =
-        {...snake[0]};
+        {
+            x:snake[0].x,
+            y:snake[0].y
+        };
 
 
-    if(snakeDirection === "up"){
+    if(
+        snakeDirection === "up"
+    ){
+
         head.y--;
+
     }
 
-    if(snakeDirection === "down"){
+
+    if(
+        snakeDirection === "down"
+    ){
+
         head.y++;
+
     }
 
-    if(snakeDirection === "left"){
+
+    if(
+        snakeDirection === "left"
+    ){
+
         head.x--;
+
     }
 
-    if(snakeDirection === "right"){
+
+    if(
+        snakeDirection === "right"
+    ){
+
         head.x++;
+
     }
 
-
-    /* DUVAR */
 
     if(
         head.x < 0 ||
-        head.x >= snakeGrid ||
+        head.x >= snakeCells ||
         head.y < 0 ||
-        head.y >= snakeGrid
+        head.y >= snakeCells
     ){
 
-        finishSnake();
+        endSnake();
 
         return;
     }
 
 
-    /* KENDİNE ÇARPMA */
+    const hitSelf =
+        snake.some(
+            function(part){
 
-    if(
-        snake.some(function(part){
+                return (
+                    part.x === head.x &&
+                    part.y === head.y
+                );
 
-            return(
-                part.x === head.x &&
-                part.y === head.y
-            );
+            }
+        );
 
-        })
-    ){
 
-        finishSnake();
+    if(hitSelf){
+
+        endSnake();
 
         return;
     }
@@ -1918,21 +3014,23 @@ function moveSnake(){
     snake.unshift(head);
 
 
-    /* YEMEK */
-
     if(
         head.x === snakeFood.x &&
         head.y === snakeFood.y
     ){
 
-        snakeScore += 10;
+        snakeScore++;
+
 
         document
-            .getElementById("snakeScore")
+            .getElementById(
+                "snakeScore"
+            )
             .textContent =
-                snakeScore;
+            snakeScore;
 
-        addCoins(10);
+
+        addCoins(5);
 
         createSnakeFood();
 
@@ -1942,6 +3040,7 @@ function moveSnake(){
 
     }
 
+
     drawSnake();
 
 }
@@ -1949,91 +3048,108 @@ function moveSnake(){
 
 function drawSnake(){
 
-    const canvas =
-        document.getElementById("snakeCanvas");
-
-    const ctx =
-        canvas.getContext("2d");
-
-    ctx.clearRect(
+    snakeCtx.clearRect(
         0,
         0,
-        canvas.width,
-        canvas.height
+        snakeCanvas.width,
+        snakeCanvas.height
     );
 
 
-    /* YEMEK */
+    snakeCtx.fillStyle =
+        "#f4f4f4";
 
-    ctx.fillStyle = "#ff4757";
 
-    ctx.beginPath();
-
-    ctx.arc(
-        snakeFood.x * snakeCell + 10,
-        snakeFood.y * snakeCell + 10,
-        8,
+    snakeCtx.fillRect(
         0,
-        Math.PI * 2
+        0,
+        snakeCanvas.width,
+        snakeCanvas.height
     );
 
-    ctx.fill();
+
+    snakeCtx.fillStyle =
+        "#ff4757";
 
 
-    /* YILAN */
+    snakeCtx.fillRect(
+        snakeFood.x * snakeSize,
+        snakeFood.y * snakeSize,
+        snakeSize,
+        snakeSize
+    );
 
-    ctx.fillStyle = "#2ed573";
 
-    snake.forEach(function(part){
+    snake.forEach(
+        function(part,index){
 
-        ctx.fillRect(
-            part.x * snakeCell + 1,
-            part.y * snakeCell + 1,
-            snakeCell - 2,
-            snakeCell - 2
-        );
+            snakeCtx.fillStyle =
+                index === 0
+                    ? "#675cff"
+                    : "#8b82ff";
 
-    });
+
+            snakeCtx.fillRect(
+                part.x * snakeSize,
+                part.y * snakeSize,
+                snakeSize - 1,
+                snakeSize - 1
+            );
+
+        }
+    );
 
 }
 
 
-function finishSnake(){
+function endSnake(){
 
     clearInterval(snakeTimer);
 
     snakeRunning = false;
 
+
     document
-        .getElementById("snakeMsg")
+        .getElementById(
+            "snakeMsg"
+        )
         .textContent =
-            "🏁 Oyun bitti! " +
-            snakeScore +
-            " puan.";
+        "💥 Oyun bitti! Puanın: " +
+        snakeScore;
 
 }
 
 
-/* KLAVYE KONTROLLERİ */
+/* =========================
+   KLAVYE KONTROLLERİ
+========================= */
 
 document.addEventListener(
     "keydown",
     function(event){
 
         if(event.key === "ArrowUp"){
+
             changeDirection("up");
+
         }
 
         if(event.key === "ArrowDown"){
+
             changeDirection("down");
+
         }
 
         if(event.key === "ArrowLeft"){
+
             changeDirection("left");
+
         }
 
         if(event.key === "ArrowRight"){
+
             changeDirection("right");
+
         }
 
     }
@@ -2041,207 +3157,93 @@ document.addEventListener(
 
 
 /* =========================
-   AVATAR MARKETİ
-========================= */
-
-function buyItem(item,price,emoji){
-
-    if(coins < price){
-
-        document
-            .getElementById("shopMsg")
-            .textContent =
-                "❌ Yeterli puanın yok!";
-
-        return;
-    }
-
-    coins -= price;
-
-    document
-        .getElementById("coins")
-        .textContent =
-            coins;
-
-
-    document
-        .getElementById(item)
-        .textContent =
-            emoji;
-
-
-    localStorage.setItem(
-        "avatar_" + item,
-        emoji
-    );
-
-
-    document
-        .getElementById("shopMsg")
-        .textContent =
-            "✅ Ürün satın alındı!";
-
-
-    saveCoins();
-
-}
-
-
-function saveCoins(){
-
-    localStorage.setItem(
-        "coins",
-        coins
-    );
-
-}
-
-
-function loadAvatar(){
-
-    const items = [
-        "hat",
-        "glasses",
-        "shirt",
-        "pants",
-        "shoes"
-    ];
-
-    items.forEach(function(item){
-
-        const saved =
-            localStorage.getItem(
-                "avatar_" + item
-            );
-
-        if(saved){
-
-            document
-                .getElementById(item)
-                .textContent =
-                    saved;
-
-        }
-
-    });
-
-}
-
-
-/* =========================
-   REKORLAR
+   REKORLARI YÜKLE
 ========================= */
 
 function loadRecords(){
 
     const bestScore =
         Number(
-            localStorage.getItem("bestScore") || 0
+            localStorage.getItem(
+                "bestScore"
+            ) || 0
         );
+
 
     const memoryBest =
         Number(
-            localStorage.getItem("memoryBest") || 0
+            localStorage.getItem(
+                "memoryBest"
+            ) || 0
         );
+
 
     const clickBest =
         Number(
-            localStorage.getItem("clickBest") || 0
+            localStorage.getItem(
+                "clickBest"
+            ) || 0
         );
+
 
     const targetBest =
         Number(
-            localStorage.getItem("targetBest") || 0
+            localStorage.getItem(
+                "targetBest"
+            ) || 0
         );
 
 
     document
-        .getElementById("bestScore")
+        .getElementById(
+            "bestScore"
+        )
         .textContent =
-            bestScore;
+        bestScore;
+
 
     document
-        .getElementById("memoryBest")
+        .getElementById(
+            "memoryBest"
+        )
         .textContent =
-            memoryBest;
+        memoryBest;
+
 
     document
-        .getElementById("clickBest")
+        .getElementById(
+            "clickBest"
+        )
         .textContent =
-            clickBest;
+        clickBest;
+
 
     document
-        .getElementById("targetBest")
+        .getElementById(
+            "targetBest"
+        )
         .textContent =
-            targetBest;
+        targetBest;
 
 }
 
 
 /* =========================
-   SAYFA BAŞLANGICI
+   BAŞLANGIÇ
 ========================= */
 
-function loadGameData(){
+loadRecords();
 
-    coins =
-        Number(
-            localStorage.getItem("coins") || 0
-        );
+resetClickGame();
 
-    document
-        .getElementById("coins")
-        .textContent =
-            coins;
+document
+    .getElementById("login")
+    .classList.remove("hidden");
 
-
-    loadRecords();
-    loadAvatar();
-
-    resetClickGame();
-
-}
-
-
-/* GİRİŞ DURUMU */
-
-window.addEventListener(
-    "load",
-    function(){
-
-        loadGameData();
-
-        const loggedIn =
-            localStorage.getItem(
-                "miniGameLoggedIn"
-            );
-
-        if(loggedIn === "true"){
-
-            document
-                .getElementById("login")
-                .classList.add("hidden");
-
-        }
-
-    }
-);
-
-
-/* PUAN DEĞİŞİNCE KAYDET */
-
-const oldAddCoins = addCoins;
-
-addCoins = function(amount){
-
-    oldAddCoins(amount);
-
-    saveCoins();
-
-};
 
 </script>
 
 </body>
 </html>
-    
+
+</section>

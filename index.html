@@ -2,419 +2,433 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini Oyun Merkezi</title>
 
 <style>
-*{box-sizing:border-box}
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#dff6ff,#f4e1ff);
-color:#222
+*{
+    box-sizing:border-box;
 }
 
-button,input{font:inherit}
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#dff6ff,#f4e1ff);
+    color:#222;
+}
+
+button,
+input{
+    font:inherit;
+}
 
 button{
-border:0;
-cursor:pointer
+    border:0;
+    cursor:pointer;
 }
 
 .container{
-width:min(1050px,94%);
-margin:auto
+    width:min(1050px,94%);
+    margin:auto;
 }
 
 .panel{
-background:#ffffffee;
-border-radius:22px;
-padding:22px;
-margin:18px 0;
-box-shadow:0 8px 25px #0002
+    background:#ffffffee;
+    border-radius:22px;
+    padding:22px;
+    margin:18px 0;
+    box-shadow:0 8px 25px #0002;
 }
 
 .hidden{
-display:none!important
+    display:none !important;
 }
 
 .btn{
-background:#675cff;
-color:white;
-padding:12px 18px;
-border-radius:13px;
-font-weight:700
+    background:#675cff;
+    color:white;
+    padding:12px 18px;
+    border-radius:13px;
+    font-weight:700;
+}
+
+.btn:hover{
+    opacity:.9;
 }
 
 .back{
-background:#eee;
-color:#222;
-padding:10px 15px;
-border-radius:12px
+    background:#eee;
+    color:#222;
+    padding:10px 15px;
+    border-radius:12px;
 }
 
 /* GİRİŞ */
 
 #login{
-position:fixed;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#dff6ff,#f4e1ff);
-z-index:100
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#dff6ff,#f4e1ff);
+    z-index:1000;
 }
 
 .loginBox{
-background:white;
-padding:30px;
-border-radius:22px;
-text-align:center;
-width:min(400px,90%);
-box-shadow:0 10px 35px #0003
+    background:white;
+    padding:30px;
+    border-radius:22px;
+    text-align:center;
+    width:min(400px,90%);
+    box-shadow:0 10px 35px #0003;
 }
 
 .input{
-padding:12px;
-border:2px solid #ddd;
-border-radius:12px;
-width:90%;
-margin:6px
+    padding:12px;
+    border:2px solid #ddd;
+    border-radius:12px;
+    width:90%;
+    margin:6px;
+}
+
+/* HEADER */
+
+header{
+    text-align:center;
+    padding:25px 10px;
 }
 
 /* PROFİL */
 
 .profile{
-display:grid;
-grid-template-columns:230px 1fr;
-gap:25px;
-align-items:center
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:25px;
+    align-items:center;
 }
 
-/* 2D İNSAN */
-
 .avatar{
-width:210px;
-height:320px;
-margin:auto;
-position:relative
+    width:210px;
+    height:320px;
+    margin:auto;
+    position:relative;
 }
 
 .head{
-position:absolute;
-top:5px;
-left:70px;
-width:70px;
-height:70px;
-border-radius:50%;
-background:#ffd1a9;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:35px;
-z-index:3
+    position:absolute;
+    top:5px;
+    left:70px;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#ffd1a9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    z-index:3;
 }
 
 .body{
-position:absolute;
-top:70px;
-left:62px;
-width:86px;
-height:115px;
-background:#675cff;
-border-radius:25px
+    position:absolute;
+    top:70px;
+    left:62px;
+    width:86px;
+    height:115px;
+    background:#675cff;
+    border-radius:25px;
 }
 
 .arm{
-position:absolute;
-top:82px;
-width:25px;
-height:100px;
-background:#ffd1a9;
-border-radius:20px
+    position:absolute;
+    top:82px;
+    width:25px;
+    height:100px;
+    background:#ffd1a9;
+    border-radius:20px;
 }
 
-.arm.left{left:37px}
-.arm.right{right:37px}
+.arm.left{
+    left:37px;
+}
+
+.arm.right{
+    right:37px;
+}
 
 .leg{
-position:absolute;
-top:180px;
-width:32px;
-height:110px;
-background:#333;
-border-radius:0 0 15px 15px
+    position:absolute;
+    top:180px;
+    width:32px;
+    height:110px;
+    background:#333;
+    border-radius:0 0 15px 15px;
 }
 
-.leg.left{left:63px}
-.leg.right{right:63px}
+.leg.left{
+    left:63px;
+}
+
+.leg.right{
+    right:63px;
+}
 
 .wear{
-position:absolute;
-z-index:5;
-pointer-events:none
+    position:absolute;
+    z-index:5;
+    pointer-events:none;
 }
 
 .hat{
-top:-20px;
-left:68px;
-font-size:45px
+    top:-20px;
+    left:68px;
+    font-size:45px;
 }
 
 .glasses{
-top:30px;
-left:88px;
-font-size:27px
+    top:30px;
+    left:88px;
+    font-size:27px;
 }
 
 .shirt{
-top:90px;
-left:77px;
-font-size:48px
+    top:90px;
+    left:77px;
+    font-size:48px;
 }
 
 .pants{
-top:170px;
-left:76px;
-font-size:40px
+    top:170px;
+    left:76px;
+    font-size:40px;
 }
 
 .shoes{
-top:255px;
-left:67px;
-font-size:38px
+    top:255px;
+    left:67px;
+    font-size:38px;
+}
+
+/* OYUN KARTLARI */
+
+.games{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 5px 15px #0001;
+}
+
+.emoji{
+    font-size:50px;
 }
 
 /* OYUNLAR */
 
-.games{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:16px
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:18px;
-text-align:center;
-box-shadow:0 5px 15px #0001
-}
-
-.emoji{
-font-size:50px
-}
-
-/* OYUN EKRANLARI */
-
 .game{
-display:none
+    display:none;
 }
 
 .game.active{
-display:block
+    display:block;
 }
 
 .gamehead{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
 .stats2{
-display:flex;
-gap:15px;
-justify-content:center;
-flex-wrap:wrap;
-margin:12px
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:12px;
+}
+
+.msg{
+    text-align:center;
+    font-weight:bold;
+    min-height:25px;
 }
 
 /* HAFIZA */
 
 .memory{
-max-width:520px;
-margin:20px auto;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px
+    max-width:520px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
 }
 
 .mcard{
-aspect-ratio:1;
-border-radius:14px;
-background:#675cff;
-color:transparent;
-font-size:clamp(25px,7vw,42px);
-transition:
-transform .3s,
-background .3s,
-box-shadow .3s
+    aspect-ratio:1;
+    border-radius:14px;
+    background:#675cff;
+    color:white;
+    font-size:clamp(25px,7vw,42px);
 }
 
-.mcard.open{
-background:#eee;
-color:#222;
-transform:rotateY(180deg) scale(1.03)
-}
-
+.mcard.open,
 .mcard.done{
-background:#74d66d;
-color:#222;
-animation:match .5s ease
-}
-
-.mcard.wrong{
-animation:shake .45s ease
-}
-
-@keyframes match{
-50%{transform:rotateY(180deg) scale(1.15)}
-100%{transform:rotateY(180deg) scale(1.03)}
-}
-
-@keyframes shake{
-25%{transform:rotateY(180deg) translateX(-7px)}
-50%{transform:rotateY(180deg) translateX(7px)}
-75%{transform:rotateY(180deg) translateX(-5px)}
-100%{transform:rotateY(180deg) translateX(0)}
+    background:#eee;
+    color:#222;
 }
 
 /* TIKLA */
 
 .clickarea{
-height:280px;
-background:#eee;
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center
+    height:280px;
+    background:#eee;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .clickbtn{
-width:150px;
-height:150px;
-border-radius:50%;
-background:#ff4d6d;
-color:white;
-font-size:22px;
-font-weight:bold
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:#ff4d6d;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
 }
 
 /* HEDEF */
 
 .targetarea{
-height:350px;
-background:#eef0f5;
-border-radius:18px;
-position:relative;
-overflow:hidden
+    height:350px;
+    background:#eef0f5;
+    border-radius:18px;
+    position:relative;
+    overflow:hidden;
 }
 
 .target{
-position:absolute;
-width:55px;
-height:55px;
-border-radius:50%;
-background:#ff4757
+    position:absolute;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#ff4757;
+    display:none;
 }
 
 /* YILAN */
 
 #snakeCanvas{
-display:block;
-width:min(400px,100%);
-height:auto;
-margin:15px auto;
-border:3px solid #222;
-background:#f4f4f4
+    display:block;
+    width:min(400px,100%);
+    height:auto;
+    margin:15px auto;
+    border:3px solid #222;
+    background:#f4f4f4;
 }
 
 .controls{
-display:grid;
-grid-template-columns:repeat(3,60px);
-grid-template-rows:55px 55px;
-gap:7px;
-width:max-content;
-margin:15px auto;
-touch-action:none
+    display:grid;
+    grid-template-columns:repeat(3,60px);
+    grid-template-rows:55px 55px;
+    gap:7px;
+    width:max-content;
+    margin:15px auto;
 }
 
 .controls button{
-width:60px;
-height:55px;
-border-radius:12px;
-background:#ddd;
-font-size:22px;
-touch-action:manipulation
+    width:60px;
+    height:55px;
+    border-radius:12px;
+    background:#ddd;
+    font-size:22px;
 }
 
-.up{grid-column:2}
-.left{grid-column:1;grid-row:2}
-.down{grid-column:2;grid-row:2}
-.right{grid-column:3;grid-row:2}
+.up{
+    grid-column:2;
+}
+
+.left{
+    grid-column:1;
+    grid-row:2;
+}
+
+.down{
+    grid-column:2;
+    grid-row:2;
+}
+
+.right{
+    grid-column:3;
+    grid-row:2;
+}
 
 /* MARKET */
 
 .shop{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 
 .item{
-background:#f5f5ff;
-padding:14px;
-border-radius:15px;
-text-align:center
+    background:#f5f5ff;
+    padding:14px;
+    border-radius:15px;
+    text-align:center;
 }
 
 .itemIcon{
-font-size:42px
+    font-size:42px;
 }
 
 /* REKOR */
 
 .records{
-display:flex;
-gap:12px;
-justify-content:center;
-flex-wrap:wrap
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
 
 .record{
-min-width:145px;
-text-align:center;
-background:#fff5d8;
-padding:15px;
-border-radius:15px
+    min-width:145px;
+    text-align:center;
+    background:#fff5d8;
+    padding:15px;
+    border-radius:15px;
 }
 
 .medal{
-font-size:32px
+    font-size:32px;
 }
 
-.msg{
-text-align:center;
-font-weight:bold;
-min-height:25px
-}
+/* MOBİL */
 
 @media(max-width:700px){
 
-.profile{
-grid-template-columns:1fr;
-text-align:center
-}
+    .profile{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
 
-.games{
-grid-template-columns:1fr
-}
+    .games{
+        grid-template-columns:1fr;
+    }
 
-.shop{
-grid-template-columns:repeat(2,1fr)
-}
+    .shop{
+        grid-template-columns:repeat(2,1fr);
+    }
 
 }
 
@@ -422,586 +436,612 @@ grid-template-columns:repeat(2,1fr)
 </head>
 
 <body>
-.>
 
-<p id="hello"></p>
+<!-- GİRİŞ EKRANI -->
 
-<input
-id="password"
-class="input"
-type="password"
-placeholder="Şifren"
->
+<div id="login">
 
-<br><br>
+    <div class="loginBox">
 
-<button
-class="btn"
-onclick="login()">
-Giriş Yap
-</button>
+        <h1>🎮 Mini Oyun Merkezi</h1>
+
+        <p>Hoş geldin!</p>
+
+        <input
+            id="password"
+            class="input"
+            type="password"
+            placeholder="Şifren"
+        >
+
+        <br><br>
+
+        <button class="btn" onclick="login()">
+            Giriş Yap
+        </button>
+
+        <br><br>
+
+        <button onclick="forgotPassword()">
+            Şifremi Unuttum
+        </button>
+
+        <p id="loginMsg" class="msg"></p>
+
+    </div>
 
 </div>
 
-</div>
-</div>
+<!-- ANA SAYFA -->
 
+<header>
 
-<header style="text-align:center;padding:25px 10px">
+    <h1>🎮 Mini Oyun Merkezi</h1>
 
-<h1>🎮 Mini Oyun Merkezi</h1>
-
-<p>Oyna • Puan kazan • Avatarını giydir</p>
+    <p>Oyna • Puan kazan • Avatarını giydir</p>
 
 </header>
 
-
 <main class="container">
 
-<!-- PROFİL -->
+    <!-- PROFİL -->
 
-<section class="panel">
+    <section class="panel">
 
-<div class="profile">
+        <div class="profile">
 
-<div class="avatar">
+            <div class="avatar">
 
-<div class="head">🙂</div>
+                <div class="head">🙂</div>
 
-<div class="body"></div>
+                <div class="body"></div>
 
-<div class="arm left"></div>
-<div class="arm right"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
 
-<div class="leg left"></div>
-<div class="leg right"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
 
-<div id="hat" class="wear hat"></div>
-<div id="glasses" class="wear glasses"></div>
-<div id="shirt" class="wear shirt"></div>
-<div id="pants" class="wear pants"></div>
-<div id="shoes" class="wear shoes"></div>
+                <div id="hat" class="wear hat"></div>
+                <div id="glasses" class="wear glasses"></div>
+                <div id="shirt" class="wear shirt"></div>
+                <div id="pants" class="wear pants"></div>
+                <div id="shoes" class="wear shoes"></div>
 
-</div>
+            </div>
 
-<div>
+            <div>
 
-<h2>👤 Profil</h2>
+                <h2>👤 Profil</h2>
 
-<h2 id="player">
-Oyuncu
-</h2>
+                <h2 id="player">
+                    Oyuncu
+                </h2>
 
-<div class="stats2">
+                <div class="stats2">
 
-<b>
-💰 <span id="coins">0</span> puan
-</b>
+                    <b>
+                        💰
+                        <span id="coins">0</span>
+                        puan
+                    </b>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</section>
+    </section>
 
+    <!-- OYUNLAR -->
 
-<!-- OYUNLAR -->
+    <section class="panel">
 
-<section id="home">
+        <h2>🎮 Oyunlar</h2>
 
-<div 
-class="panel">
+        <div class="games">
 
-<h2>🎮 Oyunlar</h2>
-<div class="games">
+            <div class="card">
 
-<div class="card">
+                <div class="emoji">🧠</div>
 
-<div class="emoji">🧠</div>
+                <h3>Hafıza Oyunu</h3>
 
-<h2>Hafıza</h2>
+                <p>Kartların eşlerini bul!</p>
 
-<p>Kartları eşleştir.</p>
+                <button
+                    class="btn"
+                    onclick="openGame('memoryGame')">
+                    Oyna
+                </button>
 
-<button
-class="btn"
-onclick="openGame('memory')">
-Oyna
-</button>
+            </div>
 
-</div>
+            <div class="card">
 
+                <div class="emoji">👆</div>
 
-<div class="card">
+                <h3>Tıkla Kazan</h3>
 
-<div class="emoji">🐍</div>
+                <p>30 saniyede ne kadar hızlısın?</p>
 
-<h2>Mini Yılan</h2>
+                <button
+                    class="btn"
+                    onclick="openGame('clickGame')">
+                    Oyna
+                </button>
 
-<p>Yemleri topla.</p>
+            </div>
 
-<button
-class="btn"
-onclick="openGame('snake')">
-Oyna
-</button>
+            <div class="card">
 
-</div>
+                <div class="emoji">🎯</div>
 
+                <h3>Hedefi Vur</h3>
 
-<div class="card">
+                <p>Hedeflere hızlıca tıkla!</p>
 
-<div class="emoji">⚡</div>
+                <button
+                    class="btn"
+                    onclick="openGame('targetGame')">
+                    Oyna
+                </button>
 
-<h2>Hızlı Tıkla</h2>
+            </div>
 
-<p>10 saniyede hızlı tıkla.</p>
+            <div class="card">
 
-<button
-class="btn"
-onclick="openGame('clicker')">
-Oyna
-</button>
+                <div class="emoji">🐍</div>
 
-</div>
+                <h3>Yılan</h3>
 
+                <p>Yılanı kontrol et ve puan topla!</p>
 
-<div class="card">
+                <button
+                    class="btn"
+                    onclick="openGame('snakeGame')">
+                    Oyna
+                </button>
 
-<div class="emoji">🎯</div>
+            </div>
 
-<h2>Hedefi Yakala</h2>
+        </div>
 
-<p>20 saniyede hedefleri yakala.</p>
+    </section>
 
-<button
-class="btn"
-onclick="openGame('targetGame')">
-Oyna
-</button>
+     <!-- OYUN EKRANLARI -->
 
-</div>
+    <section class="panel">
 
-</div>
+        <!-- HAFIZA -->
 
-</div>
+        <div id="memoryGame" class="game">
 
+            <div class="gamehead">
 
-<!-- MARKET -->
+                <h2>🧠 Hafıza Oyunu</h2>
 
-<div class="panel">
+                <button
+                    class="back"
+                    onclick="closeGames()">
+                    ← Geri
+                </button>
 
-<h2>🛍️ Avatar Mağazası</h2>
+            </div>
 
-<div id="shop" class="shop"></div>
+            <div class="stats2">
 
-</div>
+                <b>
+                    Hamle:
+                    <span id="memoryMoves">0</span>
+                </b>
 
+                <b>
+                    Puan:
+                    <span id="memoryScore">0</span>
+                </b>
 
-<!-- REKORLAR -->
+            </div>
 
-<div class="panel">
+            <div
+                id="memoryBoard"
+                class="memory">
+            </div>
 
-<h2>🏆 Kendi İlk 3 Rekorun</h2>
+            <p
+                id="memoryMsg"
+                class="msg">
+            </p>
 
-<div id="records" class="records"></div>
+            <div style="text-align:center">
 
-</div>
+                <button
+                    class="btn"
+                    onclick="startMemory()">
+                    Yeniden Başlat
+                </button>
 
-</section>
+            </div>
 
+        </div>
 
-<!-- HAFIZA -->
 
-<section
-id="memory"
-class="game panel">
+        <!-- TIKLA KAZAN -->
 
-<div class="gamehead">
+        <div id="clickGame" class="game">
 
-<h2>🧠 Hafıza</h2>
+            <div class="gamehead">
 
-<button
-class="back"
-onclick="backHome()">
-← Menü
-</button>
+                <h2>👆 Tıkla Kazan</h2>
 
-</div>
+                <button
+                    class="back"
+                    onclick="closeGames()">
+                    ← Geri
+                </button>
 
-<div class="stats2">
+            </div>
 
-<b>
-Hamle:
-<span id="moves">0</span>
-</b>
+            <div class="stats2">
 
-</div>
+                <b>
+                    Süre:
+                    <span id="clickTime">30</span>
+                </b>
 
-<div
-id="memoryBoard"
-class="memory">
-</div>
+                <b>
+                    Tıklama:
+                    <span id="clickScore">0</span>
+                </b>
 
-<button
-class="btn"
-onclick="startMemory()">
-Yeniden Başlat
-</button>
+            </div>
 
-</section>
+            <div class="clickarea">
 
+                <button
+                    id="clickButton"
+                    class="clickbtn"
+                    onclick="clickGameAction()">
+                    BAŞLA
+                </button>
 
-<!-- HIZLI TIKLA -->
+            </div>
 
-<section
-id="clicker"
-class="game panel">
+            <p
+                id="clickMsg"
+                class="msg">
+            </p>
 
-<div class="gamehead">
+        </div>
 
-<h2>⚡ Hızlı Tıkla</h2>
 
-<button
-class="back"
-onclick="backHome()">
-← Menü
-</button>
+        <!-- HEDEF -->
 
-</div>
+        <div id="targetGame" class="game">
 
-<div class="stats2">
+            <div class="gamehead">
 
-<b>
-Tıklama:
-<span id="clickScore">0</span>
-</b>
+                <h2>🎯 Hedefi Vur</h2>
 
-<b>
-Süre:
-<span id="clickTime">10</span>
-</b>
+                <button
+                    class="back"
+                    onclick="closeGames()">
+                    ← Geri
+                </button>
 
-</div>
+            </div>
 
-<button
-class="btn"
-onclick="startClicker()">
-Başlat
-</button>
+            <div class="stats2">
 
-<div class="clickarea">
+                <b>
+                    Süre:
+                    <span id="targetTime">30</span>
+                </b>
 
-<button
-id="clickButton"
-class="clickbtn"
-onclick="clickFast()"
-disabled>
-TIKLA!
-</button>
+                <b>
+                    Puan:
+                    <span id="targetScore">0</span>
+                </b>
 
-</div>
+            </div>
 
-</section>
+            <div
+                id="targetArea"
+                class="targetarea">
 
+                <button
+                    id="target"
+                    class="target"
+                    onclick="hitTarget()">
+                </button>
 
-<!-- HEDEF -->
+            </div>
 
-<section
-id="targetGame"
-class="game panel">
+            <p
+                id="targetMsg"
+                class="msg">
+            </p>
 
-<div class="gamehead">
+            <div style="text-align:center">
 
-<h2>🎯 Hedefi Yakala</h2>
+                <button
+                    class="btn"
+                    onclick="startTarget()">
+                    Başlat
+                </button>
 
-<button
-class="back"
-onclick="backHome()">
-← Menü
-</button>
+            </div>
 
-</div>
+        </div>
 
-<div class="stats2">
 
-<b>
-Skor:
-<span id="targetScore">0</span>
-</b>
+        <!-- YILAN -->
 
-<b>
-Süre:
-<span id="targetTime">20</span>
-</b>
+        <div id="snakeGame" class="game">
 
-</div>
+            <div class="gamehead">
 
-<button
-class="btn"
-onclick="startTarget()">
-Başlat
-</button>
+                <h2>🐍 Yılan</h2>
 
-<div
-id="targetArea"
-class="targetarea">
-</div>
+                <button
+                    class="back"
+                    onclick="closeGames()">
+                    ← Geri
+                </button>
 
-</section>
+            </div>
 
+            <div class="stats2">
 
-<!-- YILAN -->
+                <b>
+                    Puan:
+                    <span id="snakeScore">0</span>
+                </b>
 
-<section
-id="snake"
-class="game panel">
+            </div>
 
-<div class="gamehead">
+            <canvas
+                id="snakeCanvas"
+                width="400"
+                height="400">
+            </canvas>
 
-<h2>🐍 Mini Yılan</h2>
+            <div class="controls">
 
-<button
-class="back"
-onclick="backHome()">
-← Menü
-</button>
+                <button
+                    class="up"
+                    onclick="changeDirection('up')">
+                    ⬆️
+                </button>
 
-</div>
+                <button
+                    class="left"
+                    onclick="changeDirection('left')">
+                    ⬅️
+                </button>
 
-<div class="stats2">
+                <button
+                    class="down"
+                    onclick="changeDirection('down')">
+                    ⬇️
+                </button>
 
-<b>
-Skor:
-<span id="snakeScore">0</span>
-</b>
+                <button
+                    class="right"
+                    onclick="changeDirection('right')">
+                    ➡️
+                </button>
 
-</div>
+            </div>
 
-<button
-class="btn"
-onclick="startSnake()">
-Başlat
-</button>
+            <div style="text-align:center">
 
-<canvas
-id="snakeCanvas"
-width="400"
-height="400">
-</canvas>
+                <button
+                    class="btn"
+                    onclick="startSnake()">
+                    Oyunu Başlat
+                </button>
 
-<p style="text-align:center">
-Telefonda aşağıdaki okları kullan.
-</p>
+            </div>
 
-<div class="controls">
+            <p
+                id="snakeMsg"
+                class="msg">
+            </p>
 
-<button
-class="up"
-onclick="changeDirection('up')">
-⬆️
-</button>
+        </div>
 
-<button
-class="left"
-onclick="changeDirection('left')">
-⬅️
-</button>
+    </section>
 
-<button
-class="down"
-onclick="changeDirection('down')">
-⬇️
-</button>
 
-<button
-class="right"
-onclick="changeDirection('right')">
-➡️
-</button>
+    <!-- AVATAR MARKETİ -->
 
-</div>
+    <section class="panel">
 
-</section>
+        <h2>🛍️ Avatar Marketi</h2>
 
+        <p>
+            Puanlarını kullanarak avatarını giydirebilirsin.
+        </p>
 
-<div id="msg" class="msg"></div>
+        <div class="shop">
+
+            <div class="item">
+
+                <div class="itemIcon">🎩</div>
+
+                <h3>Şapka</h3>
+
+                <p>50 puan</p>
+
+                <button
+                    class="btn"
+                    onclick="buyItem('hat',50,'🎩')">
+                    Satın Al
+                </button>
+
+            </div>
+
+            <div class="item">
+
+                <div class="itemIcon">🕶️</div>
+
+                <h3>Gözlük</h3>
+
+                <p>40 puan</p>
+
+                <button
+                    class="btn"
+                    onclick="buyItem('glasses',40,'🕶️')">
+                    Satın Al
+                </button>
+
+            </div>
+
+            <div class="item">
+
+                <div class="itemIcon">👕</div>
+
+                <h3>Gömlek</h3>
+
+                <p>60 puan</p>
+
+                <button
+                    class="btn"
+                    onclick="buyItem('shirt',60,'👕')">
+                    Satın Al
+                </button>
+
+            </div>
+
+            <div class="item">
+
+                <div class="itemIcon">👖</div>
+
+                <h3>Pantolon</h3>
+
+                <p>70 puan</p>
+
+                <button
+                    class="btn"
+                    onclick="buyItem('pants',70,'👖')">
+                    Satın Al
+                </button>
+
+            </div>
+
+            <div class="item">
+
+                <div class="itemIcon">👟</div>
+
+                <h3>Ayakkabı</h3>
+
+                <p>80 puan</p>
+
+                <button
+                    class="btn"
+                    onclick="buyItem('shoes',80,'👟')">
+                    Satın Al
+                </button>
+
+            </div>
+
+        </div>
+
+        <p
+            id="shopMsg"
+            class="msg">
+        </p>
+
+    </section>
+
+
+    <!-- REKORLAR -->
+
+    <section class="panel">
+
+        <h2>🏆 Rekorlar</h2>
+
+        <div class="records">
+
+            <div class="record">
+
+                <div class="medal">🥇</div>
+
+                <b>En Yüksek Puan</b>
+
+                <p id="bestScore">0</p>
+
+            </div>
+
+            <div class="record">
+
+                <div class="medal">🧠</div>
+
+                <b>Hafıza Rekoru</b>
+
+                <p id="memoryBest">0</p>
+
+            </div>
+
+            <div class="record">
+
+                <div class="medal">👆</div>
+
+                <b>Tıklama Rekoru</b>
+
+                <p id="clickBest">0</p>
+
+            </div>
+
+            <div class="record">
+
+                <div class="medal">🎯</div>
+
+                <b>Hedef Rekoru</b>
+
+                <p id="targetBest">0</p>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </main>
 
  <script>
 
 /* =========================
-   HESAP SİSTEMİ
+   GENEL DEĞİŞKENLER
 ========================= */
 
-const KEY = "miniOyunMerkezi_v3";
+let coins = 0;
+let playerName = "Oyuncu";
 
-let data = {
-    name: "",
-    password: "",
-    coins: 0,
-    records: [],
-    owned: [],
-    equipped: {
-        hat: "",
-        glasses: "",
-        shirt: "",
-        pants: "",
-        shoes: ""
-    }
-};
+let memoryTimer = null;
+let clickTimer = null;
+let targetTimer = null;
+let snakeTimer = null;
 
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLock = false;
 
-/* KAYITLI VERİYİ YÜKLE */
+let clickScore = 0;
+let clickStarted = false;
+let clickTime = 30;
 
-const saved = localStorage.getItem(KEY);
+let targetScore = 0;
+let targetStarted = false;
+let targetTime = 30;
 
-if(saved){
-
-    try{
-
-        const oldData = JSON.parse(saved);
-
-        data = {
-            ...data,
-            ...oldData,
-            equipped:{
-                ...data.equipped,
-                ...(oldData.equipped || {})
-            }
-        };
-
-    }catch(e){
-
-        console.log("Kayıt okunamadı.");
-
-    }
-
-}
-
-
-/* KAYDET */
-
-function save(){
-
-    localStorage.setItem(
-        KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =========================
-   HESAP OLUŞTUR
-========================= */
-
-function createAccount(){
-
-    const name =
-        document.getElementById("newName")
-        .value
-        .trim();
-
-    const password =
-        document.getElementById("newPassword")
-        .value;
-
-    if(name.length < 2){
-
-        alert("❌ En az 2 karakterlik bir isim yaz.");
-
-        return;
-
-    }
-
-    if(password.length < 4){
-
-        alert("❌ Şifre en az 4 karakter olmalı.");
-
-        return;
-
-    }
-
-    data.name = name;
-    data.password = password;
-
-    save();
-
-    document
-        .getElementById("register")
-        .classList.add("hidden");
-
-    document
-        .getElementById("enter")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("hello")
-        .textContent =
-        "Hoş geldin, " + name + "!";
-
-}
-
-
-/
-/* =========================
-   SAYFA AÇILIŞI
-========================= */
-
-if(data.name && data.password){
-
-    document
-        .getElementById("register")
-        .classList.add("hidden");
-
-    document
-        .getElementById("enter")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("hello")
-        .textContent =
-        "Hoş geldin, " + data.name + "!";
-
-/* =========================
-   ŞİFREMİ UNUTTUM
-========================= */
-
-function forgotPassword(){
-
-    const name = prompt("Oyuncu adını yaz:");
-
-    if(name === null) return;
-
-    if(name.trim() !== data.name){
-
-        alert("❌ Oyuncu adı yanlış!");
-        return;
-
-    }
-
-    const newPassword = prompt("Yeni şifreni yaz:");
-
-    if(newPassword === null) return;
-
-    if(newPassword.length < 4){
-
-        alert("❌ Yeni şifre en az 4 karakter olmalı!");
-        return;
-
-    }
-
-    data.password = newPassword;
-
-    save();
-
-    alert("✅ Şifren başarıyla değiştirildi!");
-
-}
+let snake = [];
+let snakeFood = {};
+let snakeDirection = "right";
+let snakeRunning = false;
+let snakeScore = 0;
 
 
 /* =========================
@@ -1011,463 +1051,145 @@ function forgotPassword(){
 function login(){
 
     const password =
-        document
-        .getElementById("password")
-        .value;
+        document.getElementById("password").value.trim();
 
-    if(password !== data.password){
+    if(password === ""){
 
-        alert("❌ Şifre yanlış!");
+        document.getElementById("loginMsg").textContent =
+            "⚠️ Lütfen bir şifre gir!";
 
         return;
-
     }
 
-    document
-        .getElementById("login")
-        .classList.add("hidden");
+    document.getElementById("login").classList.add("hidden");
 
-    updateUI();
-
-}
-
-
-/* =========================
-   MARKET
-========================= */
-
-const items = [
-
-    ["hat1","hat","🎩","Şapka",50],
-    ["hat2","hat","👑","Taç",150],
-    ["hat3","hat","🧢","Kep",250],
-
-    ["glasses1","glasses","😎","Güneş Gözlüğü",75],
-    ["glasses2","glasses","🤓","Gözlük",125],
-
-    ["shirt1","shirt","👕","Tişört",100],
-    ["shirt2","shirt","👔","Gömlek",200],
-    ["shirt3","shirt","🧥","Mont",350],
-
-    ["pants1","pants","👖","Pantolon",150],
-    ["pants2","pants","🩳","Şort",100],
-
-    ["shoes1","shoes","👟","Spor Ayakkabı",200],
-    ["shoes2","shoes","🥾","Bot",300]
-
-];
-
-
-/* EŞYANIN EMOJİSİNİ BUL */
-
-function getItemIcon(type){
-
-    const id =
-        data.equipped[type];
-
-    const item =
-        items.find(
-            x => x[0] === id
-        );
-
-    return item
-        ? item[2]
-        : "";
+    document.getElementById("player").textContent =
+        playerName;
 
 }
 
 
-/* =========================
-   ARAYÜZÜ GÜNCELLE
-========================= */
+function forgotPassword(){
 
-function updateUI(){
-
-    document
-        .getElementById("player")
-        .textContent =
-        "👤 " + (data.name || "Oyuncu");
-
-    document
-        .getElementById("coins")
-        .textContent =
-        data.coins;
-
-    document
-        .getElementById("hat")
-        .textContent =
-        getItemIcon("hat");
-
-    document
-        .getElementById("glasses")
-        .textContent =
-        getItemIcon("glasses");
-
-    document
-        .getElementById("shirt")
-        .textContent =
-        getItemIcon("shirt");
-
-    document
-        .getElementById("pants")
-        .textContent =
-        getItemIcon("pants");
-
-    document
-        .getElementById("shoes")
-        .textContent =
-        getItemIcon("shoes");
-
-    renderShop();
-
-    renderRecords();
-
-}
-
-
-/* =========================
-   MAĞAZAYI OLUŞTUR
-========================= */
-
-function renderShop(){
-
-    const shop =
-        document.getElementById("shop");
-
-    if(!shop)return;
-
-    shop.innerHTML = "";
-
-    items.forEach(item => {
-
-        const id = item[0];
-        const type = item[1];
-        const icon = item[2];
-        const name = item[3];
-        const price = item[4];
-
-        const owned =
-            data.owned.includes(id);
-
-        const equipped =
-            data.equipped[type] === id;
-
-        const box =
-            document.createElement("div");
-
-        box.className =
-            "shopItem";
-
-        let buttonText;
-
-        if(equipped){
-
-            buttonText = "Çıkar";
-
-        }else if(owned){
-
-            buttonText = "Giy";
-
-        }else{
-
-            buttonText =
-                "Satın Al • " + price;
-
-        }
-
-        box.innerHTML = `
-
-            <div class="shopIcon">
-                ${icon}
-            </div>
-
-            <b>${name}</b>
-
-            <p>
-                ${owned
-                    ? "Sahipsin"
-                    : price + " puan"}
-            </p>
-
-            <button>
-                ${buttonText}
-            </button>
-
-        `;
-
-        box
-            .querySelector("button")
-            .onclick =
-            () => shopAction(id);
-
-        shop.appendChild(box);
-
-    });
-
-}
-
-
-/* =========================
-   MARKET İŞLEMİ
-========================= */
-
-function shopAction(id){
-
-    const item =
-        items.find(
-            x => x[0] === id
-        );
-
-    if(!item)return;
-
-    const type = item[1];
-    const price = item[4];
-
-    /* Üzerindeyse çıkar */
-
-    if(data.equipped[type] === id){
-
-        data.equipped[type] = "";
-
-        save();
-        updateUI();
-
-        return;
-
-    }
-
-
-    /* Zaten alınmışsa giy */
-
-    if(data.owned.includes(id)){
-
-        data.equipped[type] = id;
-
-        save();
-        updateUI();
-
-        return;
-
-    }
-
-
-    /* Para kontrolü */
-
-    if(data.coins < price){
-
-        alert(
-            "💰 Bu eşya için yeterli puanın yok!"
-        );
-
-        return;
-
-    }
-
-
-    /* Satın al */
-
-    data.coins -= price;
-
-    data.owned.push(id);
-
-    data.equipped[type] = id;
-
-    save();
-
-    updateUI();
-
-}
-
-
-/* =========================
-   REKOR SİSTEMİ
-========================= */
-
-function addRecord(points, game){
-
-    points =
-        Math.max(
-            0,
-            Math.floor(points)
-        );
-
-    if(points <= 0)return;
-
-    data.coins += points;
-
-    data.records.push({
-
-        game: game,
-        points: points
-
-    });
-
-    data.records.sort(
-        (a,b) =>
-        b.points - a.points
+    alert(
+        "Şifreni unuttuysan yeni bir şifre belirlemek için sayfayı yenileyebilirsin."
     );
 
-    data.records =
-        data.records.slice(0,3);
-
-    save();
-
-    updateUI();
-
 }
 
 
-/* =========================
-   İLK 3 REKOR
-========================= */
+/* Enter tuşuyla giriş */
 
-function renderRecords(){
+document
+    .getElementById("password")
+    .addEventListener("keydown",function(event){
 
-    const records =
-        document.getElementById("records");
-
-    if(!records)return;
-
-    records.innerHTML = "";
-
-    const medals = [
-        "🥇",
-        "🥈",
-        "🥉"
-    ];
-
-    for(let i = 0; i < 3; i++){
-
-        const box =
-            document.createElement("div");
-
-        box.className =
-            "record";
-
-        if(data.records[i]){
-
-            const record =
-                data.records[i];
-
-            box.innerHTML = `
-
-                <div class="medal">
-                    ${medals[i]}
-                </div>
-
-                <b>
-                    ${record.game}
-                </b>
-
-                <div style="
-                    font-size:25px;
-                    margin-top:5px;
-                ">
-                    ${record.points}
-                </div>
-
-                <small>
-                    puan
-                </small>
-
-            `;
-
-        }else{
-
-            box.innerHTML = `
-
-                <div class="medal">
-                    ${medals[i]}
-                </div>
-
-                <div>
-                    Henüz rekor yok
-                </div>
-
-            `;
-
+        if(event.key === "Enter"){
+            login();
         }
 
-        records.appendChild(box);
-
-    }
-
-}
+    });
 
 
 /* =========================
-   OYUN MENÜSÜ
+   OYUN AÇ / KAPAT
 ========================= */
 
-function openGame(id){
+function openGame(gameId){
 
     document
-        .getElementById("home")
-        .classList.add("hidden");
-
-    document
-        .querySelectorAll(".gameScreen")
-        .forEach(game => {
+        .querySelectorAll(".game")
+        .forEach(function(game){
 
             game.classList.remove("active");
 
         });
 
     const game =
-        document.getElementById(id);
+        document.getElementById(gameId);
 
     if(game){
-
         game.classList.add("active");
-
     }
 
-
-    if(id === "memory"){
-
+    if(gameId === "memoryGame"){
         startMemory();
+    }
 
+    if(gameId === "clickGame"){
+        resetClickGame();
+    }
+
+    if(gameId === "targetGame"){
+        resetTarget();
+    }
+
+    if(gameId === "snakeGame"){
+        drawSnakeStart();
     }
 
 }
 
 
-/* =========================
-   ANA MENÜYE DÖN
-========================= */
-
-function backHome(){
-
-    clearInterval(clickTimer);
-    clearInterval(targetTimer);
-    clearInterval(snakeTimer);
-
-    clickRun = false;
-    targetRun = false;
-    snakeRun = false;
-
-    const button =
-        document.getElementById("clickButton");
-
-    if(button){
-
-        button.disabled = true;
-
-    }
+function closeGames(){
 
     document
-        .querySelectorAll(".gameScreen")
-        .forEach(game => {
+        .querySelectorAll(".game")
+        .forEach(function(game){
 
             game.classList.remove("active");
 
         });
 
-    document
-        .getElementById("home")
-        .classList.remove("hidden");
+    clearInterval(clickTimer);
+    clearInterval(targetTimer);
+    clearInterval(snakeTimer);
 
-    updateUI();
+    clickStarted = false;
+    targetStarted = false;
+    snakeRunning = false;
+
+}
+
+
+/* =========================
+   PUAN SİSTEMİ
+========================= */
+
+function addCoins(amount){
+
+    amount = Number(amount);
+
+    if(amount <= 0){
+        return;
+    }
+
+    coins += amount;
+
+    document.getElementById("coins").textContent =
+        coins;
+
+    updateBestScore();
+
+}
+
+
+function updateBestScore(){
+
+    const best =
+        Number(localStorage.getItem("bestScore") || 0);
+
+    if(coins > best){
+
+        localStorage.setItem(
+            "bestScore",
+            coins
+        );
+
+    }
+
+    document.getElementById("bestScore").textContent =
+        Math.max(coins,best);
 
 }
 
@@ -1476,76 +1198,80 @@ function backHome(){
    HAFIZA OYUNU
 ========================= */
 
-const memorySymbols = [
+const memoryEmojis = [
 
     "🍎","🍎",
+    "🍕","🍕",
     "🚀","🚀",
     "🐱","🐱",
     "⚽","⚽",
-    "🎮","🎮",
-    "🍕","🍕",
-    "⭐","⭐",
-    "🔥","🔥"
+    "🌟","🌟",
+    "🍔","🍔",
+    "🎮","🎮"
 
 ];
 
-
-let memoryFirst = null;
-let memorySecond = null;
-let memoryLock = false;
-let memoryMovesN = 0;
+let memoryMoves = 0;
+let memoryScore = 0;
 let memoryMatched = 0;
 
 
-/* HAFIZAYI BAŞLAT */
-
 function startMemory(){
 
-    const board =
-        document.getElementById(
-            "memoryBoard"
-        );
-
-    if(!board)return;
-
-    board.innerHTML = "";
+    clearTimeout(memoryTimer);
 
     memoryFirst = null;
     memorySecond = null;
     memoryLock = false;
-    memoryMovesN = 0;
+
+    memoryMoves = 0;
+    memoryScore = 0;
     memoryMatched = 0;
 
-    document
-        .getElementById("memoryMoves")
-        .textContent = "0";
+    document.getElementById("memoryMoves").textContent =
+        "0";
+
+    document.getElementById("memoryScore").textContent =
+        "0";
+
+    document.getElementById("memoryMsg").textContent =
+        "";
+
+    const board =
+        document.getElementById("memoryBoard");
+
+    board.innerHTML = "";
+
+    const cards =
+        [...memoryEmojis];
+
+    cards.sort(function(){
+
+        return Math.random() - 0.5;
+
+    });
 
 
-    const shuffled =
-        [...memorySymbols].sort(
-            () => Math.random() - 0.5
-        );
-
-
-    shuffled.forEach(symbol => {
+    cards.forEach(function(emoji,index){
 
         const card =
             document.createElement("button");
 
-        card.className =
-            "memoryCard";
+        card.className = "mcard";
 
-        card.textContent =
-            symbol;
+        card.dataset.value = emoji;
+        card.dataset.index = index;
 
-        card.dataset.symbol =
-            symbol;
+        card.textContent = "?";
 
-        card.dataset.open =
-            "no";
+        card.addEventListener(
+            "click",
+            function(){
 
-        card.onclick =
-            () => flipMemory(card);
+                memoryClick(card);
+
+            }
+        );
 
         board.appendChild(card);
 
@@ -1554,27 +1280,27 @@ function startMemory(){
 }
 
 
-/* KARTI ÇEVİR */
+function memoryClick(card){
 
-function flipMemory(card){
+    if(memoryLock){
+        return;
+    }
 
-    if(memoryLock)return;
+    if(card.classList.contains("open")){
+        return;
+    }
 
-    if(
-        card.dataset.open === "yes"
-    )return;
-
-    if(
-        card.classList.contains("matched")
-    )return;
-
-
-    card.dataset.open = "yes";
+    if(card.classList.contains("done")){
+        return;
+    }
 
     card.classList.add("open");
 
+    card.textContent =
+        card.dataset.value;
 
-    if(!memoryFirst){
+
+    if(memoryFirst === null){
 
         memoryFirst = card;
 
@@ -1585,153 +1311,177 @@ function flipMemory(card){
 
     memorySecond = card;
 
-    memoryMovesN++;
+    memoryMoves++;
 
-    document
-        .getElementById("memoryMoves")
-        .textContent =
-        memoryMovesN;
+    document.getElementById("memoryMoves").textContent =
+        memoryMoves;
 
-
-    /* DOĞRU */
 
     if(
-        memoryFirst.dataset.symbol ===
-        memorySecond.dataset.symbol
+        memoryFirst.dataset.value ===
+        memorySecond.dataset.value
     ){
 
-        memoryFirst.classList.remove("open");
-        memorySecond.classList.remove("open");
+        memoryFirst.classList.add("done");
+        memorySecond.classList.add("done");
 
-        memoryFirst.classList.add("matched");
-        memorySecond.classList.add("matched");
-
+        memoryScore += 10;
         memoryMatched += 2;
+
+        document.getElementById("memoryScore").textContent =
+            memoryScore;
 
         memoryFirst = null;
         memorySecond = null;
 
 
-        /* OYUN BİTTİ */
-
         if(
             memoryMatched ===
-            memorySymbols.length
+            memoryEmojis.length
         ){
 
-            const points =
-                Math.max(
-                    20,
-                    150 -
-                    memoryMovesN * 5
-                );
-
-            setTimeout(() => {
-
-                addRecord(
-                    points,
-                    "Hafıza"
-                );
-
-                alert(
-                    "🧠 Tebrikler!\n\n" +
-                    "Hamle: " +
-                    memoryMovesN +
-                    "\n" +
-                    "Kazandığın puan: " +
-                    points
-                );
-
-            },500);
+            finishMemory();
 
         }
 
     }
-
-
-    /* YANLIŞ */
-
     else{
 
         memoryLock = true;
 
-        memoryFirst.classList.add("wrong");
-        memorySecond.classList.add("wrong");
+        memoryTimer =
+            setTimeout(function(){
 
+                memoryFirst.classList.remove("open");
+                memorySecond.classList.remove("open");
 
-        setTimeout(() => {
+                memoryFirst.textContent = "?";
+                memorySecond.textContent = "?";
 
-            memoryFirst.classList.remove(
-                "open",
-                "wrong"
-            );
+                memoryFirst = null;
+                memorySecond = null;
 
-            memorySecond.classList.remove(
-                "open",
-                "wrong"
-            );
+                memoryLock = false;
 
-            memoryFirst.dataset.open =
-                "no";
-
-            memorySecond.dataset.open =
-                "no";
-
-            memoryFirst = null;
-            memorySecond = null;
-
-            memoryLock = false;
-
-        },700);
+            },800);
 
     }
 
 }
 
 
+function finishMemory(){
+
+    const bonus =
+        Math.max(0,50 - memoryMoves);
+
+    const total =
+        memoryScore + bonus;
+
+    addCoins(total);
+
+    document.getElementById("memoryMsg").textContent =
+        "🎉 Tebrikler! +" +
+        total +
+        " puan kazandın!";
+
+    const best =
+        Number(
+            localStorage.getItem("memoryBest") || 0
+        );
+
+    if(total > best){
+
+        localStorage.setItem(
+            "memoryBest",
+            total
+        );
+
+    }
+
+    document.getElementById("memoryBest").textContent =
+        Math.max(total,best);
+
+}
+
+
 /* =========================
-   HIZLI TIKLA
+   TIKLA KAZAN
 ========================= */
 
-let clickTimer = null;
-let clickRun = false;
-let clickN = 0;
-
-
-function startClicker(){
+function resetClickGame(){
 
     clearInterval(clickTimer);
 
-    clickRun = true;
-    clickN = 0;
+    clickScore = 0;
+    clickTime = 30;
+    clickStarted = false;
 
-    let time = 10;
+    document.getElementById("clickTime").textContent =
+        "30";
 
-    document
-        .getElementById("clickScore")
-        .textContent = "0";
+    document.getElementById("clickScore").textContent =
+        "0";
 
-    document
-        .getElementById("clickTime")
-        .textContent = time;
+    document.getElementById("clickButton").textContent =
+        "BAŞLA";
 
-    document
-        .getElementById("clickButton")
-        .disabled = false;
+    document.getElementById("clickMsg").textContent =
+        "";
+
+}
+
+
+function clickGameAction(){
+
+    if(!clickStarted){
+
+        startClickGame();
+
+        return;
+
+    }
+
+    clickScore++;
+
+    document.getElementById("clickScore").textContent =
+        clickScore;
+
+}
+
+
+function startClickGame(){
+
+    clearInterval(clickTimer);
+
+    clickScore = 0;
+    clickTime = 30;
+    clickStarted = true;
+
+    document.getElementById("clickScore").textContent =
+        "0";
+
+    document.getElementById("clickTime").textContent =
+        "30";
+
+    document.getElementById("clickButton").textContent =
+        "TIKLA!";
+
+    document.getElementById("clickMsg").textContent =
+        "🔥 Hızlı tıkla!";
 
 
     clickTimer =
-        setInterval(() => {
+        setInterval(function(){
 
-            time--;
+            clickTime--;
 
-            document
-                .getElementById("clickTime")
-                .textContent = time;
+            document.getElementById("clickTime").textContent =
+                clickTime;
 
-            if(time <= 0){
+            if(clickTime <= 0){
 
-                finishClicker();
+                finishClickGame();
 
             }
 
@@ -1740,90 +1490,101 @@ function startClicker(){
 }
 
 
-function clickFast(){
-
-    if(!clickRun)return;
-
-    clickN++;
-
-    document
-        .getElementById("clickScore")
-        .textContent =
-        clickN;
-
-}
-
-
-function finishClicker(){
+function finishClickGame(){
 
     clearInterval(clickTimer);
 
-    clickRun = false;
+    clickStarted = false;
 
-    document
-        .getElementById("clickButton")
-        .disabled = true;
+    document.getElementById("clickButton").textContent =
+        "TEKRAR";
 
-    const points =
-        clickN * 5;
+    document.getElementById("clickMsg").textContent =
+        "⏰ Süre bitti! " +
+        clickScore +
+        " tıklama yaptın.";
 
-    addRecord(
-        points,
-        "Hızlı Tıkla"
-    );
+    addCoins(clickScore);
 
-    alert(
-        "⚡ Bitti!\n\n" +
-        "Tıklama: " +
-        clickN +
-        "\n" +
-        "Puan: " +
-        points
-    );
+    const best =
+        Number(
+            localStorage.getItem("clickBest") || 0
+        );
+
+    if(clickScore > best){
+
+        localStorage.setItem(
+            "clickBest",
+            clickScore
+        );
+
+    }
+
+    document.getElementById("clickBest").textContent =
+        Math.max(clickScore,best);
 
 }
 
 
 /* =========================
-   HEDEF OYUNU
+   HEDEFİ VUR
 ========================= */
 
-let targetTimer = null;
-let targetRun = false;
-let targetN = 0;
+function resetTarget(){
+
+    clearInterval(targetTimer);
+
+    targetScore = 0;
+    targetTime = 30;
+    targetStarted = false;
+
+    document.getElementById("targetScore").textContent =
+        "0";
+
+    document.getElementById("targetTime").textContent =
+        "30";
+
+    document.getElementById("targetMsg").textContent =
+        "";
+
+    document.getElementById("target").style.display =
+        "none";
+
+}
 
 
 function startTarget(){
 
     clearInterval(targetTimer);
 
-    targetRun = true;
-    targetN = 0;
+    targetScore = 0;
+    targetTime = 30;
+    targetStarted = true;
 
-    let time = 20;
+    document.getElementById("targetScore").textContent =
+        "0";
 
-    document
-        .getElementById("targetScore")
-        .textContent = "0";
+    document.getElementById("targetTime").textContent =
+        "30";
 
-    document
-        .getElementById("targetTime")
-        .textContent = time;
+    document.getElementById("targetMsg").textContent =
+        "🎯 Hedefleri vur!";
+
+    document.getElementById("target").style.display =
+        "block";
 
     moveTarget();
 
 
     targetTimer =
-        setInterval(() => {
+        setInterval(function(){
 
-            time--;
+            targetTime--;
 
-            document
-                .getElementById("targetTime")
-                .textContent =
-                time;
+            document.getElementById("targetTime").textContent =
+                targetTime;
 
-            if(time <= 0){
+            if(targetTime <= 0){
 
                 finishTarget();
 
@@ -1836,56 +1597,53 @@ function startTarget(){
 
 function moveTarget(){
 
-    if(!targetRun)return;
-
     const area =
-        document.getElementById(
-            "targetArea"
-        );
-
-    area.innerHTML = "";
+        document.getElementById("targetArea");
 
     const target =
-        document.createElement("button");
-
-    target.className = "target";
+        document.getElementById("target");
 
     const maxX =
-        Math.max(
-            0,
-            area.clientWidth - 55
-        );
+        area.clientWidth -
+        target.offsetWidth;
 
     const maxY =
-        Math.max(
-            0,
-            area.clientHeight - 55
+        area.clientHeight -
+        target.offsetHeight;
+
+    const x =
+        Math.floor(
+            Math.random() *
+            Math.max(maxX,1)
+        );
+
+    const y =
+        Math.floor(
+            Math.random() *
+            Math.max(maxY,1)
         );
 
     target.style.left =
-        Math.random() * maxX + "px";
+        x + "px";
 
     target.style.top =
-        Math.random() * maxY + "px";
+        y + "px";
+
+}
 
 
-    target.onclick = () => {
+function hitTarget(){
 
-        if(!targetRun)return;
+    if(!targetStarted){
+        return;
+    }
 
-        targetN++;
+    targetScore++;
 
-        document
-            .getElementById("targetScore")
-            .textContent =
-            targetN;
+    document.getElementById("targetScore").textContent =
+        targetScore;
 
-        moveTarget();
-
-    };
-
-
-    area.appendChild(target);
+    moveTarget();
 
 }
 
@@ -1894,42 +1652,72 @@ function finishTarget(){
 
     clearInterval(targetTimer);
 
-    targetRun = false;
+    targetStarted = false;
 
-    document
-        .getElementById("targetArea")
-        .innerHTML = "";
+    document.getElementById("target").style.display =
+        "none";
 
-    const points =
-        targetN * 10;
+    document.getElementById("targetMsg").textContent =
+        "🏁 Süre bitti! " +
+        targetScore +
+        " hedef vurdun.";
 
-    addRecord(
-        points,
-        "Hedef"
-    );
+    addCoins(targetScore);
 
-    alert(
-        "🎯 Bitti!\n\n" +
-        "Hedef: " +
-        targetN +
-        "\n" +
-        "Puan: " +
-        points
-    );
+    const best =
+        Number(
+            localStorage.getItem("targetBest") || 0
+        );
+
+    if(targetScore > best){
+
+        localStorage.setItem(
+            "targetBest",
+            targetScore
+        );
+
+    }
+
+    document.getElementById("targetBest").textContent =
+        Math.max(targetScore,best);
 
 }
-  /* =========================
-   MİNİ YILAN
+
+
+/* =========================
+   AVATAR MARKETİ
 ========================= */
 
-let snakeTimer = null;
-let snakeRun = false;
+function buyItem(type,cost,emoji){
 
-let snake = [];
-let snakeFood = {};
-let snakeDir = "right";
-let snakeNextDir = "right";
-let snakeScoreN = 0;
+    if(coins < cost){
+
+        document.getElementById("shopMsg").textContent =
+            "❌ Yeterli puanın yok!";
+
+        return;
+
+    }
+
+    coins -= cost;
+
+    document.getElementById("coins").textContent =
+        coins;
+
+    document.getElementById(type).textContent =
+        emoji;
+
+    document.getElementById("shopMsg").textContent =
+        "✅ " +
+        emoji +
+        " satın alındı!";
+
+}
+
+
+/* =========================
+   YILAN OYUNU
+========================= */
 
 const snakeCanvas =
     document.getElementById("snakeCanvas");
@@ -1939,64 +1727,94 @@ const snakeCtx =
 
 const snakeSize = 20;
 
+const snakeGrid = 20;
+
+
 function startSnake(){
 
     clearInterval(snakeTimer);
 
-    snakeRun = true;
-
-    snakeScoreN = 0;
-
-    snakeDir = "right";
-    snakeNextDir = "right";
-
     snake = [
-        {x:200,y:200},
-        {x:180,y:200},
-        {x:160,y:200}
+
+        {x:10,y:10},
+        {x:9,y:10},
+        {x:8,y:10}
+
     ];
 
-    document
-        .getElementById("snakeScore")
-        .textContent = "0";
+    snakeDirection = "right";
+    snakeScore = 0;
+    snakeRunning = true;
+
+    document.getElementById("snakeScore").textContent =
+        "0";
+
+    document.getElementById("snakeMsg").textContent =
+        "🐍 Yılanı hareket ettir!";
 
     createSnakeFood();
-
     drawSnake();
 
     snakeTimer =
         setInterval(
-            moveSnake,
-            120
+            snakeMove,
+            140
         );
+
+}
+
+
+function drawSnakeStart(){
+
+    snake = [
+
+        {x:10,y:10},
+        {x:9,y:10},
+        {x:8,y:10}
+
+    ];
+
+    snakeDirection = "right";
+    snakeRunning = false;
+    snakeScore = 0;
+
+    document.getElementById("snakeScore").textContent =
+        "0";
+
+    document.getElementById("snakeMsg").textContent =
+        "Oyunu başlatmak için butona bas.";
+
+    createSnakeFood();
+    drawSnake();
 
 }
 
 
 function createSnakeFood(){
 
-    const cols = 20;
-    const rows = 20;
-
     snakeFood = {
 
-        x:
-        Math.floor(
-            Math.random() * cols
-        ) * snakeSize,
+        x:Math.floor(
+            Math.random() * snakeGrid
+        ),
 
-        y:
-        Math.floor(
-            Math.random() * rows
-        ) * snakeSize
+        y:Math.floor(
+            Math.random() * snakeGrid
+        )
 
     };
 
+
     const onSnake =
-        snake.some(part =>
-            part.x === snakeFood.x &&
-            part.y === snakeFood.y
-        );
+        snake.some(function(part){
+
+            return(
+                part.x === snakeFood.x &&
+                part.y === snakeFood.y
+            );
+
+        });
+
 
     if(onSnake){
 
@@ -2007,62 +1825,66 @@ function createSnakeFood(){
 }
 
 
-function moveSnake(){
+function snakeMove(){
 
-    if(!snakeRun)return;
-
-    snakeDir = snakeNextDir;
+    if(!snakeRunning){
+        return;
+    }
 
     const head = {
-        x: snake[0].x,
-        y: snake[0].y
+        x:snake[0].x,
+        y:snake[0].y
     };
 
 
-    if(snakeDir === "up"){
-        head.y -= snakeSize;
+    if(snakeDirection === "up"){
+        head.y--;
     }
 
-    if(snakeDir === "down"){
-        head.y += snakeSize;
+    if(snakeDirection === "down"){
+        head.y++;
     }
 
-    if(snakeDir === "left"){
-        head.x -= snakeSize;
+    if(snakeDirection === "left"){
+        head.x--;
     }
 
-    if(snakeDir === "right"){
-        head.x += snakeSize;
+    if(snakeDirection === "right"){
+        head.x++;
     }
 
 
-    /* DUVARA ÇARPMA */
+    /* Duvara çarpma */
 
     if(
         head.x < 0 ||
+        head.x >= snakeGrid ||
         head.y < 0 ||
-        head.x >= snakeCanvas.width ||
-        head.y >= snakeCanvas.height
+        head.y >= snakeGrid
     ){
 
         endSnake();
-
         return;
 
     }
 
 
-    /* KENDİNE ÇARPMA */
+    /* Kendine çarpma */
 
-    if(
-        snake.some(part =>
-            part.x === head.x &&
-            part.y === head.y
-        )
-    ){
+    const hitSelf =
+        snake.some(function(part){
+
+            return(
+                part.x === head.x &&
+                part.y === head.y
+            );
+
+        });
+
+
+    if(hitSelf){
 
         endSnake();
-
         return;
 
     }
@@ -2071,23 +1893,24 @@ function moveSnake(){
     snake.unshift(head);
 
 
-    /* YEM */
+    /* Yemek */
 
     if(
         head.x === snakeFood.x &&
         head.y === snakeFood.y
     ){
 
-        snakeScoreN++;
+        snakeScore += 10;
 
-        document
-            .getElementById("snakeScore")
-            .textContent =
-            snakeScoreN;
+        document.getElementById("snakeScore").textContent =
+            snakeScore;
+
+        addCoins(10);
 
         createSnakeFood();
 
-    }else{
+    }
+    else{
 
         snake.pop();
 
@@ -2109,15 +1932,29 @@ function drawSnake(){
     );
 
 
-    /* YEM */
+    /* Zemin */
 
-    snakeCtx.fillStyle = "#ff4757";
+    snakeCtx.fillStyle =
+        "#f4f4f4";
+
+    snakeCtx.fillRect(
+        0,
+        0,
+        snakeCanvas.width,
+        snakeCanvas.height
+    );
+
+
+    /* Yemek */
+
+    snakeCtx.fillStyle =
+        "#ff4757";
 
     snakeCtx.beginPath();
 
     snakeCtx.arc(
-        snakeFood.x + 10,
-        snakeFood.y + 10,
+        snakeFood.x * snakeSize + 10,
+        snakeFood.y * snakeSize + 10,
         8,
         0,
         Math.PI * 2
@@ -2126,1277 +1963,73 @@ function drawSnake(){
     snakeCtx.fill();
 
 
-    /* YILAN */
+    /* Yılan */
 
-    snake.forEach(
-        (part,index) => {
+    snake.forEach(function(part,index){
 
-            snakeCtx.fillStyle =
-                index === 0
+        snakeCtx.fillStyle =
+            index === 0
                 ? "#675cff"
-                : "#777";
+                : "#8b82ff";
 
-            snakeCtx.fillRect(
-                part.x + 1,
-                part.y + 1,
-                snakeSize - 2,
-                snakeSize - 2
-            );
+        snakeCtx.fillRect(
+            part.x * snakeSize + 1,
+            part.y * snakeSize + 1,
+            snakeSize - 2,
+            snakeSize - 2
+        );
 
-        }
-    );
-
-}
-
-
-function changeDirection(direction){
-
-    if(!snakeRun)return;
-
-
-    if(
-        direction === "up" &&
-        snakeDir !== "down"
-    ){
-
-        snakeNextDir = "up";
-
-    }
-
-
-    if(
-        direction === "down" &&
-        snakeDir !== "up"
-    ){
-
-        snakeNextDir = "down";
-
-    }
-
-
-    if(
-        direction === "left" &&
-        snakeDir !== "right"
-    ){
-
-        snakeNextDir = "left";
-
-    }
-
-
-    if(
-        direction === "right" &&
-        snakeDir !== "left"
-    ){
-
-        snakeNextDir = "right";
-
-    }
+    });
 
 }
-
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(e.key === "ArrowUp"){
-            changeDirection("up");
-        }
-
-        if(e.key === "ArrowDown"){
-            changeDirection("down");
-        }
-
-        if(e.key === "ArrowLeft"){
-            changeDirection("left");
-        }
-
-        if(e.key === "ArrowRight"){
-            changeDirection("right");
-        }
-
-    }
-);
 
 
 function endSnake(){
 
     clearInterval(snakeTimer);
 
-    snakeRun = false;
+    snakeRunning = false;
 
-    const points =
-        snakeScoreN * 10;
-
-    addRecord(
-        points,
-        "Mini Yılan"
-    );
-
-    alert(
-        "🐍 Oyun bitti!\n\n" +
-        "Skor: " +
-        snakeScoreN +
-        "\n" +
-        "Puan: " +
-        points
-    );
+    document.getElementById("snakeMsg").textContent =
+        "💥 Oyun bitti! Puanın: " +
+        snakeScore;
 
 }
 
 
-/* =========================
-   OYUN EKRANI DÜZELTMESİ
-========================= */
-
-document
-    .querySelectorAll(".game")
-    .forEach(game => {
-
-        game.classList.add("gameScreen");
-
-    });
-
-
-/* =========================
-   BAŞLANGIÇ
-========================= */
-
-if(data.name && data.password){
-
-    updateUI();
-
-}
-  </script>
-/* =========================
-   HESAP SİSTEMİ
-========================= */
-
-const KEY = "miniOyunMerkezi_v4";
-
-let data = {
-    name: "",
-    password: "",
-    coins: 0,
-    records: [],
-    owned: [],
-    equipped: {
-        hat: "",
-        glasses: "",
-        shirt: "",
-        pants: "",
-        shoes: ""
-    }
-};
-
-
-/* KAYITLI VERİ */
-
-const saved = localStorage.getItem(KEY);
-
-if(saved){
-
-    try{
-
-        const oldData = JSON.parse(saved);
-
-        data = {
-            ...data,
-            ...oldData,
-            equipped:{
-                ...data.equipped,
-                ...(oldData.equipped || {})
-            }
-        };
-
-    }catch(e){
-
-        console.log("Kayıt okunamadı.");
-
-    }
-
-}
-
-
-/* KAYDET */
-
-function save(){
-
-    localStorage.setItem(
-        KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =========================
-   HESAP OLUŞTUR
-========================= */
-
-function createAccount(){
-
-    const name =
-        document.getElementById("newName")
-        .value
-        .trim();
-
-    const password =
-        document.getElementById("newPassword")
-        .value;
-
-    if(name.length < 2){
-
-        alert("❌ En az 2 karakterlik bir isim yaz.");
-
-        return;
-
-    }
-
-    if(password.length < 4){
-
-        alert("❌ Şifre en az 4 karakter olmalı.");
-
-        return;
-
-    }
-
-    data.name = name;
-    data.password = password;
-
-    save();
-
-    document
-        .getElementById("register")
-        .classList.add("hidden");
-
-    document
-        .getElementById("enter")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("hello")
-        .textContent =
-        "Hoş geldin, " + name + "!";
-
-}
-
-
-/* =========================
-   GİRİŞ
-========================= */
-
-function login(){
-
-    const password =
-        document
-        .getElementById("password")
-        .value;
-
-    if(password !== data.password){
-
-        alert("❌ Şifre yanlış!");
-
-        return;
-
-    }
-
-    document
-        .getElementById("login")
-        .classList.add("hidden");
-
-    updateUI();
-
-}
-
-
-/* =========================
-   ŞİFREMİ UNUTTUM
-========================= */
-
-function forgotPassword(){
-
-    if(!data.name){
-
-        alert(
-            "❌ Henüz kayıtlı bir hesap yok."
-        );
-
-        return;
-
-    }
-
-    const newPassword =
-        prompt(
-            "🔐 Yeni şifreni yaz:\n\n" +
-            "En az 4 karakter olmalı."
-        );
-
-    if(newPassword === null){
-
-        return;
-
-    }
-
-    if(newPassword.length < 4){
-
-        alert(
-            "❌ Şifre en az 4 karakter olmalı."
-        );
-
-        return;
-
-    }
-
-    data.password = newPassword;
-
-    save();
-
-    document
-        .getElementById("password")
-        .value = "";
-
-    alert(
-        "✅ Şifren başarıyla değiştirildi!"
-    );
-
-}
-
-
-/* =========================
-   SAYFA AÇILIŞI
-========================= */
-
-if(data.name && data.password){
-
-    document
-        .getElementById("register")
-        .classList.add("hidden");
-
-    document
-        .getElementById("enter")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("hello")
-        .textContent =
-        "Hoş geldin, " + data.name + "!";
-
-}
-
-
-/* =========================
-   MARKET
-========================= */
-
-const items = [
-
-    ["hat1","hat","🎩","Şapka",50],
-    ["hat2","hat","👑","Taç",150],
-    ["hat3","hat","🧢","Kep",250],
-
-    ["glasses1","glasses","😎","Güneş Gözlüğü",75],
-    ["glasses2","glasses","🤓","Gözlük",125],
-
-    ["shirt1","shirt","👕","Tişört",100],
-    ["shirt2","shirt","👔","Gömlek",200],
-    ["shirt3","shirt","🧥","Mont",350],
-
-    ["pants1","pants","👖","Pantolon",150],
-    ["pants2","pants","🩳","Şort",100],
-
-    ["shoes1","shoes","👟","Spor Ayakkabı",200],
-    ["shoes2","shoes","🥾","Bot",300]
-
-];
-
-
-function getItemIcon(type){
-
-    const id =
-        data.equipped[type];
-
-    const item =
-        items.find(
-            x => x[0] === id
-        );
-
-    return item
-        ? item[2]
-        : "";
-
-}
-
-
-function updateUI(){
-
-    document
-        .getElementById("player")
-        .textContent =
-        "👤 " + (data.name || "Oyuncu");
-
-    document
-        .getElementById("coins")
-        .textContent =
-        data.coins;
-
-    document
-        .getElementById("hat")
-        .textContent =
-        getItemIcon("hat");
-
-    document
-        .getElementById("glasses")
-        .textContent =
-        getItemIcon("glasses");
-
-    document
-        .getElementById("shirt")
-        .textContent =
-        getItemIcon("shirt");
-
-    document
-        .getElementById("pants")
-        .textContent =
-        getItemIcon("pants");
-
-    document
-        .getElementById("shoes")
-        .textContent =
-        getItemIcon("shoes");
-
-    renderShop();
-    renderRecords();
-
-}
-
-
-/* =========================
-   MAĞAZA
-========================= */
-
-function renderShop(){
-
-    const shop =
-        document.getElementById("shop");
-
-    if(!shop)return;
-
-    shop.innerHTML = "";
-
-    items.forEach(item => {
-
-        const id = item[0];
-        const type = item[1];
-        const icon = item[2];
-        const name = item[3];
-        const price = item[4];
-
-        const owned =
-            data.owned.includes(id);
-
-        const equipped =
-            data.equipped[type] === id;
-
-        const box =
-            document.createElement("div");
-
-        box.className = "item";
-
-        let buttonText;
-
-        if(equipped){
-
-            buttonText = "Çıkar";
-
-        }else if(owned){
-
-            buttonText = "Giy";
-
-        }else{
-
-            buttonText =
-                "Satın Al • " + price;
-
-        }
-
-        box.innerHTML = `
-
-            <div class="itemIcon">
-                ${icon}
-            </div>
-
-            <b>${name}</b>
-
-            <p>
-                ${
-                    owned
-                    ? "Sahipsin"
-                    : price + " puan"
-                }
-            </p>
-
-            <button class="btn">
-                ${buttonText}
-            </button>
-
-        `;
-
-        box
-            .querySelector("button")
-            .onclick =
-            () => shopAction(id);
-
-        shop.appendChild(box);
-
-    });
-
-}
-
-
-function shopAction(id){
-
-    const item =
-        items.find(
-            x => x[0] === id
-        );
-
-    if(!item)return;
-
-    const type = item[1];
-    const price = item[4];
-
-    if(data.equipped[type] === id){
-
-        data.equipped[type] = "";
-
-        save();
-        updateUI();
-
-        return;
-
-    }
-
-    if(data.owned.includes(id)){
-
-        data.equipped[type] = id;
-
-        save();
-        updateUI();
-
-        return;
-
-    }
-
-    if(data.coins < price){
-
-        alert(
-            "💰 Yeterli puanın yok!"
-        );
-
-        return;
-
-    }
-
-    data.coins -= price;
-
-    data.owned.push(id);
-
-    data.equipped[type] = id;
-
-    save();
-    updateUI();
-
-}
-
-
-/* =========================
-   REKOR SİSTEMİ
-========================= */
-
-function addRecord(points, game){
-
-    points =
-        Math.max(
-            0,
-            Math.floor(points)
-        );
-
-    if(points <= 0)return;
-
-    data.coins += points;
-
-    data.records.push({
-        game: game,
-        points: points
-    });
-
-    data.records.sort(
-        (a,b) =>
-        b.points - a.points
-    );
-
-    data.records =
-        data.records.slice(0,3);
-
-    save();
-    updateUI();
-
-}
-
-
-function renderRecords(){
-
-    const records =
-        document.getElementById("records");
-
-    if(!records)return;
-
-    records.innerHTML = "";
-
-    const medals = [
-        "🥇",
-        "🥈",
-        "🥉"
-    ];
-
-    for(let i = 0; i < 3; i++){
-
-        const box =
-            document.createElement("div");
-
-        box.className =
-            "record";
-
-        if(data.records[i]){
-
-            const record =
-                data.records[i];
-
-            box.innerHTML = `
-
-                <div class="medal">
-                    ${medals[i]}
-                </div>
-
-                <b>${record.game}</b>
-
-                <div style="
-                    font-size:25px;
-                    margin-top:5px;
-                ">
-                    ${record.points}
-                </div>
-
-                <small>puan</small>
-
-            `;
-
-        }else{
-
-            box.innerHTML = `
-
-                <div class="medal">
-                    ${medals[i]}
-                </div>
-
-                <div>
-                    Henüz rekor yok
-                </div>
-
-            `;
-
-        }
-
-        records.appendChild(box);
-
-    }
-
-}
-
-
-/* =========================
-   OYUN AÇMA
-========================= */
-
-function openGame(id){
-
-    document
-        .getElementById("home")
-        .classList.add("hidden");
-
-    document
-        .querySelectorAll(".game")
-        .forEach(game => {
-
-            game.classList.remove("active");
-
-        });
-
-    const game =
-        document.getElementById(id);
-
-    if(game){
-
-        game.classList.add("active");
-
-    }
-
-    if(id === "memory"){
-
-        startMemory();
-
-    }
-
-}
-
-
-/* =========================
-   ANA MENÜ
-========================= */
-
-function backHome(){
-
-    clearInterval(clickTimer);
-    clearInterval(targetTimer);
-    clearInterval(snakeTimer);
-
-    clickRun = false;
-    targetRun = false;
-    snakeRun = false;
-
-    const button =
-        document.getElementById("clickButton");
-
-    if(button){
-
-        button.disabled = true;
-
-    }
-
-    document
-        .querySelectorAll(".game")
-        .forEach(game => {
-
-            game.classList.remove("active");
-
-        });
-
-    document
-        .getElementById("home")
-        .classList.remove("hidden");
-
-    updateUI();
-
-}
-
-
-/* =========================
-   HAFIZA
-========================= */
-
-const memorySymbols = [
-    "🍎","🍎",
-    "🚀","🚀",
-    "🐱","🐱",
-    "⚽","⚽",
-    "🎮","🎮",
-    "🍕","🍕",
-    "⭐","⭐",
-    "🔥","🔥"
-];
-
-let memoryFirst = null;
-let memorySecond = null;
-let memoryLock = false;
-let memoryMovesN = 0;
-let memoryMatched = 0;
-
-
-function startMemory(){
-
-    const board =
-        document.getElementById(
-            "memoryBoard"
-        );
-
-    if(!board)return;
-
-    board.innerHTML = "";
-
-    memoryFirst = null;
-    memorySecond = null;
-    memoryLock = false;
-    memoryMovesN = 0;
-    memoryMatched = 0;
-
-    document
-        .getElementById("moves")
-        .textContent = "0";
-
-    const shuffled =
-        [...memorySymbols].sort(
-            () => Math.random() - 0.5
-        );
-
-    shuffled.forEach(symbol => {
-
-        const card =
-            document.createElement("button");
-
-        card.className = "mcard";
-
-        card.textContent = "?";
-
-        card.dataset.symbol =
-            symbol;
-
-        card.dataset.open = "no";
-
-        card.onclick =
-            () => flipMemory(card);
-
-        board.appendChild(card);
-
-    });
-
-}
-
-
-function flipMemory(card){
-
-    if(memoryLock)return;
-
-    if(card.dataset.open === "yes")
-        return;
-
-    if(card.classList.contains("done"))
-        return;
-
-    card.dataset.open = "yes";
-
-    card.classList.add("open");
-
-    card.textContent =
-        card.dataset.symbol;
-
-    if(!memoryFirst){
-
-        memoryFirst = card;
-
-        return;
-
-    }
-
-    memorySecond = card;
-
-    memoryMovesN++;
-
-    document
-        .getElementById("moves")
-        .textContent =
-        memoryMovesN;
+function changeDirection(direction){
 
     if(
-        memoryFirst.dataset.symbol ===
-        memorySecond.dataset.symbol
+        direction === "up" &&
+        snakeDirection !== "down"
     ){
-
-        memoryFirst.classList.add("done");
-        memorySecond.classList.add("done");
-
-        memoryMatched += 2;
-
-        memoryFirst = null;
-        memorySecond = null;
-
-        if(
-            memoryMatched ===
-            memorySymbols.length
-        ){
-
-            const points =
-                Math.max(
-                    20,
-                    150 -
-                    memoryMovesN * 5
-                );
-
-            setTimeout(() => {
-
-                addRecord(
-                    points,
-                    "Hafıza"
-                );
-
-                alert(
-                    "🧠 Tebrikler!\n\n" +
-                    "Hamle: " +
-                    memoryMovesN +
-                    "\nPuan: " +
-                    points
-                );
-
-            },500);
-
-        }
-
-    }else{
-
-        memoryLock = true;
-
-        memoryFirst.classList.add("wrong");
-        memorySecond.classList.add("wrong");
-
-        setTimeout(() => {
-
-            memoryFirst.textContent = "?";
-            memorySecond.textContent = "?";
-
-            memoryFirst.classList.remove(
-                "open",
-                "wrong"
-            );
-
-            memorySecond.classList.remove(
-                "open",
-                "wrong"
-            );
-
-            memoryFirst.dataset.open =
-                "no";
-
-            memorySecond.dataset.open =
-                "no";
-
-            memoryFirst = null;
-            memorySecond = null;
-
-            memoryLock = false;
-
-        },700);
-
-    }
-
-}
-
-
-/* =========================
-   HIZLI TIKLA
-========================= */
-
-let clickTimer = null;
-let clickRun = false;
-let clickN = 0;
-
-function startClicker(){
-
-    clearInterval(clickTimer);
-
-    clickRun = true;
-    clickN = 0;
-
-    let time = 10;
-
-    document
-        .getElementById("clickScore")
-        .textContent = "0";
-
-    document
-        .getElementById("clickTime")
-        .textContent = time;
-
-    document
-        .getElementById("clickButton")
-        .disabled = false;
-
-    clickTimer =
-        setInterval(() => {
-
-            time--;
-
-            document
-                .getElementById("clickTime")
-                .textContent = time;
-
-            if(time <= 0){
-
-                finishClicker();
-
-            }
-
-        },1000);
-
-}
-
-
-function clickFast(){
-
-    if(!clickRun)return;
-
-    clickN++;
-
-    document
-        .getElementById("clickScore")
-        .textContent =
-        clickN;
-
-}
-
-
-function finishClicker(){
-
-    clearInterval(clickTimer);
-
-    clickRun = false;
-
-    document
-        .getElementById("clickButton")
-        .disabled = true;
-
-    const points =
-        clickN * 5;
-
-    addRecord(
-        points,
-        "Hızlı Tıkla"
-    );
-
-    alert(
-        "⚡ Bitti!\n\n" +
-        "Tıklama: " +
-        clickN +
-        "\nPuan: " +
-        points
-    );
-
-}
-
-
-/* =========================
-   HEDEF
-========================= */
-
-let targetTimer = null;
-let targetRun = false;
-let targetN = 0;
-
-function startTarget(){
-
-    clearInterval(targetTimer);
-
-    targetRun = true;
-    targetN = 0;
-
-    let time = 20;
-
-    document
-        .getElementById("targetScore")
-        .textContent = "0";
-
-    document
-        .getElementById("targetTime")
-        .textContent = time;
-
-    moveTarget();
-
-    targetTimer =
-        setInterval(() => {
-
-            time--;
-
-            document
-                .getElementById("targetTime")
-                .textContent = time;
-
-            if(time <= 0){
-
-                finishTarget();
-
-            }
-
-        },1000);
-
-}
-
-
-function moveTarget(){
-
-    if(!targetRun)return;
-
-    const area =
-        document.getElementById(
-            "targetArea"
-        );
-
-    area.innerHTML = "";
-
-    const target =
-        document.createElement("button");
-
-    target.className = "target";
-
-    const maxX =
-        Math.max(
-            0,
-            area.clientWidth - 55
-        );
-
-    const maxY =
-        Math.max(
-            0,
-            area.clientHeight - 55
-        );
-
-    target.style.left =
-        Math.random() * maxX + "px";
-
-    target.style.top =
-        Math.random() * maxY + "px";
-
-    target.onclick = () => {
-
-        if(!targetRun)return;
-
-        targetN++;
-
-        document
-            .getElementById("targetScore")
-            .textContent =
-            targetN;
-
-        moveTarget();
-
-    };
-
-    area.appendChild(target);
-
-}
-
-
-function finishTarget(){
-
-    clearInterval(targetTimer);
-
-    targetRun = false;
-
-    document
-        .getElementById("targetArea")
-        .innerHTML = "";
-
-    const points =
-        targetN * 10;
-
-    addRecord(
-        points,
-        "Hedef"
-    );
-
-    alert(
-        "🎯 Bitti!\n\n" +
-        "Hedef: " +
-        targetN +
-        "\n" +
-        "Puan: " +
-        points
-    );
-
-}
-
-
-/* =========================
-   YILAN
-========================= */
-
-let snakeTimer = null;
-let snakeRun = false;
-let snakeScore = 0;
-let snakeDirection = "right";
-
-function startSnake(){
-
-    clearInterval(snakeTimer);
-
-    snakeRun = true;
-    snakeScore = 0;
-    snakeDirection = "right";
-
-    document
-        .getElementById("snakeScore")
-        .textContent = "0";
-
-    /* Yılan başlangıcı */
-
-    snake = [
-        {x:10,y:10},
-        {x:9,y:10},
-        {x:8,y:10}
-    ];
-
-    snakeFood();
-
-    drawSnake();
-
-    snakeTimer =
-        setInterval(
-            snakeMove,
-            120
-        );
-
-}
-
-
-let snake = [];
-
-let food = {
-    x:15,
-    y:15
-};
-
-
-function snakeFood(){
-
-    food = {
-        x:
-            Math.floor(
-                Math.random()*20
-            ),
-
-        y:
-            Math.floor(
-                Math.random()*20
-            )
-    };
-
-}
-
-
-function changeDirection(dir){
-
-    if(dir === "up" &&
-       snakeDirection !== "down"){
 
         snakeDirection = "up";
 
     }
 
-    if(dir === "down" &&
-       snakeDirection !== "up"){
+    if(
+        direction === "down" &&
+        snakeDirection !== "up"
+    ){
 
         snakeDirection = "down";
 
     }
 
-    if(dir === "left" &&
-       snakeDirection !== "right"){
+    if(
+        direction === "left" &&
+        snakeDirection !== "right"
+    ){
 
         snakeDirection = "left";
 
     }
 
-    if(dir === "right" &&
-       snakeDirection !== "left"){
+    if(
+        direction === "right" &&
+        snakeDirection !== "left"
+    ){
 
         snakeDirection = "right";
 
@@ -3405,205 +2038,93 @@ function changeDirection(dir){
 }
 
 
-function snakeMove(){
-
-    if(!snakeRun)return;
-
-    const head = {
-        x:snake[0].x,
-        y:snake[0].y
-    };
-
-    if(snakeDirection === "up")
-        head.y--;
-
-    if(snakeDirection === "down")
-        head.y++;
-
-    if(snakeDirection === "left")
-        head.x--;
-
-    if(snakeDirection === "right")
-        head.x++;
-
-    /* Duvara çarpma */
-
-    if(
-        head.x < 0 ||
-        head.x >= 20 ||
-        head.y < 0 ||
-        head.y >= 20
-    ){
-
-        finishSnake();
-
-        return;
-
-    }
-
-    /* Kendine çarpma */
-
-    if(
-        snake.some(
-            part =>
-            part.x === head.x &&
-            part.y === head.y
-        )
-    ){
-
-        finishSnake();
-
-        return;
-
-    }
-
-    snake.unshift(head);
-
-    /* Yem */
-
-    if(
-        head.x === food.x &&
-        head.y === food.y
-    ){
-
-        snakeScore++;
-
-        document
-            .getElementById("snakeScore")
-            .textContent =
-            snakeScore;
-
-        snakeFood();
-
-    }else{
-
-        snake.pop();
-
-    }
-
-    drawSnake();
-
-}
-
-
-function drawSnake(){
-
-    const canvas =
-        document.getElementById(
-            "snakeCanvas"
-        );
-
-    if(!canvas)return;
-
-    const ctx =
-        canvas.getContext("2d");
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    const size = 20;
-
-    /* Yem */
-
-    ctx.fillStyle = "#ff4757";
-
-    ctx.fillRect(
-        food.x * size,
-        food.y * size,
-        size-2,
-        size-2
-    );
-
-    /* Yılan */
-
-    ctx.fillStyle = "#2ed573";
-
-    snake.forEach(part => {
-
-        ctx.fillRect(
-            part.x * size,
-            part.y * size,
-            size-2,
-            size-2
-        );
-
-    });
-
-}
-
-
-function finishSnake(){
-
-    clearInterval(snakeTimer);
-
-    snakeRun = false;
-
-    const points =
-        snakeScore * 15;
-
-    addRecord(
-        points,
-        "Mini Yılan"
-    );
-
-    alert(
-        "🐍 Oyun bitti!\n\n" +
-        "Skor: " +
-        snakeScore +
-        "\nPuan: " +
-        points
-    );
-
-}
-
-
 /* =========================
-   KLAVYE
+   KLAVYEYLE YILAN
 ========================= */
 
 document.addEventListener(
     "keydown",
-    function(e){
+    function(event){
 
-        if(
-            e.key === "ArrowUp"
-        )
+        if(event.key === "ArrowUp"){
             changeDirection("up");
+        }
 
-        if(
-            e.key === "ArrowDown"
-        )
+        if(event.key === "ArrowDown"){
             changeDirection("down");
+        }
 
-        if(
-            e.key === "ArrowLeft"
-        )
+        if(event.key === "ArrowLeft"){
             changeDirection("left");
+        }
 
-        if(
-            e.key === "ArrowRight"
-        )
+        if(event.key === "ArrowRight"){
             changeDirection("right");
+        }
 
     }
 );
 
 
 /* =========================
+   REKORLARI YÜKLE
+========================= */
+
+function loadRecords(){
+
+    const bestScore =
+        Number(
+            localStorage.getItem("bestScore") || 0
+        );
+
+    const memoryBest =
+        Number(
+            localStorage.getItem("memoryBest") || 0
+        );
+
+    const clickBest =
+        Number(
+            localStorage.getItem("clickBest") || 0
+        );
+
+    const targetBest =
+        Number(
+            localStorage.getItem("targetBest") || 0
+        );
+
+
+    document.getElementById("bestScore").textContent =
+        bestScore;
+
+    document.getElementById("memoryBest").textContent =
+        memoryBest;
+
+    document.getElementById("clickBest").textContent =
+        clickBest;
+
+    document.getElementById("targetBest").textContent =
+        targetBest;
+
+}
+
+
+/* =========================
    BAŞLANGIÇ
 ========================= */
 
-updateUI();
+loadRecords();
 
+resetClickGame();
+
+resetTarget();
+
+drawSnakeStart();
 
 </script>
 
 </body>
 </html>
+
  
 
-  
+ 

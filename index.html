@@ -1817,11 +1817,21 @@ function resetAccountData(){
     const oldName = account.name;
     const oldPassword = account.password;
 
-    account = {
-        name: oldName,
-        password: oldPassword,
-        coins: 0
-    };
+account = {
+    name: oldName,
+    password: oldPassword,
+    coins: 0,
+    owned: [],
+    usedCodes: [],
+    equipped: {
+        hat: null,
+        glasses: null,
+        shirt: null,
+        pants: null,
+        shoes: null,
+        accessory: null
+    }
+};
 
 localStorage.removeItem("snakeBest");
 localStorage.removeItem("bestScore");

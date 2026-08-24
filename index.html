@@ -1733,8 +1733,11 @@ function resetAccountData(){
         coins: 0
     };
 
-    localStorage.removeItem("snakeBest");
-    localStorage.removeItem("bestScore");
+localStorage.removeItem("snakeBest");
+localStorage.removeItem("bestScore");
+localStorage.removeItem("memoryBest");
+localStorage.removeItem("clickBest");
+localStorage.removeItem("targetBest");
 
     saveAccount();
     updatePage();

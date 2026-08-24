@@ -1833,13 +1833,10 @@ account = {
         pants: null,
         shoes: null,
         accessory: null
-        coins = 0;
-
     }
 };
 
-
-
+coins = 0;
 
 localStorage.removeItem("snakeBest");
 localStorage.removeItem("bestScore");
@@ -1849,10 +1846,7 @@ localStorage.removeItem("targetBest");
 
 saveAccount();
 
-updateRecords();
-updateCoins();
-renderAvatar();
-createShop();
+updateEverything();
 
 alert(
     "✅ Veriler sıfırlandı!\n\n" +
@@ -1911,7 +1905,7 @@ const giftCodes = {
 
     "MT2500": {
         type: "coins",
-        amount: 1000
+        amount: 100000
     }
 
 };

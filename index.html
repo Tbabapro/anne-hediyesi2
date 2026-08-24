@@ -1003,6 +1003,34 @@ header h1{
 
     <p id="shopMsg" class="msg"></p>
 
+    <div class="panel" style="margin-top:20px;">
+
+    <h2>🎁 Hediye Kodu</h2>
+
+    <p>
+        Özel kodunu gir ve ödülünü al!
+    </p>
+
+    <input
+        id="giftCodeInput"
+        class="input"
+        maxlength="30"
+        type="text"
+        placeholder="Hediye kodunu yaz">
+
+    <button
+        class="btn"
+        onclick="redeemGiftCode()">
+        🎁 Kodu Kullan
+    </button>
+
+    <p
+        id="giftCodeMsg"
+        class="msg">
+    </p>
+
+</div>
+
 </section>
 
 
@@ -1331,6 +1359,7 @@ let account = {
     password:"",
     coins:0,
     owned:[],
+    usedCodes:[],
     equipped:{
         hat:null,
         glasses:null,
@@ -1366,6 +1395,10 @@ function loadAccount(){
         if(!account.owned){
             account.owned = [];
         }
+
+        if(!account.usedCodes){
+    account.usedCodes = [];
+}
 
         if(!account.equipped){
 
@@ -1739,18 +1772,18 @@ localStorage.removeItem("memoryBest");
 localStorage.removeItem("clickBest");
 localStorage.removeItem("targetBest");
 
-    saveAccount();
-    updatePage();
+saveAccount();
 
-    stopSnake();
+updateRecords();
+updateCoins();
+renderAvatar();
+createShop();
 
-    document.getElementById("snakeScore").textContent = "0";
-    document.getElementById("snakeMsg").textContent = "";
+alert(
+    "✅ Veriler sıfırlandı!\n\n" +
+    "İsmin ve şifren korundu."
+);
 
-    alert(
-        "✅ Veriler sıfırlandı!\n\n" +
-        "İsmin ve şifren korundu."
-    );
 }
 
 
@@ -1793,6 +1826,132 @@ function updateRecords(){
 
     document.getElementById("snakeBest").textContent =
         localStorage.getItem("snakeBest") || 0;
+
+}
+        /* =====================================================
+   HEDİYE KODLARI
+===================================================== */
+
+const giftCodes = {
+
+    "ILKHEDIYE": {
+        type: "coins",
+        amount: 500
+    }
+
+};
+        function redeemGiftCode(){
+
+    const input =
+        document.getElementById("giftCodeInput");
+
+    const msg =
+        document.getElementById("giftCodeMsg");
+
+    const code =
+        input.value.trim().toUpperCase();
+
+    if(!code){
+
+        msg.textContent =
+            "❌ Önce bir hediye kodu yaz.";
+
+        return;
+
+    }
+
+
+    const reward =
+        giftCodes[code];
+
+
+    if(!reward){
+
+        msg.textContent =
+            "❌ Bu hediye kodu geçersiz.";
+
+        return;
+
+    }
+
+
+    if(account.usedCodes.includes(code)){
+
+        msg.textContent =
+            "🚫 Bu kodu daha önce kullandın.";
+
+        return;
+
+    }
+
+
+    /* COIN ÖDÜLÜ */
+
+    if(reward.type === "coins"){
+
+        addCoins(reward.amount);
+
+        msg.textContent =
+            "🎉 Tebrikler! +" +
+            reward.amount +
+            " puan kazandın!";
+
+    }
+
+
+    /* KIYAFET ÖDÜLÜ */
+
+    if(reward.type === "item"){
+
+        const item =
+            shopItems.find(function(x){
+                return x.id === reward.itemId;
+            });
+
+
+        if(!item){
+
+            msg.textContent =
+                "❌ Bu ödül eşyası bulunamadı.";
+
+            return;
+
+        }
+
+
+        if(account.owned.includes(item.id)){
+
+            msg.textContent =
+                "👕 Bu kıyafete zaten sahipsin.";
+
+            return;
+
+        }
+
+
+        account.owned.push(item.id);
+
+        account.equipped[item.type] =
+            item.id;
+
+        saveAccount();
+
+        renderAvatar();
+        createShop();
+
+        msg.textContent =
+            "🎉 Tebrikler! " +
+            item.name +
+            " kıyafetini kazandın!";
+
+    }
+
+
+    account.usedCodes.push(code);
+
+    saveAccount();
+
+    input.value = "";
 
 }
 

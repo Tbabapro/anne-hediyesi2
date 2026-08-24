@@ -338,7 +338,36 @@ header h1{
 }
 .cyan{background:#18dcff}
 .lime{background:#7bed9f}
-.gold{background:#ffd32a}
+.gold{
+    background:linear-gradient(
+        135deg,
+        #fff176,
+        #ffd700,
+        #fff59d,
+        #ffb300,
+        #fff176
+    );
+    background-size:300% 300%;
+    animation:goldShine 1.8s linear infinite;
+    box-shadow:
+        0 0 8px #ffd700,
+        0 0 18px #ffd700,
+        0 0 30px #ffb300;
+}
+
+@keyframes goldShine{
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
 .brown{background:#8e5a3c}
 
 /* =========================
@@ -666,6 +695,34 @@ header h1{
         height:145px;
     }
 
+}
+    .angelWings{
+    left:48px;
+    top:125px;
+    width:145px;
+    height:90px;
+    z-index:4;
+    display:none;
+}
+
+.angelWings::before,
+.angelWings::after{
+    position:absolute;
+    font-size:65px;
+    line-height:1;
+    top:5px;
+}
+
+.angelWings::before{
+    content:"🪽";
+    left:-5px;
+    transform:scaleX(-1) rotate(-10deg);
+}
+
+.angelWings::after{
+    content:"🪽";
+    right:-5px;
+    transform:rotate(-10deg);
 }
 </style>
 </head>
@@ -2161,7 +2218,7 @@ const shopItems = [
         name:"Altın Pantolon",
         icon:"👖",
         price:5500,
-        className:"gold"
+        className:"darkgold"
     },
 
 
@@ -2248,12 +2305,15 @@ const shopItems = [
     },
 
     {
-        id:"accessory_angel",
-        type:"accessory",
-        name:"Melek Kanadı",
-        icon:"🪽",
-        price:7000,
-        value:"🪽"
+        {
+    id:"accessory_angel",
+    type:"accessory",
+    name:"Melek Kanadı",
+    icon:"🪽",
+    price:7000,
+    className:"angelWings",
+    value:""
+}
     }
 
 ];

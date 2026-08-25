@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>account = {
-  
-coins = 0;
+<head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -341,6 +339,7 @@ header h1{
 }
 .cyan{background:#18dcff}
 .lime{background:#7bed9f}
+
 .gold{
     background:linear-gradient(
         135deg,
@@ -371,6 +370,7 @@ header h1{
         background-position:0% 50%;
     }
 }
+
 .brown{background:#8e5a3c}
 
 /* =========================
@@ -564,158 +564,54 @@ header h1{
     grid-row:2;
 }
 
-<!-- =========================
-     MARKET
-========================= -->
+/* =========================
+   MARKET
+========================= */
 
-<button
-    class="btn"
-    onclick="toggleMarket()">
-    🛍️ Avatar Marketi Aç
-</button>
+.marketSection{
+    display:none;
+}
 
-<section
-    id="marketSection"
-    class="panel marketSection">
+.marketSection.open{
+    display:block;
+}
 
-    <h2>🛍️ Avatar Marketi</h2>
+/* =========================
+   MELEK KANATLARI
+========================= */
 
-    <button
-        class="back"
-        onclick="toggleMarket()">
-        ❌ Marketi Kapat
-    </button>
+.angelWings{
+    left:48px;
+    top:125px;
+    width:145px;
+    height:90px;
+    z-index:4;
+    display:none;
+}
 
-    <p>
-        Daha özel eşyalar daha pahalıdır.
-    </p>
+.angelWings::before,
+.angelWings::after{
+    position:absolute;
+    font-size:65px;
+    line-height:1;
+    top:5px;
+}
 
-    <div class="shopTabs">
+.angelWings::before{
+    content:"🪽";
+    left:-5px;
+    transform:scaleX(-1) rotate(-10deg);
+}
 
-        <button
-            class="shopTab active"
-            onclick="showCategory('all')">
-            ⭐ Hepsi
-        </button>
+.angelWings::after{
+    content:"🪽";
+    right:-5px;
+    transform:rotate(-10deg);
+}
 
-        <button
-            class="shopTab"
-            onclick="showCategory('hat')">
-            🎩 Şapka
-        </button>
-
-        <button
-            class="shopTab"
-            onclick="showCategory('glasses')">
-            🕶️ Gözlük
-        </button>
-
-        <button
-            class="shopTab"
-            onclick="showCategory('shirt')">
-            👕 Üst
-        </button>
-
-        <button
-            class="shopTab"
-            onclick="showCategory('pants')">
-            👖 Pantolon
-        </button>
-
-        <button
-            class="shopTab"
-            onclick="showCategory('shoes')">
-            👟 Ayakkabı
-        </button>
-
-        <button
-            class="shopTab"
-            onclick="showCategory('accessory')">
-            ✨ Aksesuar
-        </button>
-
-    </div>
-
-    <div id="shop" class="shop"></div>
-
-    <p id="shopMsg" class="msg"></p>
-
-    <div class="panel" style="margin-top:20px;">
-
-        <h2>🎁 Hediye Kodu</h2>
-
-        <p>
-            Özel kodunu gir ve ödülünü al!
-        </p>
-
-        <input
-            id="giftCodeInput"
-            class="input"
-            maxlength="30"
-            type="text"
-            placeholder="Hediye kodunu yaz">
-
-        <button
-            class="btn"
-            onclick="redeemGiftCode()">
-            🎁 Kodu Kullan
-        </button>
-
-        <p id="giftCodeMsg" class="msg"></p>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     REKORLAR
-========================= -->
-
-<section class="panel">
-
-    <h2>🏆 Rekorlar</h2>
-
-    <div class="records">
-
-        <div class="record">
-            <div class="medal">🥇</div>
-            <b>En Yüksek Puan</b>
-            <p id="bestScore">0</p>
-        </div>
-
-        <div class="record">
-            <div class="medal">🧠</div>
-            <b>Hafıza</b>
-            <p id="memoryBest">0</p>
-        </div>
-
-        <div class="record">
-            <div class="medal">👆</div>
-            <b>Tıklama</b>
-            <p id="clickBest">0</p>
-        </div>
-
-        <div class="record">
-            <div class="medal">🎯</div>
-            <b>Hedef</b>
-            <p id="targetBest">0</p>
-        </div>
-
-        <div class="record">
-            <div class="medal">🐍</div>
-            <b>Yılan</b>
-            <p id="snakeBest">0</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     MOBİL CSS
-========================= -->
+/* =========================
+   MOBİL CSS
+========================= */
 
 @media(max-width:800px){
 
@@ -768,40 +664,6 @@ header h1{
         height:145px;
     }
 
-}
-
-
-<!-- =========================
-     MELEK KANATLARI
-========================= -->
-
-.angelWings{
-    left:48px;
-    top:125px;
-    width:145px;
-    height:90px;
-    z-index:4;
-    display:none;
-}
-
-.angelWings::before,
-.angelWings::after{
-    position:absolute;
-    font-size:65px;
-    line-height:1;
-    top:5px;
-}
-
-.angelWings::before{
-    content:"🪽";
-    left:-5px;
-    transform:scaleX(-1) rotate(-10deg);
-}
-
-.angelWings::after{
-    content:"🪽";
-    right:-5px;
-    transform:rotate(-10deg);
 }
 
 </style>
@@ -984,10 +846,10 @@ header h1{
             </p>
 
             <button 
-    class="back" 
-    onclick="resetAccountData()"> 
-    🗑️ Verileri Sıfırla 
-</button>
+                class="back" 
+                onclick="resetAccountData()"> 
+                🗑️ Verileri Sıfırla 
+            </button>
 
         </div>
 
@@ -1105,6 +967,7 @@ header h1{
         onclick="toggleMarket()">
         ❌ Marketi Kapat
     </button>
+
     <p>
         Daha özel eşyalar daha pahalıdır.
     </p>
@@ -1154,31 +1017,31 @@ header h1{
 
     <div class="panel" style="margin-top:20px;">
 
-    <h2>🎁 Hediye Kodu</h2>
+        <h2>🎁 Hediye Kodu</h2>
 
-    <p>
-        Özel kodunu gir ve ödülünü al!
-    </p>
+        <p>
+            Özel kodunu gir ve ödülünü al!
+        </p>
 
-    <input
-        id="giftCodeInput"
-        class="input"
-        maxlength="30"
-        type="text"
-        placeholder="Hediye kodunu yaz">
+        <input
+            id="giftCodeInput"
+            class="input"
+            maxlength="30"
+            type="text"
+            placeholder="Hediye kodunu yaz">
 
-    <button
-        class="btn"
-        onclick="redeemGiftCode()">
-        🎁 Kodu Kullan
-    </button>
+        <button
+            class="btn"
+            onclick="redeemGiftCode()">
+            🎁 Kodu Kullan
+        </button>
 
-    <p
-        id="giftCodeMsg"
-        class="msg">
-    </p>
+        <p
+            id="giftCodeMsg"
+            class="msg">
+        </p>
 
-</div>
+    </div>
 
 </section>
 
@@ -1494,8 +1357,7 @@ header h1{
         </p>
 
     </div>
-
-    <script>
+<script>
 
 /* =====================================================
    HESAP SİSTEMİ
@@ -1546,8 +1408,8 @@ function loadAccount(){
         }
 
         if(!account.usedCodes){
-    account.usedCodes = [];
-}
+            account.usedCodes = [];
+        }
 
         if(!account.equipped){
 
@@ -1645,6 +1507,8 @@ function createAccount(){
         coins:0,
 
         owned:[],
+
+        usedCodes:[],
 
         equipped:{
             hat:null,
@@ -1804,11 +1668,6 @@ function resetAccount(){
     }
 
 
-    /*
-       Puanlar ve alınmış kıyafetler korunuyor.
-       Sadece isim ve şifre değişiyor.
-    */
-
     account.name = name;
     account.password = password;
 
@@ -1893,6 +1752,7 @@ function addCoins(amount){
 
 }
 
+
 function resetAccountData(){
 
     const answer = confirm(
@@ -1909,38 +1769,38 @@ function resetAccountData(){
     const oldName = account.name;
     const oldPassword = account.password;
 
-account = {
-    name: oldName,
-    password: oldPassword,
-    coins: 0,
-    owned: [],
-    usedCodes: [],
-    equipped: {
-        hat: null,
-        glasses: null,
-        shirt: null,
-        pants: null,
-        shoes: null,
-        accessory: null
-    }
-};
+    account = {
+        name: oldName,
+        password: oldPassword,
+        coins: 0,
+        owned: [],
+        usedCodes: [],
+        equipped: {
+            hat: null,
+            glasses: null,
+            shirt: null,
+            pants: null,
+            shoes: null,
+            accessory: null
+        }
+    };
 
-coins = 0;
+    coins = 0;
 
-localStorage.removeItem("snakeBest");
-localStorage.removeItem("bestScore");
-localStorage.removeItem("memoryBest");
-localStorage.removeItem("clickBest");
-localStorage.removeItem("targetBest");
+    localStorage.removeItem("snakeBest");
+    localStorage.removeItem("bestScore");
+    localStorage.removeItem("memoryBest");
+    localStorage.removeItem("clickBest");
+    localStorage.removeItem("targetBest");
 
-saveAccount();
+    saveAccount();
 
-updateEverything();
+    updateEverything();
 
-alert(
-    "✅ Veriler sıfırlandı!\n\n" +
-    "İsmin ve şifren korundu."
-);
+    alert(
+        "✅ Veriler sıfırlandı!\n\n" +
+        "İsmin ve şifren korundu."
+    );
 
 }
 
@@ -1986,7 +1846,9 @@ function updateRecords(){
         localStorage.getItem("snakeBest") || 0;
 
 }
-        /* =====================================================
+
+
+/* =====================================================
    HEDİYE KODLARI
 ===================================================== */
 
@@ -1998,7 +1860,9 @@ const giftCodes = {
     }
 
 };
-        function redeemGiftCode(){
+
+
+function redeemGiftCode(){
 
     const input =
         document.getElementById("giftCodeInput");
@@ -2018,10 +1882,8 @@ const giftCodes = {
 
     }
 
-
     const reward =
         giftCodes[code];
-
 
     if(!reward){
 
@@ -2032,7 +1894,6 @@ const giftCodes = {
 
     }
 
-
     if(account.usedCodes.includes(code)){
 
         msg.textContent =
@@ -2041,9 +1902,6 @@ const giftCodes = {
         return;
 
     }
-
-
-    /* COIN ÖDÜLÜ */
 
     if(reward.type === "coins"){
 
@@ -2056,16 +1914,12 @@ const giftCodes = {
 
     }
 
-
-    /* KIYAFET ÖDÜLÜ */
-
     if(reward.type === "item"){
 
         const item =
             shopItems.find(function(x){
                 return x.id === reward.itemId;
             });
-
 
         if(!item){
 
@@ -2076,7 +1930,6 @@ const giftCodes = {
 
         }
 
-
         if(account.owned.includes(item.id)){
 
             msg.textContent =
@@ -2085,7 +1938,6 @@ const giftCodes = {
             return;
 
         }
-
 
         account.owned.push(item.id);
 
@@ -2104,7 +1956,6 @@ const giftCodes = {
 
     }
 
-
     account.usedCodes.push(code);
 
     saveAccount();
@@ -2116,7 +1967,6 @@ const giftCodes = {
 
 /* =====================================================
    MARKET VERİLERİ
-   DAHA PAHALI + RENK ÇEŞİTLERİ
 ===================================================== */
 
 const shopItems = [
@@ -2166,7 +2016,6 @@ const shopItems = [
         value:"👑"
     },
 
-
     {
         id:"glasses_black",
         type:"glasses",
@@ -2202,7 +2051,6 @@ const shopItems = [
         price:2500,
         value:"🥽"
     },
-
 
     {
         id:"shirt_red",
@@ -2267,7 +2115,6 @@ const shopItems = [
         className:"gold"
     },
 
-
     {
         id:"pants_black",
         type:"pants",
@@ -2319,9 +2166,8 @@ const shopItems = [
         name:"Altın Pantolon",
         icon:"👖",
         price:5500,
-        className:"Gold"
+        className:"gold"
     },
-
 
     {
         id:"shoes_white",
@@ -2368,7 +2214,6 @@ const shopItems = [
         className:"gold"
     },
 
-
     {
         id:"accessory_star",
         type:"accessory",
@@ -2396,7 +2241,7 @@ const shopItems = [
         value:"💎"
     },
 
-       {
+    {
         id:"accessory_game",
         type:"accessory",
         name:"Oyun Rozeti",
@@ -2417,6 +2262,7 @@ const shopItems = [
 
 ];
 
+
 /* =====================================================
    MARKETİ OLUŞTUR
 ===================================================== */
@@ -2426,14 +2272,23 @@ function toggleMarket(){
     const market =
         document.getElementById("marketSection");
 
+    if(!market){
+        return;
+    }
+
     market.classList.toggle("open");
 
 }
+
 
 function createShop(){
 
     const shop =
         document.getElementById("shop");
+
+    if(!shop){
+        return;
+    }
 
     shop.innerHTML = "";
 
@@ -2449,6 +2304,7 @@ function createShop(){
 
         const owned =
             account.owned.includes(item.id);
+
         if(owned){
             box.classList.add("owned");
         }
@@ -2460,7 +2316,6 @@ function createShop(){
             owned
             ? (equipped ? "Üzerinde" : "Giy")
             : "Satın Al";
-
 
         box.innerHTML = `
 
@@ -2511,7 +2366,6 @@ function showCategory(category){
 
     });
 
-
     document
         .querySelectorAll(".item")
         .forEach(function(item){
@@ -2541,10 +2395,8 @@ function buyOrWear(id){
         return;
     }
 
-
     const owned =
         account.owned.includes(id);
-
 
     if(owned){
 
@@ -2553,7 +2405,6 @@ function buyOrWear(id){
         return;
 
     }
-
 
     if(coins < item.price){
 
@@ -2567,7 +2418,6 @@ function buyOrWear(id){
         return;
 
     }
-
 
     coins -= item.price;
 
@@ -2584,7 +2434,6 @@ function buyOrWear(id){
     createShop();
 
     updateRecords();
-
 
     document.getElementById("shopMsg").textContent =
         "✅ " +
@@ -2651,7 +2500,6 @@ function renderAvatar(){
 
     });
 
-
     types.forEach(function(type){
 
         const id =
@@ -2681,11 +2529,9 @@ function renderAvatar(){
             return;
         }
 
-
         element.className =
             "clothing " +
             type;
-
 
         if(item.className){
 
@@ -2695,14 +2541,12 @@ function renderAvatar(){
 
         }
 
-
         if(item.value){
 
             element.textContent =
                 item.value;
 
         }
-
 
         element.style.display =
             "block";
@@ -2751,7 +2595,6 @@ function openGame(id){
 
         });
 
-
     const screen =
         document.getElementById(id);
 
@@ -2759,14 +2602,12 @@ function openGame(id){
         return;
     }
 
-
     screen.classList.add("active");
 
     document.body.style.overflow =
         "hidden";
 
     screen.scrollTop = 0;
-
 
     if(id === "memoryScreen"){
         startMemory();
@@ -2872,7 +2713,6 @@ function startMemory(){
     memoryScore = 0;
     memoryMatched = 0;
 
-
     document.getElementById("memoryMoves").textContent =
         "0";
 
@@ -2882,18 +2722,15 @@ function startMemory(){
     document.getElementById("memoryMsg").textContent =
         "";
 
-
     const board =
         document.getElementById("memoryBoard");
 
     board.innerHTML = "";
 
-
     const cards =
         [...memoryEmojis].sort(
             () => Math.random() - .5
         );
-
 
     cards.forEach(function(emoji){
 
@@ -2934,12 +2771,10 @@ function memoryClick(card){
         return;
     }
 
-
     card.classList.add("open");
 
     card.textContent =
         card.dataset.value;
-
 
     if(memoryFirst === null){
 
@@ -2949,15 +2784,12 @@ function memoryClick(card){
 
     }
 
-
     memorySecond = card;
 
     memoryMoves++;
 
-
     document.getElementById("memoryMoves").textContent =
         memoryMoves;
-
 
     if(
         memoryFirst.dataset.value ===
@@ -2971,14 +2803,11 @@ function memoryClick(card){
 
         memoryMatched += 2;
 
-
         document.getElementById("memoryScore").textContent =
             memoryScore;
 
-
         memoryFirst = null;
         memorySecond = null;
-
 
         if(
             memoryMatched ===
@@ -3028,21 +2857,17 @@ function finishMemory(){
     const total =
         memoryScore + bonus;
 
-
     addCoins(total);
-
 
     document.getElementById("memoryMsg").textContent =
         "🎉 Harika! +" +
         total +
         " puan kazandın!";
 
-
     const oldBest =
         Number(
             localStorage.getItem("memoryBest") || 0
         );
-
 
     if(total > oldBest){
 
@@ -3052,7 +2877,6 @@ function finishMemory(){
         );
 
     }
-
 
     updateRecords();
 
@@ -3079,7 +2903,6 @@ function clickAction(){
 
     }
 
-
     clickScore++;
 
     document.getElementById("clickScore").textContent =
@@ -3094,11 +2917,9 @@ function startClick(){
         clearInterval(clickTimer);
     }
 
-
     clickTime = 30;
     clickScore = 0;
     clickStarted = true;
-
 
     document.getElementById("clickTime").textContent =
         "30";
@@ -3112,7 +2933,6 @@ function startClick(){
     document.getElementById("clickMsg").textContent =
         "🔥 Başladın!";
 
-
     clickTimer =
         setInterval(function(){
 
@@ -3120,7 +2940,6 @@ function startClick(){
 
             document.getElementById("clickTime").textContent =
                 clickTime;
-
 
             if(clickTime <= 0){
 
@@ -3141,28 +2960,23 @@ function finishClick(){
 
     clickStarted = false;
 
-
     document.getElementById("clickButton").textContent =
         "TEKRAR";
-
 
     document.getElementById("clickMsg").textContent =
         "⏰ Süre bitti! " +
         clickScore +
         " tıklama yaptın.";
 
-
     const reward =
         clickScore * 15;
 
     addCoins(reward);
 
-
     const oldBest =
         Number(
             localStorage.getItem("clickBest") || 0
         );
-
 
     if(clickScore > oldBest){
 
@@ -3172,7 +2986,6 @@ function finishClick(){
         );
 
     }
-
 
     updateRecords();
 
@@ -3195,11 +3008,9 @@ function startTarget(){
         clearInterval(targetTimer);
     }
 
-
     targetTime = 30;
     targetScore = 0;
     targetStarted = true;
-
 
     document.getElementById("targetTime").textContent =
         "30";
@@ -3210,16 +3021,13 @@ function startTarget(){
     document.getElementById("targetMsg").textContent =
         "🎯 Başla!";
 
-
     const target =
         document.getElementById("targetButton");
 
     target.style.display =
         "block";
 
-
     moveTarget();
-
 
     targetTimer =
         setInterval(function(){
@@ -3228,7 +3036,6 @@ function startTarget(){
 
             document.getElementById("targetTime").textContent =
                 targetTime;
-
 
             if(targetTime <= 0){
 
@@ -3249,14 +3056,12 @@ function moveTarget(){
     const target =
         document.getElementById("targetButton");
 
-
     const maxX =
         Math.max(
             1,
             area.clientWidth -
             target.offsetWidth
         );
-
 
     const maxY =
         Math.max(
@@ -3265,12 +3070,10 @@ function moveTarget(){
             target.offsetHeight
         );
 
-
     target.style.left =
         Math.floor(
             Math.random() * maxX
         ) + "px";
-
 
     target.style.top =
         Math.floor(
@@ -3286,13 +3089,10 @@ function hitTarget(){
         return;
     }
 
-
     targetScore++;
-
 
     document.getElementById("targetScore").textContent =
         targetScore;
-
 
     moveTarget();
 
@@ -3307,27 +3107,22 @@ function finishTarget(){
 
     targetStarted = false;
 
-
     document.getElementById("targetButton").style.display =
         "none";
-
 
     document.getElementById("targetMsg").textContent =
         "🏁 Süre bitti! " +
         targetScore +
         " hedef vurdun.";
 
-
     addCoins(
         targetScore * 20
     );
-
 
     const oldBest =
         Number(
             localStorage.getItem("targetBest") || 0
         );
-
 
     if(targetScore > oldBest){
 
@@ -3337,7 +3132,6 @@ function finishTarget(){
         );
 
     }
-
 
     updateRecords();
 
@@ -3354,7 +3148,6 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
-
 let snake = [];
 let food = {};
 let snakeDirection = "right";
@@ -3370,7 +3163,6 @@ function startSnake(){
         clearInterval(snakeTimer);
     }
 
-
     snake = [
 
         {x:200,y:200},
@@ -3378,7 +3170,6 @@ function startSnake(){
         {x:160,y:200}
 
     ];
-
 
     snakeDirection =
         "right";
@@ -3392,18 +3183,15 @@ function startSnake(){
     snakeRunning =
         true;
 
-
     document.getElementById("snakeScore").textContent =
         "0";
 
     document.getElementById("snakeMsg").textContent =
         "🐍 Başladın!";
 
-
     createFood();
 
     drawSnake();
-
 
     snakeTimer =
         setInterval(
@@ -3430,7 +3218,6 @@ function createFood(){
 
     };
 
-
     const onSnake =
         snake.some(function(part){
 
@@ -3440,7 +3227,6 @@ function createFood(){
             );
 
         });
-
 
     if(onSnake){
 
@@ -3457,16 +3243,13 @@ function snakeLoop(){
         return;
     }
 
-
     snakeDirection =
         nextDirection;
-
 
     const head = {
         x:snake[0].x,
         y:snake[0].y
     };
-
 
     if(snakeDirection === "up"){
         head.y -= 20;
@@ -3484,7 +3267,6 @@ function snakeLoop(){
         head.x += 20;
     }
 
-
     if(
         head.x < 0 ||
         head.x >= 400 ||
@@ -3498,7 +3280,6 @@ function snakeLoop(){
 
     }
 
-
     const hitSelf =
         snake.some(function(part){
 
@@ -3509,7 +3290,6 @@ function snakeLoop(){
 
         });
 
-
     if(hitSelf){
 
         finishSnake();
@@ -3518,9 +3298,7 @@ function snakeLoop(){
 
     }
 
-
     snake.unshift(head);
-
 
     if(
         head.x === food.x &&
@@ -3540,7 +3318,6 @@ function snakeLoop(){
 
     }
 
-
     drawSnake();
 
 }
@@ -3555,12 +3332,10 @@ function drawSnake(){
         400
     );
 
-
     ctx.fillStyle =
         "#2ed573";
 
-
-    snake.forEach(function(part,index){
+    snake.forEach(function(part){
 
         ctx.fillRect(
             part.x + 1,
@@ -3571,10 +3346,8 @@ function drawSnake(){
 
     });
 
-
     ctx.fillStyle =
         "#ff4757";
-
 
     ctx.beginPath();
 
@@ -3597,7 +3370,6 @@ function changeDirection(direction){
         return;
     }
 
-
     const opposite = {
 
         up:"down",
@@ -3606,7 +3378,6 @@ function changeDirection(direction){
         right:"left"
 
     };
-
 
     if(
         opposite[direction] !==
@@ -3629,23 +3400,19 @@ function finishSnake(){
 
     snakeRunning = false;
 
-
     document.getElementById("snakeMsg").textContent =
         "💥 Oyun bitti! " +
         snakeScore +
         " puanlık yılan skoru yaptın.";
 
-
     addCoins(
-        snakeScore *  30
+        snakeScore * 30
     );
-
 
     const oldBest =
         Number(
             localStorage.getItem("snakeBest") || 0
         );
-
 
     if(snakeScore > oldBest){
 
@@ -3655,7 +3422,6 @@ function finishSnake(){
         );
 
     }
-
 
     updateRecords();
 
@@ -3687,10 +3453,8 @@ document.addEventListener(
 
         };
 
-
         const direction =
             keyMap[event.key];
-
 
         if(direction){
 
@@ -3714,7 +3478,6 @@ document.addEventListener(
 
         const hasAccount =
             loadAccount();
-
 
         if(hasAccount){
 
@@ -3750,5 +3513,3 @@ document.addEventListener(
 
 </body>
 </html>
-
-</div>

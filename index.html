@@ -564,96 +564,158 @@ header h1{
     grid-row:2;
 }
 
-/* =========================
-   MARKET
-========================= */
+<!-- =========================
+     MARKET
+========================= -->
 
-  .marketSection{
-    display:none;
-}
+<button
+    class="btn"
+    onclick="toggleMarket()">
+    🛍️ Avatar Marketi Aç
+</button>
 
-.marketSection.open{
-    display:block;
-}
+<section
+    id="marketSection"
+    class="panel marketSection">
 
-.shopTabs{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin:18px 0;
-}
+    <h2>🛍️ Avatar Marketi</h2>
 
-.shopTab{
-    background:#eee;
-    padding:9px 13px;
-    border-radius:11px;
-    font-weight:bold;
-}
+    <button
+        class="back"
+        onclick="toggleMarket()">
+        ❌ Marketi Kapat
+    </button>
 
-.shopTab.active{
-    background:#675cff;
-    color:white;
-}
+    <p>
+        Daha özel eşyalar daha pahalıdır.
+    </p>
 
-.shop{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
+    <div class="shopTabs">
 
-.item{
-    background:#f7f7ff;
-    padding:17px;
-    border-radius:18px;
-    text-align:center;
-    border:2px solid transparent;
-}
+        <button
+            class="shopTab active"
+            onclick="showCategory('all')">
+            ⭐ Hepsi
+        </button>
 
-.item:hover{
-    border-color:#675cff;
-}
+        <button
+            class="shopTab"
+            onclick="showCategory('hat')">
+            🎩 Şapka
+        </button>
 
-.itemIcon{
-    font-size:48px;
-}
+        <button
+            class="shopTab"
+            onclick="showCategory('glasses')">
+            🕶️ Gözlük
+        </button>
 
-.price{
-    font-weight:bold;
-    color:#675cff;
-}
+        <button
+            class="shopTab"
+            onclick="showCategory('shirt')">
+            👕 Üst
+        </button>
 
-.item.owned{
-    border-color:#2ed573;
-}
+        <button
+            class="shopTab"
+            onclick="showCategory('pants')">
+            👖 Pantolon
+        </button>
 
-.item.owned .btn{
-    background:#2ed573;
-}
+        <button
+            class="shopTab"
+            onclick="showCategory('shoes')">
+            👟 Ayakkabı
+        </button>
 
-/* =========================
-   REKORLAR
-========================= */
+        <button
+            class="shopTab"
+            onclick="showCategory('accessory')">
+            ✨ Aksesuar
+        </button>
 
-.records{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:14px;
-}
+    </div>
 
-.record{
-    background:#fff5d8;
-    padding:17px;
-    border-radius:16px;
-    text-align:center;
-}
+    <div id="shop" class="shop"></div>
 
-.medal{
-    font-size:32px;
-}
+    <p id="shopMsg" class="msg"></p>
 
-/* =========================
-   MOBİL
-========================= */
+    <div class="panel" style="margin-top:20px;">
+
+        <h2>🎁 Hediye Kodu</h2>
+
+        <p>
+            Özel kodunu gir ve ödülünü al!
+        </p>
+
+        <input
+            id="giftCodeInput"
+            class="input"
+            maxlength="30"
+            type="text"
+            placeholder="Hediye kodunu yaz">
+
+        <button
+            class="btn"
+            onclick="redeemGiftCode()">
+            🎁 Kodu Kullan
+        </button>
+
+        <p id="giftCodeMsg" class="msg"></p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     REKORLAR
+========================= -->
+
+<section class="panel">
+
+    <h2>🏆 Rekorlar</h2>
+
+    <div class="records">
+
+        <div class="record">
+            <div class="medal">🥇</div>
+            <b>En Yüksek Puan</b>
+            <p id="bestScore">0</p>
+        </div>
+
+        <div class="record">
+            <div class="medal">🧠</div>
+            <b>Hafıza</b>
+            <p id="memoryBest">0</p>
+        </div>
+
+        <div class="record">
+            <div class="medal">👆</div>
+            <b>Tıklama</b>
+            <p id="clickBest">0</p>
+        </div>
+
+        <div class="record">
+            <div class="medal">🎯</div>
+            <b>Hedef</b>
+            <p id="targetBest">0</p>
+        </div>
+
+        <div class="record">
+            <div class="medal">🐍</div>
+            <b>Yılan</b>
+            <p id="snakeBest">0</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MOBİL CSS
+========================= -->
 
 @media(max-width:800px){
 
@@ -707,7 +769,13 @@ header h1{
     }
 
 }
-    .angelWings{
+
+
+<!-- =========================
+     MELEK KANATLARI
+========================= -->
+
+.angelWings{
     left:48px;
     top:125px;
     width:145px;
@@ -735,10 +803,12 @@ header h1{
     right:-5px;
     transform:rotate(-10deg);
 }
+
 </style>
 </head>
 
 <body>
+
 
 <!-- =========================
      GİRİŞ EKRANI

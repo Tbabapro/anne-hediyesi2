@@ -2532,6 +2532,48 @@ function renderAvatar(){
         if(!id){
             return;
         }
+function renderAvatar(){
+
+    const types = [
+        "hat",
+        "glasses",
+        "shirt",
+        "pants",
+        "shoes",
+        "accessory"
+    ];
+
+    types.forEach(function(type){
+
+        const element =
+            document.getElementById(
+                "avatar" +
+                type.charAt(0).toUpperCase() +
+                type.slice(1)
+            );
+
+        if(!element){
+            return;
+        }
+
+        element.style.display = "none";
+
+        element.className =
+            "clothing " +
+            type;
+
+        element.textContent = "";
+
+    });
+
+    types.forEach(function(type){
+
+        const id =
+            account.equipped[type];
+
+        if(!id){
+            return;
+        }
 
         const item =
             shopItems.find(function(x){
@@ -2562,22 +2604,6 @@ function renderAvatar(){
             element.classList.add(
                 item.className
             );
-
-        }
-
-        if(item.image){
-
-            element.style.backgroundImage =
-                "url('" + item.image + "')";
-
-            element.style.backgroundSize =
-                "contain";
-
-            element.style.backgroundRepeat =
-                "no-repeat";
-
-            element.style.backgroundPosition =
-                "center";
 
         }
 

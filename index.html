@@ -1364,13 +1364,16 @@ header h1{
         </div>
 
         <p
+                  <p
             id="snakeMsg"
             class="msg">
         </p>
 
     </div>
-<script>
 
+</div>
+
+<script>
 /* =====================================================
    HESAP SİSTEMİ
 ===================================================== */
@@ -2110,7 +2113,7 @@ const shopItems = [
     },
 
     {
-        d:"ishirt_black",
+        d:"shirt_black",
         type:"shirt",
         name:"Siyah Premium Üst",
         icon:"👕",
@@ -2501,94 +2504,60 @@ function renderAvatar(){
 
     types.forEach(function(type){
 
-        const element =
-            document.getElementById(
-                "avatar" +
-                type.charAt(0).toUpperCase() +
-                type.slice(1)
-            );
+        const element = document.getElementById(
+            "avatar" +
+            type.charAt(0).toUpperCase() +
+            type.slice(1)
+        );
 
-        if(!element){
-            return;
-        }
+        if(!element) return;
 
         element.style.display = "none";
-
-        element.className =
-            "clothing " + type;
-
+        element.className = "clothing " + type;
         element.textContent = "";
-
         element.style.backgroundImage = "";
 
     });
 
-
     types.forEach(function(type){
 
-        const id =
-            account.equipped[type];
+        const id = account.equipped[type];
 
-        if(!id){
-            return;
-        }
+        if(!id) return;
 
-        const item =
-            shopItems.find(function(x){
-                return x.id === id;
-            });
+        const item = shopItems.find(function(x){
+            return x.id === id;
+        });
 
-        if(!item){
-            return;
-        }
+        if(!item) return;
 
-        const element =
-            document.getElementById(
-                "avatar" +
-                type.charAt(0).toUpperCase() +
-                type.slice(1)
-            );
+        const element = document.getElementById(
+            "avatar" +
+            type.charAt(0).toUpperCase() +
+            type.slice(1)
+        );
 
-        if(!element){
-            return;
-        }
+        if(!element) return;
 
-        element.className =
-            "clothing " + type;
+        element.className = "clothing " + type;
 
         if(item.className){
-
-            element.classList.add(
-                item.className
-            );
-
+            element.classList.add(item.className);
         }
 
         if(item.image){
-
             element.style.backgroundImage =
                 "url('" + item.image + "')";
-
-            element.style.backgroundSize =
-                "contain";
-
-            element.style.backgroundRepeat =
-                "no-repeat";
-
-            element.style.backgroundPosition =
-                "center";
-
+            element.style.backgroundSize = "contain";
+            element.style.backgroundRepeat = "no-repeat";
+            element.style.backgroundPosition = "center";
         }
 
         if(item.value){
-
-            element.textContent =
-                item.value;
-
+            element.textContent = item.value;
         }
 
-        element.style.display =
-            "block";
+        element.style.display = "block";
 
     });
 

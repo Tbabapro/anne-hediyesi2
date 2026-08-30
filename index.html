@@ -1364,7 +1364,6 @@ header h1{
         </div>
 
         <p
-                  <p
             id="snakeMsg"
             class="msg">
         </p>
@@ -1765,6 +1764,7 @@ function addCoins(amount){
 
     updateRecords();
 
+
 }
 
 
@@ -2131,24 +2131,23 @@ const shopItems = [
     },
 
     {
-    id:"shirt_pickle",
-    type:"shirt",
-    name:"Turşulu Troll Üst",
-    icon:"🥒",
-    price:7500,
-    image:"pickle_shirt.png"
-},
+        id:"shirt_pickle",
+        type:"shirt",
+        name:"Turşulu Troll Üst",
+        icon:"🥒",
+        price:7500,
+        image:"static/pickle_shirt.png"
+    },
 
-{
-    id:"pants_black",
-    type:"pants",
-    name:"Siyah Pantolon",
-    icon:"👖",
-    price:1800,
-    className:"black"
-},
+    {
+        id:"pants_black",
+        type:"pants",
+        name:"Siyah Pantolon",
+        icon:"👖",
+        price:1800,
+        className:"black"
+    },
 
-   
     {
         id:"pants_blue",
         type:"pants",
@@ -2406,6 +2405,7 @@ function showCategory(category){
 
         });
 
+
 }
 
 
@@ -2562,6 +2562,546 @@ function renderAvatar(){
     });
 
 }
+
+
+/* =====================================================
+   HER ŞEYİ GÜNCELLE
+===================================================== */
+
+function updateEverything(){
+
+    document.getElementById("playerName").textContent =
+        account.name;
+
+    coins =
+        Number(account.coins || 0);
+
+    updateCoins();
+
+    updateRecords();
+
+    renderAvatar();
+
+    createShop();
+
+}
+
+
+/* =====================================================
+   OYUN EKRANI
+===================================================== */
+
+function openGame(id){
+
+    stopAllGames();
+
+    document
+        .querySelectorAll(".gameScreen")
+        .forEach(function(screen){
+
+            screen.classList.remove("active");
+
+        });
+
+    const screen =
+        document.getElementById(id);
+
+    if(!screen){
+        return;
+    }
+
+    screen.classList.add("active");
+
+    document.body.style.overflow =
+        "hidden";
+
+    screen.scrollTop = 0;
+
+    if(id === "memoryScreen"){
+        startMemory();
+    }
+
+}
+
+
+function closeGame(){
+
+    stopAllGames();
+
+    document
+        .querySelectorAll(".gameScreen")
+        .forEach(function(screen){
+
+            screen.classList.remove("active");
+
+        });
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+function stopAllGames(){
+
+    if(memoryTimer){
+        clearTimeout(memoryTimer);
+        memoryTimer = null;
+    }
+
+    if(clickTimer){
+        clearInterval(clickTimer);
+        clickTimer = null;
+    }
+
+    if(targetTimer){
+        clearInterval(targetTimer);
+        targetTimer = null;
+    }
+
+    if(snakeTimer){
+        clearInterval(snakeTimer);
+        snakeTimer = null;
+    }
+
+    clickStarted = false;
+    targetStarted = false;
+    snakeRunning = false;
+
+    const target =
+        document.getElementById("targetButton");
+
+    if(target){
+        target.style.display = "none";
+    }
+
+}
+
+
+/* =====================================================
+   HAFIZA
+===================================================== */
+
+const memoryEmojis = [
+
+    "🍎","🍎",
+    "🍕","🍕",
+    "🚀","🚀",
+    "🐱","🐱",
+    "⚽","⚽",
+    "🌟","🌟",
+    "🍔","🍔",
+    "🎮","🎮"
+
+];
+
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLock = false;
+let memoryMoves = 0;
+let memoryScore = 0;
+let memoryMatched = 0;
+let memoryTimer = null;
+
+
+function startMemory(){
+
+    if(!document.getElementById("memoryBoard")){
+        return;
+    }
+
+    if(memoryTimer){
+        clearTimeout(memoryTimer);
+    }
+
+    memoryFirst = null;
+    memorySecond = null;
+    memoryLock = false;
+    memoryMoves = 0;
+    memoryScore = 0;
+    memoryMatched = 0;
+
+    document.getElementById("memoryMoves").textContent =
+        "0";
+
+    document.getElementById("memoryScore").textContent =
+        "0";
+
+    document.getElementById("memoryMsg").textContent =
+        "";
+
+    const board =
+        document.getElementById("memoryBoard");
+
+    board.innerHTML = "";
+
+    const cards =
+        [...memoryEmojis].sort(
+            () => Math.random() - .5
+        );
+
+    cards.forEach(function(emoji){
+
+        const card =
+            document.createElement("button");
+
+        card.className =
+            "memoryCard";
+
+        card.textContent =
+            "?";
+
+        card.dataset.value =
+            emoji;
+
+        card.onclick =
+            function(){
+                memoryClick(card);
+            };
+
+        board.appendChild(card);
+
+    });
+
+}
+
+
+function memoryClick(card){
+
+    if(memoryLock){
+        return;
+    }
+
+    if(
+        card.classList.contains("open") ||
+        card.classList.contains("matched")
+    ){
+        return;
+    }
+
+    card.classList.add("open");
+
+    card.textContent =
+        card.dataset.value;
+
+    if(memoryFirst === null){
+
+        memoryFirst = card;
+
+        return;
+
+    }
+
+    memorySecond = card;
+
+    memoryMoves++;
+
+    document.getElementById("memoryMoves").textContent =
+        memoryMoves;
+
+    if(
+        memoryFirst.dataset.value ===
+        memorySecond.dataset.value
+    ){
+
+        memoryFirst.classList.add("matched");
+        memorySecond.classList.add("matched");
+
+        memoryScore += 100;
+
+        memoryMatched += 2;
+
+        document.getElementById("memoryScore").textContent =
+            memoryScore;
+
+        memoryFirst = null;
+        memorySecond = null;
+
+        if(
+            memoryMatched ===
+            memoryEmojis.length
+        ){
+
+            finishMemory();
+
+        }
+
+    }else{
+
+        memoryLock = true;
+
+        memoryTimer =
+            setTimeout(function(){
+
+                if(memoryFirst){
+                    memoryFirst.classList.remove("open");
+                    memoryFirst.textContent = "?";
+                }
+
+                if(memorySecond){
+                    memorySecond.classList.remove("open");
+                    memorySecond.textContent = "?";
+                }
+
+                memoryFirst = null;
+                memorySecond = null;
+                memoryLock = false;
+
+            },700);
+
+    }
+
+}
+
+
+function finishMemory(){
+
+    const bonus =
+        Math.max(
+            0,
+            600 - memoryMoves * 12
+        );
+
+    const total =
+        memoryScore + bonus;
+
+    addCoins(total);
+
+    document.getElementById("memoryMsg").textContent =
+        "🎉 Harika! +" +
+        total +
+        " puan kazandın!";
+
+    const oldBest =
+        Number(
+            localStorage.getItem("memoryBest") || 0
+        );
+
+    if(total > oldBest){
+
+        localStorage.setItem(
+            "memoryBest",
+            total
+        );
+
+    }
+
+    updateRecords();
+
+}
+
+
+/* =====================================================
+   TIKLA KAZAN
+===================================================== */
+
+let clickTimer = null;
+let clickTime = 30;
+let clickScore = 0;
+let clickStarted = false;
+
+
+function clickAction(){
+
+    if(!clickStarted){
+
+        startClick();
+
+        return;
+
+    }
+
+    clickScore++;
+
+    document.getElementById("clickScore").textContent =
+        clickScore;
+
+}
+
+
+function startClick(){
+
+    if(clickTimer){
+        clearInterval(clickTimer);
+    }
+
+    clickTime = 30;
+    clickScore = 0;
+    clickStarted = true;
+
+    document.getElementById("clickTime").textContent =
+        "30";
+
+    document.getElementById("clickScore").textContent =
+        "0";
+
+    document.getElementById("clickButton").textContent =
+        "TIKLA!";
+
+    document.getElementById("clickMsg").textContent =
+        "🔥 Başladın!";
+
+    clickTimer =
+        setInterval(function(){
+
+            clickTime--;
+
+            document.getElementById("clickTime").textContent =
+                clickTime;
+
+            if(clickTime <= 0){
+
+                finishClick();
+
+            }
+
+        },1000);
+
+}
+
+
+function finishClick(){
+
+    clearInterval(clickTimer);
+
+    clickTimer = null;
+
+    clickStarted = false;
+
+    document.getElementById("clickButton").textContent =
+        "TEKRAR";
+
+    document.getElementById("clickMsg").textContent =
+        "⏰ Süre bitti! " +
+        clickScore +
+        " tıklama yaptın.";
+
+    const reward =
+        clickScore * 15;
+
+    addCoins(reward);
+
+    const oldBest =
+        Number(
+            localStorage.getItem("clickBest") || 0
+        );
+
+    if(clickScore > oldBest){
+
+        localStorage.setItem(
+            "clickBest",
+            clickScore
+        );
+
+    }
+
+    updateRecords();
+
+}
+
+/* =====================================================
+   AVATARI ÇİZ
+===================================================== */
+
+function renderAvatar(){
+
+    const types = [
+        "hat",
+        "glasses",
+        "shirt",
+        "pants",
+        "shoes",
+        "accessory"
+    ];
+
+    types.forEach(function(type){
+
+        const element = document.getElementById(
+            "avatar" +
+            type.charAt(0).toUpperCase() +
+            type.slice(1)
+        );
+
+        if(!element) return;
+
+        element.style.display = "none";
+        element.className = "clothing " + type;
+        element.textContent = "";
+        element.style.backgroundImage = "";
+
+        /* Önceki resim varsa temizle */
+        const oldImage = element.querySelector("img");
+
+        if(oldImage){
+            oldImage.remove();
+        }
+
+    });
+
+    types.forEach(function(type){
+
+        const id = account.equipped[type];
+
+        if(!id) return;
+
+        const item = shopItems.find(function(x){
+            return x.id === id;
+        });
+
+        if(!item) return;
+
+        const element = document.getElementById(
+            "avatar" +
+            type.charAt(0).toUpperCase() +
+            type.slice(1)
+        );
+
+        if(!element) return;
+
+        element.className = "clothing " + type;
+
+        if(item.className){
+            element.classList.add(item.className);
+        }
+
+        /* ================================
+           RESİMLİ KIYAFET
+        ================================= */
+
+        if(item.image){
+
+            const image = document.createElement("img");
+
+            image.src = item.image;
+
+            image.style.position = "absolute";
+            image.style.left = "0";
+            image.style.top = "0";
+            image.style.width = "100%";
+            image.style.height = "100%";
+            image.style.objectFit = "contain";
+            image.style.display = "block";
+            image.style.pointerEvents = "none";
+
+            element.appendChild(image);
+
+        }
+
+        /* ================================
+           EMOJİLİ KIYAFET
+        ================================= */
+
+        if(item.value){
+            element.textContent = item.value;
+        }
+
+        element.style.display = "block";
+
+    });
+
+}
+
+
 /* =====================================================
    HER ŞEYİ GÜNCELLE
 ===================================================== */

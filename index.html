@@ -286,6 +286,18 @@ header h1{
     border-radius:30px 30px 18px 18px;
 }
 
+.clothing.shirt[style*="pickle_shirt"]{
+    left:61px;
+    top:84px;
+    width:119px;
+    height:138px;
+    z-index:11;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-color:transparent;
+}
+
 /* PANTOLON */
 
 .clothing.pants{
@@ -2098,7 +2110,7 @@ const shopItems = [
     },
 
     {
-        id:"shirt_black",
+        d:"ishirt_black",
         type:"shirt",
         name:"Siyah Premium Üst",
         icon:"👕",
@@ -2116,14 +2128,24 @@ const shopItems = [
     },
 
     {
-        id:"pants_black",
-        type:"pants",
-        name:"Siyah Pantolon",
-        icon:"👖",
-        price:1800,
-        className:"black"
-    },
+    id:"shirt_pickle",
+    type:"shirt",
+    name:"Turşulu Troll Üst",
+    icon:"🥒",
+    price:7500,
+    image:"pickle_shirt.png"
+},
 
+{
+    id:"pants_black",
+    type:"pants",
+    name:"Siyah Pantolon",
+    icon:"👖",
+    price:1800,
+    className:"black"
+},
+
+   
     {
         id:"pants_blue",
         type:"pants",
@@ -2488,8 +2510,8 @@ function renderAvatar(){
 
         if(!element){
             return;
-        }
 
+        }
         element.style.display = "none";
 
         element.className =
@@ -2508,6 +2530,9 @@ function renderAvatar(){
         if(!id){
             return;
         }
+         if(!id){
+            return;
+        }
 
         const item =
             shopItems.find(function(x){
@@ -2516,6 +2541,25 @@ function renderAvatar(){
 
         if(!item){
             return;
+        }
+
+        const element =
+            document.getElementById(
+                "avatar" +
+                type.charAt(0).toUpperCase() +
+                type.slice(1)
+            );
+
+        if(!element){
+            return;
+        }
+
+        if(item.image){
+            element.style.backgroundImage =
+                "url('" + item.image + "')";
+            element.style.backgroundSize = "contain";
+            element.style.backgroundRepeat = "no-repeat";
+            element.style.backgroundPosition = "center";
         }
 
         const element =

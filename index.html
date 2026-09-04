@@ -1221,43 +1221,16 @@ button{
     </div>
 
 
-    <div class="mobileControls">
+ <div class="mobileControls" id="joystick">
 
-        <button
-            class="mobileBtn"
-            onpointerdown="mobileMove('up')"
-            onpointerup="stopMobileMove()"
-        >
-            ▲
-        </button>
+    <div class="joystickBase"></div>
 
-        <br>
+    <div
+        class="joystickStick"
+        id="joystickStick"
+    ></div>
 
-        <button
-            class="mobileBtn"
-            onpointerdown="mobileMove('left')"
-            onpointerup="stopMobileMove()"
-        >
-            ◀
-        </button>
-
-        <button
-            class="mobileBtn"
-            onpointerdown="mobileMove('down')"
-            onpointerup="stopMobileMove()"
-        >
-            ▼
-        </button>
-
-        <button
-            class="mobileBtn"
-            onpointerdown="mobileMove('right')"
-            onpointerup="stopMobileMove()"
-        >
-            ▶
-        </button>
-
-    </div>
+</div>
 
 
     <button

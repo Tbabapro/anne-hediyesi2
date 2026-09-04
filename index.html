@@ -1,322 +1,803 @@
-```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Yeni Silah Oyunu</title>
+<title>Silah Oyunu</title>
 
 <style>
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-}
-
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial, sans-serif;
-    background:#111;
-    color:white;
-}
-
-body{
     user-select:none;
 }
 
-/* ANA MENÜ */
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#10141c;
+    color:white;
+    min-height:100vh;
+    overflow:hidden;
+}
 
-#menu{
+/* =========================
+   GENEL
+========================= */
+
+button{
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================
+   GİRİŞ EKRANI
+========================= */
+
+#loginScreen{
     position:fixed;
     inset:0;
     display:flex;
     justify-content:center;
     align-items:center;
     background:
-        radial-gradient(circle at center,#263238 0%,#111 65%);
-    z-index:100;
+        radial-gradient(circle at center,#263247 0%,#11151d 55%,#090b10 100%);
+    z-index:1000;
 }
 
-.menuBox{
-    width:min(90%,500px);
-    padding:45px 30px;
+.loginBox{
+    width:min(430px,92%);
+    padding:35px;
+    border-radius:22px;
+    background:#171d29;
+    border:2px solid #303b50;
+    box-shadow:0 20px 60px rgba(0,0,0,.55);
     text-align:center;
-    background:rgba(20,20,20,.92);
-    border:2px solid #555;
-    border-radius:20px;
-    box-shadow:0 0 40px rgba(0,0,0,.7);
 }
 
-.menuBox h1{
-    font-size:42px;
-    margin-bottom:12px;
+.gameLogo{
+    font-size:52px;
+    margin-bottom:8px;
 }
 
-.menuBox p{
-    color:#bbb;
-    margin-bottom:30px;
+.loginBox h1{
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-.startBtn{
-    border:0;
-    border-radius:12px;
-    padding:16px 45px;
-    font-size:20px;
-    font-weight:bold;
-    cursor:pointer;
-    background:#e53935;
+.loginBox .creator{
+    color:#9ca9bd;
+    margin-bottom:25px;
+}
+
+.inputGroup{
+    margin-bottom:15px;
+    text-align:left;
+}
+
+.inputGroup label{
+    display:block;
+    margin-bottom:6px;
+    color:#aeb9ca;
+}
+
+.inputGroup input{
+    width:100%;
+    padding:14px;
+    border-radius:11px;
+    border:2px solid #303b50;
+    background:#0f141d;
     color:white;
-    transition:.2s;
+    outline:none;
+    font-size:16px;
 }
 
-.startBtn:hover{
-    transform:scale(1.05);
+.inputGroup input:focus{
+    border-color:#4d9cff;
 }
 
-/* OYUN */
+.mainBtn{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    background:#347cff;
+    color:white;
+    font-size:17px;
+    margin-top:5px;
+}
 
-#game{
-    display:none;
+.mainBtn:hover{
+    background:#4b8cff;
+}
+
+.secondaryBtn{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    background:#252e3d;
+    color:white;
+    margin-top:10px;
+}
+
+.forgot{
+    display:block;
+    margin-top:18px;
+    color:#6fa7ff;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.error{
+    min-height:22px;
+    margin-top:12px;
+    color:#ff6464;
+    font-size:14px;
+}
+
+/* =========================
+   ANA MENÜ
+========================= */
+
+#menuScreen{
     position:fixed;
     inset:0;
-    background:#172026;
-    cursor:none;
+    background:
+        radial-gradient(circle at 50% 20%,#27354d,#10141c 65%);
+    overflow:auto;
 }
 
-/* ÜST BİLGİ */
-
-#hud{
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:70px;
-
+.topBar{
+    height:75px;
+    padding:0 25px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-
-    padding:0 25px;
-
-    background:rgba(0,0,0,.7);
-    z-index:20;
+    background:rgba(10,14,21,.85);
+    border-bottom:1px solid #2c3748;
 }
 
-.hudItem{
-    font-size:21px;
+.logo{
+    font-size:25px;
     font-weight:bold;
 }
 
-.hudItem span{
-    color:#ffd54f;
+.playerInfo{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-/* OYUN ALANI */
+.levelBox{
+    background:#202a39;
+    padding:9px 15px;
+    border-radius:12px;
+}
 
-#arena{
+.levelBox span{
+    color:#ffd84d;
+    font-weight:bold;
+}
+
+.coinsBox{
+    background:#202a39;
+    padding:9px 15px;
+    border-radius:12px;
+}
+
+.menuContent{
+    min-height:calc(100vh - 75px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:35px;
+    padding:35px;
+}
+
+.menuCharacter{
+    width:320px;
+    height:430px;
+    position:relative;
+    border-radius:25px;
+    background:linear-gradient(145deg,#1d2737,#111722);
+    border:2px solid #303d51;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.character{
+    position:relative;
+    width:130px;
+    height:210px;
+}
+
+.characterHead{
+    position:absolute;
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#d59b72;
+    top:15px;
+    left:28px;
+    z-index:3;
+}
+
+.characterBody{
+    position:absolute;
+    width:105px;
+    height:115px;
+    border-radius:30px 30px 18px 18px;
+    background:#315b9c;
+    left:12px;
+    top:80px;
+}
+
+.characterLeg{
+    position:absolute;
+    width:35px;
+    height:75px;
+    background:#252b35;
+    bottom:0;
+    border-radius:12px;
+}
+
+.characterLeg.left{
+    left:25px;
+}
+
+.characterLeg.right{
+    right:25px;
+}
+
+.characterGun{
+    position:absolute;
+    width:70px;
+    height:18px;
+    background:#20252d;
+    right:-45px;
+    top:115px;
+    transform:rotate(-15deg);
+    border-radius:5px;
+    z-index:4;
+}
+
+.menuButtons{
+    width:min(430px,95%);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.startBtn{
+    padding:20px;
+    border-radius:18px;
+    background:#38b96b;
+    color:white;
+    font-size:24px;
+    box-shadow:0 8px 0 #237743;
+}
+
+.startBtn:active{
+    transform:translateY(5px);
+    box-shadow:0 3px 0 #237743;
+}
+
+.menuBtn{
+    padding:16px;
+    border-radius:14px;
+    background:#202a39;
+    color:white;
+    border:1px solid #354258;
+    font-size:17px;
+}
+
+.menuBtn:hover{
+    background:#2b3749;
+}
+
+/* =========================
+   MODAL / MARKET
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:500;
+    padding:20px;
+}
+
+.modalBox{
+    width:min(900px,96%);
+    max-height:90vh;
+    overflow:auto;
+    background:#171d29;
+    border:2px solid #303b50;
+    border-radius:22px;
+    padding:25px;
+}
+
+.modalHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.closeBtn{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    background:#303948;
+    color:white;
+    font-size:20px;
+}
+
+.marketTabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.marketTab{
+    padding:10px 15px;
+    border-radius:10px;
+    background:#242e3e;
+    color:white;
+}
+
+.marketTab.active{
+    background:#347cff;
+}
+
+.marketGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+}
+
+.marketItem{
+    background:#202938;
+    border:1px solid #354257;
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+}
+
+.itemIcon{
+    font-size:48px;
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.marketItem h3{
+    margin:8px 0;
+}
+
+.itemPrice{
+    color:#ffd84d;
+    margin-bottom:10px;
+}
+
+.buyBtn{
+    width:100%;
+    padding:11px;
+    border-radius:10px;
+    background:#347cff;
+    color:white;
+}
+
+.buyBtn.owned{
+    background:#38a96b;
+}
+
+.buyBtn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* =========================
+   HEDİYE KODU
+========================= */
+
+.codeArea{
+    margin-top:20px;
+    padding:18px;
+    background:#202938;
+    border-radius:15px;
+}
+
+.codeArea h3{
+    margin-bottom:10px;
+}
+
+.codeRow{
+    display:flex;
+    gap:8px;
+}
+
+.codeRow input{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #3b485d;
+    background:#111722;
+    color:white;
+}
+
+.codeRow button{
+    padding:12px 18px;
+    border-radius:10px;
+    background:#347cff;
+    color:white;
+}
+
+#codeMessage{
+    margin-top:10px;
+    min-height:20px;
+}
+
+/* =========================
+   ŞİFREMİ UNUTTUM
+========================= */
+
+.testBox{
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    background:#202938;
+}
+
+.testQuestion{
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.testBox input{
+    width:100%;
+    padding:12px;
+    border-radius:9px;
+    background:#111722;
+    border:1px solid #39465b;
+    color:white;
+    margin-bottom:10px;
+}
+
+/* =========================
+   OYUN EKRANI
+========================= */
+
+#gameScreen{
+    position:fixed;
+    inset:0;
+    background:#172116;
+    overflow:hidden;
+}
+
+.gameHUD{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:70px;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 20px;
+    background:rgba(8,12,9,.75);
+}
+
+.healthContainer{
+    width:220px;
+}
+
+.healthText{
+    margin-bottom:5px;
+    font-size:14px;
+}
+
+.healthBar{
+    height:17px;
+    background:#30352f;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.healthFill{
+    height:100%;
+    width:100%;
+    background:#3bd26b;
+    transition:.2s;
+}
+
+.shieldBar{
+    margin-top:4px;
+    height:8px;
+    background:#30352f;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.shieldFill{
+    height:100%;
+    width:0%;
+    background:#53aaff;
+}
+
+.gameStats{
+    display:flex;
+    gap:18px;
+    font-weight:bold;
+}
+
+#battlefield{
     position:absolute;
     inset:70px 0 0 0;
     overflow:hidden;
-
     background:
-        linear-gradient(
-            rgba(0,0,0,.15),
-            rgba(0,0,0,.15)
-        ),
-        repeating-linear-gradient(
-            0deg,
-            #263238 0px,
-            #263238 40px,
-            #29383d 40px,
-            #29383d 80px
-        );
+        linear-gradient(#263d25 1px,transparent 1px),
+        linear-gradient(90deg,#263d25 1px,transparent 1px),
+        #1d321c;
+    background-size:50px 50px;
 }
 
-/* HEDEF */
+/* Oyuncu */
 
-.target{
+.player{
     position:absolute;
-
-    width:75px;
-    height:75px;
-
+    width:55px;
+    height:55px;
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            #fff 0 12%,
-            #e53935 13% 30%,
-            #fff 31% 48%,
-            #e53935 49% 68%,
-            #222 69% 100%
-        );
-
-    border:3px solid #111;
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,.6);
-
-    cursor:none;
-
-    animation:targetAppear .15s ease-out;
+    background:#3e8cff;
+    border:4px solid #a9d0ff;
+    z-index:10;
+    box-shadow:0 0 15px rgba(60,140,255,.5);
 }
 
-@keyframes targetAppear{
-    from{
-        transform:scale(.2);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-/* NİŞANGÂH */
-
-#crosshair{
-    position:fixed;
-    width:34px;
-    height:34px;
-
-    pointer-events:none;
-    z-index:50;
-
-    transform:translate(-50%,-50%);
-}
-
-#crosshair::before,
-#crosshair::after{
+.player::after{
     content:"";
     position:absolute;
-    background:#fff;
-    box-shadow:0 0 4px #000;
+    width:32px;
+    height:9px;
+    background:#20252d;
+    right:-24px;
+    top:20px;
+    transform:rotate(-10deg);
+    border-radius:4px;
 }
 
-#crosshair::before{
-    width:34px;
-    height:3px;
-    left:0;
-    top:15px;
-}
-
-#crosshair::after{
-    width:3px;
-    height:34px;
-    left:15px;
-    top:0;
-}
-
-.crossDot{
+.entityHealth{
     position:absolute;
-    width:6px;
-    height:6px;
-    background:#e53935;
-    border-radius:50%;
-    left:14px;
-    top:14px;
+    width:65px;
+    height:7px;
+    left:50%;
+    transform:translateX(-50%);
+    top:-13px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-/* MERMİ / ATIŞ EFEKTİ */
-
-#flash{
-    position:fixed;
-    width:100px;
-    height:100px;
-    border-radius:50%;
-
-    background:radial-gradient(
-        circle,
-        rgba(255,255,255,.9),
-        rgba(255,200,0,.5),
-        transparent 70%
-    );
-
-    pointer-events:none;
-    opacity:0;
-    transform:translate(-50%,-50%);
-    z-index:40;
+.entityHealth div{
+    height:100%;
+    width:100%;
+    background:#39d46b;
 }
 
-/* OYUN BİTTİ */
+/* Bot */
 
-#gameOver{
-    display:none;
+.bot{
+    position:absolute;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#d74b4b;
+    border:4px solid #ff9c9c;
+    z-index:9;
+}
 
+.bot::after{
+    content:"";
+    position:absolute;
+    width:31px;
+    height:9px;
+    background:#292020;
+    left:-23px;
+    top:20px;
+    transform:rotate(10deg);
+    border-radius:4px;
+}
+
+/* Mermi */
+
+.bullet{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#ffe45c;
+    box-shadow:0 0 10px #ffe45c;
+    z-index:15;
+}
+
+/* Patlama */
+
+.explosion{
+    position:absolute;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#ff9d2e;
+    box-shadow:0 0 30px #ff4d00;
+    z-index:18;
+    animation:explode .35s ease-out forwards;
+}
+
+@keyframes explode{
+    from{
+        transform:scale(.3);
+        opacity:1;
+    }
+    to{
+        transform:scale(3);
+        opacity:0;
+    }
+}
+
+/* Engel */
+
+.wall{
+    position:absolute;
+    background:#4a4e48;
+    border:3px solid #6c7069;
+    border-radius:8px;
+}
+
+/* Oyun bitti */
+
+.gameOver{
     position:absolute;
     inset:0;
-
-    background:rgba(0,0,0,.8);
-
-    z-index:90;
-
+    z-index:100;
+    display:flex;
     align-items:center;
     justify-content:center;
+    background:rgba(0,0,0,.72);
 }
 
 .gameOverBox{
     text-align:center;
-    background:#171717;
-    border:2px solid #555;
-    border-radius:20px;
+    background:#171d29;
+    border:2px solid #39475b;
     padding:35px;
-    width:min(90%,450px);
+    border-radius:20px;
+    width:min(400px,90%);
 }
 
 .gameOverBox h2{
-    font-size:40px;
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+.gameOverBox p{
+    color:#b6c0ce;
     margin-bottom:20px;
 }
 
-.result{
-    font-size:22px;
-    margin:10px 0;
+/* =========================
+   MOBİL KONTROLLER
+========================= */
+
+.mobileControls{
+    position:absolute;
+    left:20px;
+    bottom:20px;
+    z-index:30;
+    display:none;
 }
 
-.restartBtn{
-    margin-top:25px;
-    border:0;
-    border-radius:10px;
-    padding:14px 35px;
-    background:#e53935;
+.mobileBtn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
     color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+    font-size:22px;
 }
 
-.restartBtn:hover{
-    transform:scale(1.05);
+.shootBtn{
+    position:absolute;
+    right:25px;
+    bottom:30px;
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#ff5959;
+    color:white;
+    z-index:30;
+    font-size:25px;
 }
 
-/* MOBİL */
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media(max-width:600px){
+@media(max-width:800px){
 
-    #hud{
+    .menuContent{
+        flex-direction:column;
+        padding:20px;
+    }
+
+    .menuCharacter{
+        width:250px;
+        height:260px;
+    }
+
+    .menuButtons{
+        width:100%;
+        max-width:430px;
+    }
+
+    .gameHUD{
         height:60px;
-        padding:0 12px;
+        padding:7px 10px;
     }
 
-    .hudItem{
-        font-size:15px;
+    .healthContainer{
+        width:140px;
     }
 
-    #arena{
+    #battlefield{
         inset:60px 0 0 0;
     }
 
-    .target{
-        width:65px;
-        height:65px;
+    .mobileControls{
+        display:block;
+    }
+}
+
+@media(max-width:480px){
+
+    .loginBox{
+        padding:25px 18px;
     }
 
-    .menuBox h1{
-        font-size:32px;
+    .topBar{
+        padding:0 10px;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    .playerInfo{
+        gap:5px;
+        font-size:12px;
+    }
+
+    .levelBox,
+    .coinsBox{
+        padding:7px;
+    }
+
+    .gameStats{
+        gap:7px;
+        font-size:12px;
     }
 }
 </style>
@@ -324,80 +805,268 @@ body{
 
 <body>
 
-<!-- ANA MENÜ -->
+<!-- =========================
+     GİRİŞ / KAYIT
+========================= -->
 
-<div id="menu">
+<section id="loginScreen">
 
-    <div class="menuBox">
+    <div class="loginBox">
 
-        <h1>🎯 HEDEF OYUNU</h1>
+        <div class="gameLogo">🔫</div>
 
-        <p>
-            Hedefleri mümkün olduğunca hızlı vur!
+        <h1>Silah Oyunu</h1>
+
+        <p class="creator">
+            Yapım: ChatGPT & Yusuf Talha
         </p>
 
-        <button class="startBtn" onclick="startGame()">
-            OYUNA BAŞLA
+        <div class="inputGroup">
+            <label for="username">Oyuncu Adı</label>
+            <input
+                id="username"
+                type="text"
+                maxlength="20"
+                placeholder="Oyuncu adını yaz"
+            >
+        </div>
+
+        <div class="inputGroup">
+            <label for="password">Şifre</label>
+            <input
+                id="password"
+                type="password"
+                maxlength="30"
+                placeholder="Şifreni yaz"
+            >
+        </div>
+
+        <button class="mainBtn" onclick="loginOrRegister()">
+            Giriş Yap / Kayıt Ol
         </button>
+
+        <span class="forgot" onclick="openForgotPassword()">
+            Şifremi unuttum
+        </span>
+
+        <div id="loginError" class="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ANA MENÜ
+========================= -->
+
+<section id="menuScreen" class="hidden">
+
+    <header class="topBar">
+
+        <div class="logo">
+            🔫 SİLAH OYUNU
+        </div>
+
+        <div class="playerInfo">
+
+            <div class="levelBox">
+                ⭐ Seviye:
+                <span id="levelText">1</span>
+            </div>
+
+            <div class="coinsBox">
+                💰
+                <span id="coinsText">500</span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="menuContent">
+
+        <div class="menuCharacter">
+
+            <div class="character">
+
+                <div class="characterHead"></div>
+
+                <div class="characterBody"></div>
+
+                <div class="characterLeg left"></div>
+                <div class="characterLeg right"></div>
+
+                <div class="characterGun"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="menuButtons">
+
+            <button class="startBtn" onclick="startGame()">
+                ▶ BAŞLA
+            </button>
+
+            <button class="menuBtn" onclick="openMainMarket()">
+                🛍️ ANA MARKET
+            </button>
+
+            <button class="menuBtn" onclick="openGiftCode()">
+                🎁 HEDİYE KODU
+            </button>
+
+            <button class="menuBtn" onclick="showHowToPlay()">
+                ❓ NASIL OYNANIR?
+            </button>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<!-- =========================
+     ANA MARKET
+========================= -->
+
+<div id="mainMarketModal" class="modal hidden">
+
+    <div class="modalBox">
+
+        <div class="modalHeader">
+
+            <h2>🛍️ Ana Market</h2>
+
+            <button class="closeBtn" onclick="closeMainMarket()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="marketTabs">
+
+            <button
+                class="marketTab active"
+                onclick="filterMainMarket('all',this)"
+            >
+                Hepsi
+            </button>
+
+            <button
+                class="marketTab"
+                onclick="filterMainMarket('clothes',this)"
+            >
+                👕 Kıyafetler
+            </button>
+
+            <button
+                class="marketTab"
+                onclick="filterMainMarket('skins',this)"
+            >
+                🔫 Silah Kaplamaları
+            </button>
+
+        </div>
+
+
+        <div id="mainMarketGrid" class="marketGrid"></div>
+
+
+        <div class="codeArea">
+
+            <h3>🎁 Hediye Kodu</h3>
+
+            <div class="codeRow">
+
+                <input
+                    id="giftCodeInput"
+                    type="text"
+                    placeholder="Hediye kodunu yaz"
+                >
+
+                <button onclick="redeemGiftCode()">
+                    Kullan
+                </button>
+
+            </div>
+
+            <div id="codeMessage"></div>
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- OYUN -->
+<!-- =========================
+     ŞİFREMİ UNUTTUM
+========================= -->
 
-<div id="game">
+<div id="forgotModal" class="modal hidden">
 
-    <div id="hud">
+    <div class="modalBox" style="max-width:430px">
 
-        <div class="hudItem">
-            🎯 Skor:
-            <span id="score">0</span>
+        <div class="modalHeader">
+
+            <h2>🔑 Şifre Yenile</h2>
+
+            <button class="closeBtn" onclick="closeForgotPassword()">
+                ✕
+            </button>
+
         </div>
 
-        <div class="hudItem">
-            ⏱️ Süre:
-            <span id="time">30</span>
-        </div>
+        <p>
+            Önce hesabını doğrulamak için küçük testi çöz.
+        </p>
 
-        <div class="hudItem">
-            🏆 Rekor:
-            <span id="best">0</span>
-        </div>
+        <div class="testBox">
 
-    </div>
-
-
-    <div id="arena"></div>
-
-
-    <div id="crosshair">
-        <div class="crossDot"></div>
-    </div>
-
-
-    <div id="flash"></div>
-
-
-    <div id="gameOver">
-
-        <div class="gameOverBox">
-
-            <h2>OYUN BİTTİ!</h2>
-
-            <div class="result">
-                🎯 Skor:
-                <span id="finalScore">0</span>
+            <div class="testQuestion">
+                <span id="questionText"></span>
             </div>
 
-            <div class="result">
-                🏆 Rekor:
-                <span id="finalBest">0</span>
+            <input
+                id="questionAnswer"
+                type="number"
+                placeholder="Cevabın"
+            >
+
+            <button class="mainBtn" onclick="checkSecurityTest()">
+                Doğrula
+            </button>
+
+        </div>
+
+        <div id="forgotMessage" class="error"></div>
+
+        <div id="newPasswordArea" class="hidden">
+
+            <div class="inputGroup">
+
+                <label>Yeni Şifre</label>
+
+                <input
+                    id="newPassword"
+                    type="password"
+                    maxlength="30"
+                    placeholder="Yeni şifren"
+                >
+
             </div>
 
-            <button class="restartBtn" onclick="startGame()">
-                TEKRAR OYNA
+            <button
+                class="mainBtn"
+                onclick="changePassword()"
+            >
+                Şifreyi Değiştir
             </button>
 
         </div>
@@ -407,357 +1076,1827 @@ body{
 </div>
 
 
+<!-- =========================
+     NASIL OYNANIR
+========================= -->
+
+<div id="howToModal" class="modal hidden">
+
+    <div class="modalBox" style="max-width:550px">
+
+        <div class="modalHeader">
+
+            <h2>❓ Nasıl Oynanır?</h2>
+
+            <button class="closeBtn" onclick="closeHowToPlay()">
+                ✕
+            </button>
+
+        </div>
+
+        <p style="line-height:1.8;color:#c3ccda">
+
+            🎮 <b>WASD</b> veya yön tuşları ile hareket et.<br>
+            🖱️ Fare ile nişan al.<br>
+            🔫 Sol tık ile ateş et.<br>
+            ❤️ Canın biterse oyun sona erer.<br>
+            🛡️ Kalkan ve zırh savunmanı artırır.<br>
+            💰 Kazandığın paralarla marketten ekipman alabilirsin.<br>
+            ⭐ Görevleri tamamladıkça seviyen yükselir.<br>
+            🔄 Oyunu bitirip tekrar başladığında savaş ekipmanların
+            yeniden başlangıç durumuna döner.
+            
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     OYUN
+========================= -->
+
+<section id="gameScreen" class="hidden">
+
+    <div class="gameHUD">
+
+        <div class="healthContainer">
+
+            <div class="healthText">
+                ❤️ Can:
+                <span id="playerHealthText">100</span>
+            </div>
+
+            <div class="healthBar">
+                <div
+                    id="playerHealthFill"
+                    class="healthFill"
+                ></div>
+            </div>
+
+            <div class="shieldBar">
+                <div
+                    id="playerShieldFill"
+                    class="shieldFill"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="gameStats">
+
+            <span>
+                🎯 Skor:
+                <span id="scoreText">0</span>
+            </span>
+
+            <span>
+                💰
+                <span id="gameCoinsText">0</span>
+            </span>
+
+            <span>
+                ⏱️
+                <span id="timeText">120</span>
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div id="battlefield">
+
+        <div id="player" class="player">
+
+            <div class="entityHealth">
+                <div id="playerMiniHealth"></div>
+            </div>
+
+        </div>
+
+
+        <!-- Harita engelleri -->
+
+        <div
+            class="wall"
+            style="
+                width:150px;
+                height:30px;
+                left:20%;
+                top:25%;
+            "
+        ></div>
+
+        <div
+            class="wall"
+            style="
+                width:30px;
+                height:160px;
+                left:50%;
+                top:15%;
+            "
+        ></div>
+
+        <div
+            class="wall"
+            style="
+                width:180px;
+                height:30px;
+                left:55%;
+                top:65%;
+            "
+        ></div>
+
+        <div
+            class="wall"
+            style="
+                width:30px;
+                height:130px;
+                left:25%;
+                top:60%;
+            "
+        ></div>
+
+    </div>
+
+
+    <div class="mobileControls">
+
+        <button
+            class="mobileBtn"
+            onpointerdown="mobileMove('up')"
+            onpointerup="stopMobileMove()"
+        >
+            ▲
+        </button>
+
+        <br>
+
+        <button
+            class="mobileBtn"
+            onpointerdown="mobileMove('left')"
+            onpointerup="stopMobileMove()"
+        >
+            ◀
+        </button>
+
+        <button
+            class="mobileBtn"
+            onpointerdown="mobileMove('down')"
+            onpointerup="stopMobileMove()"
+        >
+            ▼
+        </button>
+
+        <button
+            class="mobileBtn"
+            onpointerdown="mobileMove('right')"
+            onpointerup="stopMobileMove()"
+        >
+            ▶
+        </button>
+
+    </div>
+
+
+    <button
+        class="shootBtn"
+        onclick="shoot()"
+    >
+        🔫
+    </button>
+
+
+    <div id="gameOverScreen" class="gameOver hidden">
+
+        <div class="gameOverBox">
+
+            <h2 id="gameOverTitle">
+                OYUN BİTTİ
+            </h2>
+
+            <p>
+                Skorun:
+                <b id="finalScore">0</b>
+            </p>
+
+            <p>
+                Kazandığın:
+                💰 <b id="finalCoins">0</b>
+            </p>
+
+            <button
+                class="mainBtn"
+                onclick="returnToMenu()"
+            >
+                Ana Menüye Dön
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
 <script>
 
-/* =========================
+/* =========================================
+   HESAP SİSTEMİ
+========================================= */
+
+let account = JSON.parse(localStorage.getItem("silahOyunuAccount"));
+
+let currentUser = null;
+
+function saveAccount(){
+    localStorage.setItem(
+        "silahOyunuAccount",
+        JSON.stringify(account)
+    );
+}
+
+
+/* =========================================
+   GİRİŞ / KAYIT
+========================================= */
+
+function loginOrRegister(){
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("loginError");
+
+    error.textContent = "";
+
+    if(username.length < 3){
+        error.textContent =
+            "Oyuncu adı en az 3 karakter olmalı.";
+        return;
+    }
+
+    if(password.length < 4){
+        error.textContent =
+            "Şifre en az 4 karakter olmalı.";
+        return;
+    }
+
+
+    /* İlk giriş */
+
+    if(!account){
+
+        account = {
+            username: username,
+            password: password,
+
+            level: 1,
+            coins: 500,
+            xp: 0,
+
+            ownedMainItems: [],
+
+            giftCodes: [],
+
+            passwordQuestion: null,
+
+            stats:{
+                wins:0,
+                losses:0
+            }
+        };
+
+        saveAccount();
+
+        currentUser = account;
+
+        openMenu();
+
+        return;
+    }
+
+
+    /* Hesap mevcut */
+
+    if(
+        username === account.username &&
+        password === account.password
+    ){
+
+        currentUser = account;
+
+        openMenu();
+
+    }else{
+
+        error.textContent =
+            "Oyuncu adı veya şifre yanlış!";
+    }
+}
+
+
+/* =========================================
+   ANA MENÜ
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("menuScreen")
+        .classList.remove("hidden");
+
+    updateMenu();
+}
+
+
+function updateMenu(){
+
+    if(!currentUser) return;
+
+    document.getElementById("levelText")
+        .textContent = currentUser.level;
+
+    document.getElementById("coinsText")
+        .textContent = currentUser.coins;
+}
+
+
+/* =========================================
+   ŞİFREMİ UNUTTUM
+========================================= */
+
+let securityAnswer = 0;
+
+function openForgotPassword(){
+
+    if(!account){
+
+        document.getElementById("loginError")
+            .textContent =
+            "Henüz kayıtlı bir hesap yok.";
+
+        return;
+    }
+
+    document
+        .getElementById("forgotModal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("newPasswordArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("forgotMessage")
+        .textContent = "";
+
+    document
+        .getElementById("questionAnswer")
+        .value = "";
+
+    const a =
+        Math.floor(Math.random()*9)+1;
+
+    const b =
+        Math.floor(Math.random()*9)+1;
+
+    securityAnswer = a + b;
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        `${a} + ${b} = ?`;
+}
+
+
+function checkSecurityTest(){
+
+    const answer =
+        Number(
+            document.getElementById(
+                "questionAnswer"
+            ).value
+        );
+
+    if(answer === securityAnswer){
+
+        document
+            .getElementById("forgotMessage")
+            .style.color = "#45d879";
+
+        document
+            .getElementById("forgotMessage")
+            .textContent =
+            "Doğrulama başarılı! Yeni şifreni yaz.";
+
+        document
+            .getElementById("newPasswordArea")
+            .classList.remove("hidden");
+
+    }else{
+
+        document
+            .getElementById("forgotMessage")
+            .style.color = "#ff6464";
+
+        document
+            .getElementById("forgotMessage")
+            .textContent =
+            "Test cevabı yanlış!";
+    }
+}
+
+
+function changePassword(){
+
+    const newPassword =
+        document.getElementById(
+            "newPassword"
+        ).value;
+
+    if(newPassword.length < 4){
+
+        document
+            .getElementById("forgotMessage")
+            .textContent =
+            "Yeni şifre en az 4 karakter olmalı.";
+
+        return;
+    }
+
+    account.password = newPassword;
+
+    saveAccount();
+
+    document
+        .getElementById("forgotMessage")
+        .style.color = "#45d879";
+
+    document
+        .getElementById("forgotMessage")
+        .textContent =
+        "Şifren başarıyla değiştirildi!";
+
+    setTimeout(() => {
+
+        closeForgotPassword();
+
+    },1000);
+}
+
+
+function closeForgotPassword(){
+
+    document
+        .getElementById("forgotModal")
+        .classList.add("hidden");
+}
+
+
+/* =========================================
+   ANA MARKET
+========================================= */
+
+const mainMarketItems = [
+
+    {
+        id:"clothes_blue",
+        type:"clothes",
+        name:"Mavi Savaşçı Kıyafeti",
+        icon:"👕",
+        price:250
+    },
+
+    {
+        id:"clothes_red",
+        type:"clothes",
+        name:"Kırmızı Savaşçı Kıyafeti",
+        icon:"🥋",
+        price:400
+    },
+
+    {
+        id:"clothes_black",
+        type:"clothes",
+        name:"Karanlık Kıyafet",
+        icon:"🧥",
+        price:700
+    },
+
+    {
+        id:"skin_gold",
+        type:"skins",
+        name:"Altın Tabanca Kaplaması",
+        icon:"🔫",
+        price:1000
+    },
+
+    {
+        id:"skin_blue",
+        type:"skins",
+        name:"Mavi Tabanca Kaplaması",
+        icon:"🔵",
+        price:600
+    },
+
+    {
+        id:"skin_fire",
+        type:"skins",
+        name:"Alev Kaplaması",
+        icon:"🔥",
+        price:1500
+    }
+
+];
+
+
+let currentMainMarketFilter = "all";
+
+
+function openMainMarket(){
+
+    document
+        .getElementById("mainMarketModal")
+        .classList.remove("hidden");
+
+    renderMainMarket();
+}
+
+
+function closeMainMarket(){
+
+    document
+        .getElementById("mainMarketModal")
+        .classList.add("hidden");
+}
+
+
+function filterMainMarket(type,button){
+
+    currentMainMarketFilter = type;
+
+    document
+        .querySelectorAll(".marketTab")
+        .forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+    button.classList.add("active");
+
+    renderMainMarket();
+}
+
+
+function renderMainMarket(){
+
+    const grid =
+        document.getElementById("mainMarketGrid");
+
+    grid.innerHTML = "";
+
+    let items =
+        mainMarketItems.filter(item => {
+
+            if(currentMainMarketFilter === "all")
+                return true;
+
+            return item.type === currentMainMarketFilter;
+        });
+
+
+    items.forEach(item => {
+
+        const owned =
+            currentUser.ownedMainItems.includes(item.id);
+
+        const div =
+            document.createElement("div");
+
+        div.className = "marketItem";
+
+        div.innerHTML = `
+
+            <div class="itemIcon">
+                ${item.icon}
+            </div>
+
+            <h3>${item.name}</h3>
+
+            <div class="itemPrice">
+                💰 ${item.price}
+            </div>
+
+            <button
+                class="buyBtn ${owned ? "owned":""}"
+                ${owned ? "disabled":""}
+                onclick="buyMainItem('${item.id}')"
+            >
+                ${owned ? "✓ Sahip" : "Satın Al"}
+            </button>
+
+        `;
+
+        grid.appendChild(div);
+
+    });
+}
+
+
+function buyMainItem(id){
+
+    const item =
+        mainMarketItems.find(
+            x => x.id === id
+        );
+
+    if(!item) return;
+
+    if(currentUser.ownedMainItems.includes(id))
+        return;
+
+    if(currentUser.coins < item.price){
+
+        alert("Yeterli paran yok!");
+
+        return;
+    }
+
+    currentUser.coins -= item.price;
+
+    currentUser.ownedMainItems.push(id);
+
+    saveAccount();
+
+    updateMenu();
+
+    renderMainMarket();
+}
+
+
+/* =========================================
+   HEDİYE KODLARI
+========================================= */
+
+const giftCodes = {
+
+    "SILAH100":100,
+
+    "OYUN500":500,
+
+    "TALHA1000":1000
+
+};
+
+
+function openGiftCode(){
+
+    openMainMarket();
+
+    document
+        .getElementById("giftCodeInput")
+        .focus();
+}
+
+
+function redeemGiftCode(){
+
+    const input =
+        document.getElementById(
+            "giftCodeInput"
+        );
+
+    const message =
+        document.getElementById(
+            "codeMessage"
+        );
+
+    const code =
+        input.value
+        .trim()
+        .toUpperCase();
+
+
+    if(!code){
+
+        message.style.color = "#ff6464";
+
+        message.textContent =
+            "Bir hediye kodu yaz.";
+
+        return;
+    }
+
+
+    if(currentUser.giftCodes.includes(code)){
+
+        message.style.color = "#ff6464";
+
+        message.textContent =
+            "Bu kodu daha önce kullandın.";
+
+        return;
+    }
+
+
+    if(giftCodes[code] === undefined){
+
+        message.style.color = "#ff6464";
+
+        message.textContent =
+            "Geçersiz hediye kodu.";
+
+        return;
+    }
+
+
+    const reward =
+        giftCodes[code];
+
+    currentUser.coins += reward;
+
+    currentUser.giftCodes.push(code);
+
+    saveAccount();
+
+    updateMenu();
+
+    message.style.color = "#45d879";
+
+    message.textContent =
+        `🎉 Tebrikler! ${reward} coin kazandın.`;
+
+    input.value = "";
+}
+
+
+/* =========================================
+   NASIL OYNANIR
+========================================= */
+
+function showHowToPlay(){
+
+    document
+        .getElementById("howToModal")
+        .classList.remove("hidden");
+}
+
+
+function closeHowToPlay(){
+
+    document
+        .getElementById("howToModal")
+        .classList.add("hidden");
+}
+
+
+/* =========================================
    OYUN DEĞİŞKENLERİ
-========================= */
+========================================= */
+
+let playerX = 150;
+let playerY = 150;
+
+let playerHealth = 100;
+
+let playerShield = 0;
 
 let score = 0;
-let timeLeft = 30;
+
+let gameCoins = 0;
+
+let gameTime = 120;
 
 let gameRunning = false;
 
-let timerInterval = null;
-let targetInterval = null;
+let gameLoop = null;
+
+let timerLoop = null;
+
+let keys = {};
+
+let bots = [];
+
+let bullets = [];
+
+let mobileDirection = null;
 
 
-/* =========================
-   HTML ELEMANLARI
-========================= */
-
-const menu =
-    document.getElementById("menu");
-
-const game =
-    document.getElementById("game");
-
-const arena =
-    document.getElementById("arena");
-
-const scoreText =
-    document.getElementById("score");
-
-const timeText =
-    document.getElementById("time");
-
-const bestText =
-    document.getElementById("best");
-
-const gameOver =
-    document.getElementById("gameOver");
-
-const finalScore =
-    document.getElementById("finalScore");
-
-const finalBest =
-    document.getElementById("finalBest");
-
-const crosshair =
-    document.getElementById("crosshair");
-
-const flash =
-    document.getElementById("flash");
-
-
-/* =========================
-   REKOR
-========================= */
-
-let bestScore =
-    Number(localStorage.getItem("targetGameBest")) || 0;
-
-bestText.textContent = bestScore;
-
-
-/* =========================
-   NİŞANGÂH
-========================= */
-
-document.addEventListener("mousemove", function(e){
-
-    crosshair.style.left =
-        e.clientX + "px";
-
-    crosshair.style.top =
-        e.clientY + "px";
-
-});
-
-
-/* =========================
-   OYUNU BAŞLAT
-========================= */
+/* =========================================
+   OYUN BAŞLAT
+========================================= */
 
 function startGame(){
 
-    score = 0;
-    timeLeft = 30;
+    document
+        .getElementById("menuScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("gameScreen")
+        .classList.remove("hidden");
+
+    resetGame();
 
     gameRunning = true;
 
-    scoreText.textContent = score;
-    timeText.textContent = timeLeft;
+    createBots();
 
-    menu.style.display = "none";
-    game.style.display = "block";
-    gameOver.style.display = "none";
+    gameLoop = requestAnimationFrame(updateGame);
 
-    arena.innerHTML = "";
+    timerLoop = setInterval(() => {
 
-    clearInterval(timerInterval);
-    clearInterval(targetInterval);
+        if(!gameRunning) return;
 
-    createTarget();
+        gameTime--;
 
-    /*
-       Her 900 milisaniyede
-       yeni hedef oluşturulur.
-    */
+        document
+            .getElementById("timeText")
+            .textContent = gameTime;
 
-    targetInterval =
-        setInterval(createTarget,900);
+        if(gameTime <= 0){
 
+            endGame(true);
 
-    /*
-       Sayaç
-    */
+        }
 
-    timerInterval =
-        setInterval(function(){
-
-            timeLeft--;
-
-            timeText.textContent =
-                timeLeft;
-
-            if(timeLeft <= 0){
-
-                endGame();
-
-            }
-
-        },1000);
+    },1000);
 }
 
 
-/* =========================
-   HEDEF OLUŞTUR
-========================= */
+/* =========================================
+   OYUNU SIFIRLA
+========================================= */
 
-function createTarget(){
+function resetGame(){
 
-    if(!gameRunning) return;
+    playerX = 150;
+    playerY = 150;
 
-    const target =
+    playerHealth = 100;
+
+    playerShield = 0;
+
+    score = 0;
+
+    gameCoins = 0;
+
+    gameTime = 120;
+
+    bots = [];
+
+    bullets = [];
+
+    document
+        .getElementById("gameOverScreen")
+        .classList.add("hidden");
+
+    updatePlayerPosition();
+
+    updateHealth();
+
+    document
+        .getElementById("scoreText")
+        .textContent = "0";
+
+    document
+        .getElementById("gameCoinsText")
+        .textContent = "0";
+
+    document
+        .getElementById("timeText")
+        .textContent = "120";
+}
+
+
+/* =========================================
+   BOTLAR
+========================================= */
+
+function createBots(){
+
+    const battlefield =
+        document.getElementById(
+            "battlefield"
+        );
+
+    for(let i=0;i<5;i++){
+
+        const bot = {
+
+            id:Date.now()+i,
+
+            x:100+
+                Math.random()*
+                Math.max(
+                    200,
+                    battlefield.clientWidth-200
+                ),
+
+            y:80+
+                Math.random()*
+                Math.max(
+                    150,
+                    battlefield.clientHeight-180
+                ),
+
+            health:100,
+
+            maxHealth:100,
+
+            speed:0.5+
+                Math.random()*0.5,
+
+            attackCooldown:
+                Math.random()*1000
+
+        };
+
+        bots.push(bot);
+
+        drawBot(bot);
+    }
+}
+
+
+function drawBot(bot){
+
+    const element =
         document.createElement("div");
 
-    target.className = "target";
+    element.className = "bot";
 
+    element.id =
+        "bot-"+bot.id;
 
-    /*
-       Arena boyutlarını al
-    */
+    element.innerHTML = `
+        <div class="entityHealth">
+            <div id="bot-health-${bot.id}"></div>
+        </div>
+    `;
 
-    const arenaWidth =
-        arena.clientWidth;
+    element.style.left =
+        bot.x+"px";
 
-    const arenaHeight =
-        arena.clientHeight;
+    element.style.top =
+        bot.y+"px";
 
-
-    const targetSize = 75;
-
-
-    /*
-       Rastgele konum
-    */
-
-    const x =
-        Math.random() *
-        (arenaWidth - targetSize);
-
-    const y =
-        Math.random() *
-        (arenaHeight - targetSize);
-
-
-    target.style.left =
-        x + "px";
-
-    target.style.top =
-        y + "px";
-
-
-    /*
-       Hedefe tıklanınca
-    */
-
-    target.addEventListener(
-        "click",
-        hitTarget
-    );
-
-
-    arena.appendChild(target);
-
-
-    /*
-       Çok fazla hedef birikmesini
-       engelle
-    */
-
-    const targets =
-        document.querySelectorAll(".target");
-
-    if(targets.length > 6){
-
-        targets[0].remove();
-
-    }
+    document
+        .getElementById("battlefield")
+        .appendChild(element);
 }
 
 
-/* =========================
-   HEDEF VURULDU
-========================= */
-
-function hitTarget(e){
-
-    if(!gameRunning) return;
-
-    e.stopPropagation();
-
-
-    score++;
-
-    scoreText.textContent =
-        score;
-
-
-    /*
-       Vurulan hedefi kaldır
-    */
-
-    e.target.remove();
-
-
-    /*
-       Küçük efekt
-    */
-
-    showFlash(
-        e.clientX,
-        e.clientY
-    );
-}
-
-
-/* =========================
-   ATIŞ EFEKTİ
-========================= */
-
-function showFlash(x,y){
-
-    flash.style.left =
-        x + "px";
-
-    flash.style.top =
-        y + "px";
-
-    flash.style.opacity = "1";
-
-    setTimeout(function(){
-
-        flash.style.opacity = "0";
-
-    },80);
-}
-
-
-/* =========================
-   BOŞ YERE TIKLAMA
-========================= */
-
-arena.addEventListener("click",function(e){
-
-    if(!gameRunning) return;
-
-    if(e.target === arena){
-
-        /*
-           Boş yere tıklanınca
-           şimdilik puan gitmez.
-        */
-
-        showFlash(
-            e.clientX,
-            e.clientY
-        );
-    }
-
-});
-
-
-/* =========================
-   OYUNU BİTİR
-========================= */
-
-function endGame(){
-
-    gameRunning = false;
-
-    clearInterval(timerInterval);
-    clearInterval(targetInterval);
-
-    arena.innerHTML = "";
-
-
-    /*
-       Rekor kontrolü
-    */
-
-    if(score > bestScore){
-
-        bestScore = score;
-
-        localStorage.setItem(
-            "targetGameBest",
-            bestScore
-        );
-
-    }
-
-
-    bestText.textContent =
-        bestScore;
-
-    finalScore.textContent =
-        score;
-
-    finalBest.textContent =
-        bestScore;
-
-    gameOver.style.display =
-        "flex";
-}
-
-
-/* =========================
-   KLAVYE
-========================= */
+/* =========================================
+   OYUNCU HAREKETİ
+========================================= */
 
 document.addEventListener(
     "keydown",
-    function(e){
+    e => {
 
-        /*
-           ESC ile menüye dönme
-        */
+        keys[e.key.toLowerCase()] = true;
 
-        if(e.key === "Escape" && gameRunning){
+        if(
+            ["w","a","s","d",
+             "arrowup",
+             "arrowdown",
+             "arrowleft",
+             "arrowright"].includes(
+                e.key.toLowerCase()
+             )
+        ){
 
-            endGame();
+            e.preventDefault();
+        }
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    e => {
+
+        keys[e.key.toLowerCase()] = false;
+    }
+);
+
+
+function updatePlayerMovement(){
+
+    const speed = 4;
+
+    let dx = 0;
+    let dy = 0;
+
+
+    if(
+        keys["w"] ||
+        keys["arrowup"]
+    )
+        dy -= speed;
+
+
+    if(
+        keys["s"] ||
+        keys["arrowdown"]
+    )
+        dy += speed;
+
+
+    if(
+        keys["a"] ||
+        keys["arrowleft"]
+    )
+        dx -= speed;
+
+
+    if(
+        keys["d"] ||
+        keys["arrowright"]
+    )
+        dx += speed;
+
+
+    if(mobileDirection === "up")
+        dy -= speed;
+
+    if(mobileDirection === "down")
+        dy += speed;
+
+    if(mobileDirection === "left")
+        dx -= speed;
+
+    if(mobileDirection === "right")
+        dx += speed;
+
+
+    playerX += dx;
+    playerY += dy;
+
+
+    const field =
+        document.getElementById(
+            "battlefield"
+        );
+
+
+    const maxX =
+        field.clientWidth - 55;
+
+    const maxY =
+        field.clientHeight - 55;
+
+
+    playerX =
+        Math.max(
+            0,
+            Math.min(maxX,playerX)
+        );
+
+    playerY =
+        Math.max(
+            0,
+            Math.min(maxY,playerY)
+        );
+
+
+    updatePlayerPosition();
+}
+
+
+function updatePlayerPosition(){
+
+    const player =
+        document.getElementById("player");
+
+    player.style.left =
+        playerX+"px";
+
+    player.style.top =
+        playerY+"px";
+}
+
+
+/* =========================================
+   BOT HAREKETİ
+========================================= */
+
+function updateBots(){
+
+    bots.forEach(bot => {
+
+        const dx =
+            playerX - bot.x;
+
+        const dy =
+            playerY - bot.y;
+
+        const distance =
+            Math.sqrt(
+                dx*dx + dy*dy
+            );
+
+
+        if(distance > 80){
+
+            bot.x +=
+                (dx/distance) *
+                bot.speed;
+
+            bot.y +=
+                (dy/distance) *
+                bot.speed;
+        }
+
+
+        bot.attackCooldown -= 16;
+
+
+        if(
+            distance < 400 &&
+            bot.attackCooldown <= 0
+        ){
+
+            damagePlayer(8);
+
+            bot.attackCooldown = 1300;
+        }
+
+
+        const element =
+            document.getElementById(
+                "bot-"+bot.id
+            );
+
+        if(element){
+
+            element.style.left =
+                bot.x+"px";
+
+            element.style.top =
+                bot.y+"px";
+        }
+
+    });
+}
+
+
+/* =========================================
+   ATEŞ ET
+========================================= */
+
+function shoot(){
+
+    if(!gameRunning)
+        return;
+
+
+    const player =
+        document.getElementById("player");
+
+
+    const rect =
+        player.getBoundingClientRect();
+
+
+    const centerX =
+        rect.left +
+        rect.width/2;
+
+    const centerY =
+        rect.top +
+        rect.height/2;
+
+
+    const bullet = {
+
+        x:
+            playerX+25,
+
+        y:
+            playerY+25,
+
+        dx:5,
+
+        dy:0,
+
+        damage:25
+
+    };
+
+
+    bullets.push(bullet);
+
+    createBulletElement(bullet);
+}
+
+
+function createBulletElement(bullet){
+
+    const element =
+        document.createElement("div");
+
+    element.className =
+        "bullet";
+
+    element.style.left =
+        bullet.x+"px";
+
+    element.style.top =
+        bullet.y+"px";
+
+    bullet.element = element;
+
+    document
+        .getElementById("battlefield")
+        .appendChild(element);
+}
+
+
+/* =========================================
+   MERMİLER
+========================================= */
+
+function updateBullets(){
+
+    bullets.forEach(
+        (bullet,index) => {
+
+            bullet.x += bullet.dx;
+            bullet.y += bullet.dy;
+
+
+            if(bullet.element){
+
+                bullet.element.style.left =
+                    bullet.x+"px";
+
+                bullet.element.style.top =
+                    bullet.y+"px";
+            }
+
+
+            for(let i=bots.length-1;i>=0;i--){
+
+                const bot =
+                    bots[i];
+
+
+                const dx =
+                    bullet.x-bot.x;
+
+                const dy =
+                    bullet.y-bot.y;
+
+                const distance =
+                    Math.sqrt(
+                        dx*dx+
+                        dy*dy
+                    );
+
+
+                if(distance < 35){
+
+                    bot.health -=
+                        bullet.damage;
+
+
+                    createExplosion(
+                        bot.x,
+                        bot.y
+                    );
+
+
+                    if(bullet.element)
+                        bullet.element.remove();
+
+
+                    bullets.splice(
+                        index,
+                        1
+                    );
+
+
+                    updateBotHealth(bot);
+
+
+                    if(bot.health <= 0){
+
+                        removeBot(bot);
+
+                        score += 100;
+
+                        gameCoins += 25;
+
+                        document
+                            .getElementById(
+                                "scoreText"
+                            )
+                            .textContent =
+                            score;
+
+                        document
+                            .getElementById(
+                                "gameCoinsText"
+                            )
+                            .textContent =
+                            gameCoins;
+                    }
+
+                    break;
+                }
+            }
+
+
+            if(
+                bullet.x < -30 ||
+                bullet.y < -30 ||
+                bullet.x >
+                document.getElementById(
+                    "battlefield"
+                ).clientWidth+30 ||
+                bullet.y >
+                document.getElementById(
+                    "battlefield"
+                ).clientHeight+30
+            ){
+
+                if(bullet.element)
+                    bullet.element.remove();
+
+                bullets.splice(
+                    index,
+                    1
+                );
+            }
+
+        }
+    );
+}
+
+
+function updateBotHealth(bot){
+
+    const bar =
+        document.getElementById(
+            "bot-health-"+bot.id
+        );
+
+    if(bar){
+
+        bar.style.width =
+            Math.max(
+                0,
+                bot.health
+            )+"%";
+    }
+}
+
+
+function removeBot(bot){
+
+    const element =
+        document.getElementById(
+            "bot-"+bot.id
+        );
+
+    if(element)
+        element.remove();
+
+    bots =
+        bots.filter(
+            b => b.id !== bot.id
+        );
+
+
+    /* Yeni bot oluştur */
+
+    setTimeout(() => {
+
+        if(gameRunning)
+            createOneBot();
+
+    },800);
+}
+
+
+function createOneBot(){
+
+    const field =
+        document.getElementById(
+            "battlefield"
+        );
+
+    const bot = {
+
+        id:Date.now()+Math.random(),
+
+        x:
+            100+
+            Math.random()*
+            Math.max(
+                200,
+                field.clientWidth-200
+            ),
+
+        y:
+            80+
+            Math.random()*
+            Math.max(
+                150,
+                field.clientHeight-180
+            ),
+
+        health:100,
+
+        maxHealth:100,
+
+        speed:
+            .5+
+            Math.random()*.5,
+
+        attackCooldown:1000
+
+    };
+
+    bots.push(bot);
+
+    drawBot(bot);
+}
+
+
+/* =========================================
+   OYUNCU HASAR
+========================================= */
+
+function damagePlayer(amount){
+
+    if(!gameRunning)
+        return;
+
+
+    /* Önce kalkan */
+
+    if(playerShield > 0){
+
+        const shieldDamage =
+            Math.min(
+                playerShield,
+                amount
+            );
+
+        playerShield -=
+            shieldDamage;
+
+        amount -=
+            shieldDamage;
+    }
+
+
+    if(amount > 0){
+
+        playerHealth -=
+            amount;
+    }
+
+
+    updateHealth();
+
+
+    if(playerHealth <= 0){
+
+        playerHealth = 0;
+
+        endGame(false);
+    }
+}
+
+
+function updateHealth(){
+
+    const health =
+        Math.max(
+            0,
+            playerHealth
+        );
+
+    document
+        .getElementById(
+            "playerHealthText"
+        )
+        .textContent =
+        health;
+
+    document
+        .getElementById(
+            "playerHealthFill"
+        )
+        .style.width =
+        health+"%";
+
+    document
+        .getElementById(
+            "playerMiniHealth"
+        )
+        .style.width =
+        health+"%";
+
+    document
+        .getElementById(
+            "playerShieldFill"
+        )
+        .style.width =
+        Math.min(
+            100,
+            playerShield
+        )+"%";
+}
+
+
+/* =========================================
+   PATLAMA EFEKTİ
+========================================= */
+
+function createExplosion(x,y){
+
+    const explosion =
+        document.createElement("div");
+
+    explosion.className =
+        "explosion";
+
+    explosion.style.left =
+        x+"px";
+
+    explosion.style.top =
+        y+"px";
+
+    document
+        .getElementById("battlefield")
+        .appendChild(explosion);
+
+
+    setTimeout(() => {
+
+        explosion.remove();
+
+    },400);
+}
+
+
+/* =========================================
+   OYUN DÖNGÜSÜ
+========================================= */
+
+function updateGame(){
+
+    if(!gameRunning)
+        return;
+
+
+    updatePlayerMovement();
+
+    updateBots();
+
+    updateBullets();
+
+
+    gameLoop =
+        requestAnimationFrame(
+            updateGame
+        );
+}
+
+
+/* =========================================
+   OYUN BİTİŞİ
+========================================= */
+
+function endGame(won){
+
+    if(!gameRunning)
+        return;
+
+    gameRunning = false;
+
+
+    clearInterval(timerLoop);
+
+    cancelAnimationFrame(
+        gameLoop
+    );
+
+
+    /* Kazanılan coinler hesaba eklenir */
+
+    if(won){
+
+        currentUser.coins +=
+            gameCoins;
+
+        currentUser.stats.wins++;
+
+        currentUser.xp += 100;
+
+    }else{
+
+        currentUser.stats.losses++;
+
+        currentUser.xp += 25;
+    }
+
+
+    /* Seviye sistemi */
+
+    const neededXP =
+        currentUser.level * 250;
+
+
+    if(
+        currentUser.xp >= neededXP
+    ){
+
+        currentUser.xp -=
+            neededXP;
+
+        currentUser.level++;
+
+        alert(
+            "⭐ Seviye atladın!"
+        );
+    }
+
+
+    saveAccount();
+
+
+    document
+        .getElementById(
+            "gameOverScreen"
+        )
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById(
+            "gameOverTitle"
+        )
+        .textContent =
+        won
+        ? "🏆 KAZANDIN!"
+        : "💥 OYUN BİTTİ";
+
+
+    document
+        .getElementById(
+            "finalScore"
+        )
+        .textContent =
+        score;
+
+
+    document
+        .getElementById(
+            "finalCoins"
+        )
+        .textContent =
+        gameCoins;
+}
+
+
+/* =========================================
+   ANA MENÜYE DÖN
+========================================= */
+
+function returnToMenu(){
+
+    gameRunning = false;
+
+    clearInterval(timerLoop);
+
+    cancelAnimationFrame(
+        gameLoop
+    );
+
+
+    document
+        .querySelectorAll(
+            ".bot,.bullet,.explosion"
+        )
+        .forEach(
+            element => element.remove()
+        );
+
+
+    document
+        .getElementById(
+            "gameScreen"
+        )
+        .classList.add("hidden");
+
+
+    document
+        .getElementById(
+            "menuScreen"
+        )
+        .classList.remove("hidden");
+
+
+    /*
+       ÖNEMLİ:
+       Savaş ekipmanları burada
+       kaydedilmiyor.
+
+       Böylece yeni oyuna girince
+       tekrar sadece tabancayla
+       başlanabilecek.
+    */
+
+    updateMenu();
+}
+
+
+/* =========================================
+   MOBİL HAREKET
+========================================= */
+
+function mobileMove(direction){
+
+    mobileDirection =
+        direction;
+}
+
+
+function stopMobileMove(){
+
+    mobileDirection = null;
+}
+
+
+/* =========================================
+   SOL TIK İLE ATEŞ
+========================================= */
+
+document.addEventListener(
+    "mousedown",
+    e => {
+
+        if(
+            gameRunning &&
+            e.button === 0
+        ){
+
+            shoot();
+        }
+    }
+);
+
+
+/* =========================================
+   OYUN ALANI TIKLAMA
+========================================= */
+
+document
+    .getElementById("battlefield")
+    .addEventListener(
+        "click",
+        function(e){
+
+            if(!gameRunning)
+                return;
+
+            /*
+               Gelecekte buraya
+               mouse yönüne göre
+               gerçek nişan sistemi
+               eklenebilir.
+            */
+        }
+    );
+
+
+/* =========================================
+   SAYFA KAPATILIRKEN
+========================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if(currentUser){
+
+            saveAccount();
 
         }
 
@@ -768,4 +2907,3 @@ document.addEventListener(
 
 </body>
 </html>
-```

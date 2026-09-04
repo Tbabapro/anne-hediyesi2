@@ -3310,21 +3310,121 @@ function returnToMenu(){
 
 
 /* =========================================
-   MOBİL HAREKET
+   MOBİL JOYSTICK
 ========================================= */
 
-function mobileMove(direction){
+const joystick =
+    document.getElementById("joystick");
 
-    mobileDirection =
-        direction;
+const joystickStick =
+    document.getElementById("joystickStick");
+
+let joystickActive = false;
+
+function updateJoystick(e){
+
+    const rect =
+        joystick.getBoundingClientRect();
+
+    const centerX =
+        rect.left + rect.width / 2;
+
+    const centerY =
+        rect.top + rect.height / 2;
+
+    let dx =
+        e.clientX - centerX;
+
+    let dy =
+        e.clientY - centerY;
+
+    const maxDistance = 40;
+
+    const distance =
+        Math.sqrt(dx * dx + dy * dy);
+
+    if(distance > maxDistance){
+
+        dx =
+            (dx / distance) *
+            maxDistance;
+
+        dy =
+            (dy / distance) *
+            maxDistance;
+    }
+
+    joystickStick.style.transform =
+        `translate(${dx}px, ${dy}px)`;
+
+    const deadZone = 10;
+
+    mobileDirection = null;
+
+    if(Math.abs(dx) > deadZone){
+        mobileDirection =
+            dx > 0 ? "right" : "left";
+    }
+
+    if(Math.abs(dy) > deadZone){
+
+        if(Math.abs(dy) > Math.abs(dx)){
+
+            mobileDirection =
+                dy > 0 ? "down" : "up";
+        }
+    }
 }
 
 
-function stopMobileMove(){
+function stopJoystick(){
 
-    mobileDirection =
-        null;
+    joystickActive = false;
+
+    mobileDirection = null;
+
+    joystickStick.style.transform =
+        "translate(0,0)";
 }
+
+
+joystick.addEventListener(
+    "pointerdown",
+    e => {
+
+        joystickActive = true;
+
+        joystick.setPointerCapture(
+            e.pointerId
+        );
+
+        updateJoystick(e);
+    }
+);
+
+
+joystick.addEventListener(
+    "pointermove",
+    e => {
+
+        if(!joystickActive)
+            return;
+
+        updateJoystick(e);
+    }
+);
+
+
+joystick.addEventListener(
+    "pointerup",
+    stopJoystick
+);
+
+
+joystick.addEventListener(
+    "pointercancel",
+    stopJoystick
+);
 
 
 /* =========================================

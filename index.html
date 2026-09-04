@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -22,10 +22,6 @@ body{
     min-height:100vh;
     overflow:hidden;
 }
-
-/* =========================
-   GENEL
-========================= */
 
 button{
     border:0;
@@ -135,7 +131,6 @@ button{
     position:relative;
     z-index:9999;
     pointer-events:auto;
-}
 }
 
 .error{
@@ -560,8 +555,6 @@ button{
     background-size:50px 50px;
 }
 
-/* Oyuncu */
-
 .player{
     position:absolute;
     width:55px;
@@ -603,8 +596,6 @@ button{
     background:#39d46b;
 }
 
-/* Bot */
-
 .bot{
     position:absolute;
     width:55px;
@@ -627,8 +618,6 @@ button{
     border-radius:4px;
 }
 
-/* Mermi */
-
 .bullet{
     position:absolute;
     width:10px;
@@ -638,8 +627,6 @@ button{
     box-shadow:0 0 10px #ffe45c;
     z-index:15;
 }
-
-/* Patlama */
 
 .explosion{
     position:absolute;
@@ -663,16 +650,12 @@ button{
     }
 }
 
-/* Engel */
-
 .wall{
     position:absolute;
     background:#4a4e48;
     border:3px solid #6c7069;
     border-radius:8px;
 }
-
-/* Oyun bitti */
 
 .gameOver{
     position:absolute;
@@ -703,10 +686,6 @@ button{
     margin-bottom:20px;
 }
 
-/* =========================
-   MOBİL KONTROLLER
-========================= */
-
 .mobileControls{
     position:absolute;
     left:20px;
@@ -736,10 +715,6 @@ button{
     z-index:30;
     font-size:25px;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media(max-width:800px){
 
@@ -810,10 +785,6 @@ button{
 
 <body>
 
-<!-- =========================
-     GİRİŞ / KAYIT
-========================= -->
-
 <section id="loginScreen">
 
     <div class="loginBox">
@@ -850,7 +821,10 @@ button{
             Giriş Yap / Kayıt Ol
         </button>
 
-        <span class="forgot" onclick="openForgotPassword()">
+        <span
+            class="forgot"
+            onclick="openForgotPassword(event)"
+        >
             Şifremi unuttum
         </span>
 
@@ -859,11 +833,6 @@ button{
     </div>
 
 </section>
-
-
-<!-- =========================
-     ANA MENÜ
-========================= -->
 
 <section id="menuScreen" class="hidden">
 
@@ -889,7 +858,6 @@ button{
 
     </header>
 
-
     <main class="menuContent">
 
         <div class="menuCharacter">
@@ -897,18 +865,14 @@ button{
             <div class="character">
 
                 <div class="characterHead"></div>
-
                 <div class="characterBody"></div>
-
                 <div class="characterLeg left"></div>
                 <div class="characterLeg right"></div>
-
                 <div class="characterGun"></div>
 
             </div>
 
         </div>
-
 
         <div class="menuButtons">
 
@@ -934,11 +898,6 @@ button{
 
 </section>
 
-
-<!-- =========================
-     ANA MARKET
-========================= -->
-
 <div id="mainMarketModal" class="modal hidden">
 
     <div class="modalBox">
@@ -952,7 +911,6 @@ button{
             </button>
 
         </div>
-
 
         <div class="marketTabs">
 
@@ -979,9 +937,7 @@ button{
 
         </div>
 
-
         <div id="mainMarketGrid" class="marketGrid"></div>
-
 
         <div class="codeArea">
 
@@ -1008,11 +964,6 @@ button{
     </div>
 
 </div>
-
-
-<!-- =========================
-     ŞİFREMİ UNUTTUM
-========================= -->
 
 <div id="forgotModal" class="modal hidden">
 
@@ -1080,11 +1031,6 @@ button{
 
 </div>
 
-
-<!-- =========================
-     NASIL OYNANIR
-========================= -->
-
 <div id="howToModal" class="modal hidden">
 
     <div class="modalBox" style="max-width:550px">
@@ -1110,17 +1056,12 @@ button{
             ⭐ Görevleri tamamladıkça seviyen yükselir.<br>
             🔄 Oyunu bitirip tekrar başladığında savaş ekipmanların
             yeniden başlangıç durumuna döner.
-            
+
         </p>
 
     </div>
 
 </div>
-
-
-<!-- =========================
-     OYUN
-========================= -->
 
 <section id="gameScreen" class="hidden">
 
@@ -1149,7 +1090,6 @@ button{
 
         </div>
 
-
         <div class="gameStats">
 
             <span>
@@ -1171,7 +1111,6 @@ button{
 
     </div>
 
-
     <div id="battlefield">
 
         <div id="player" class="player">
@@ -1181,9 +1120,6 @@ button{
             </div>
 
         </div>
-
-
-        <!-- Harita engelleri -->
 
         <div
             class="wall"
@@ -1227,7 +1163,6 @@ button{
 
     </div>
 
-
     <div class="mobileControls">
 
         <button
@@ -1266,14 +1201,12 @@ button{
 
     </div>
 
-
     <button
         class="shootBtn"
         onclick="shoot()"
     >
         🔫
     </button>
-
 
     <div id="gameOverScreen" class="gameOver hidden">
 
@@ -1312,11 +1245,20 @@ button{
    HESAP SİSTEMİ
 ========================================= */
 
-let account = JSON.parse(localStorage.getItem("silahOyunuAccount"));
+let account =
+    JSON.parse(
+        localStorage.getItem("silahOyunuAccount")
+    );
 
 let currentUser = null;
 
+/* Şifre yenileme işlemi yalnızca
+   Şifremi Unuttum ekranından başlatılır. */
+let forgotPasswordActive = false;
+let securityVerified = false;
+
 function saveAccount(){
+
     localStorage.setItem(
         "silahOyunuAccount",
         JSON.stringify(account)
@@ -1342,40 +1284,43 @@ function loginOrRegister(){
     error.textContent = "";
 
     if(username.length < 3){
+
         error.textContent =
             "Oyuncu adı en az 3 karakter olmalı.";
+
         return;
     }
 
     if(password.length < 4){
+
         error.textContent =
             "Şifre en az 4 karakter olmalı.";
+
         return;
     }
-
-
-    /* İlk giriş */
 
     if(!account){
 
         account = {
-            username: username,
-            password: password,
 
-            level: 1,
-            coins: 500,
-            xp: 0,
+            username:username,
+            password:password,
 
-            ownedMainItems: [],
+            level:1,
+            coins:500,
+            xp:0,
 
-            giftCodes: [],
+            ownedMainItems:[],
 
-            passwordQuestion: null,
+            giftCodes:[],
+
+            passwordQuestion:null,
 
             stats:{
                 wins:0,
                 losses:0
             }
+
         };
 
         saveAccount();
@@ -1386,9 +1331,6 @@ function loginOrRegister(){
 
         return;
     }
-
-
-    /* Hesap mevcut */
 
     if(
         username === account.username &&
@@ -1443,19 +1385,24 @@ function updateMenu(){
 
 let securityAnswer = 0;
 
-function openForgotPassword(){
+function openForgotPassword(event){
 
-    alert("ÇALIŞIYOR!");
+    if(event){
+        event.stopPropagation();
+    }
 
     if(!account){
 
-
-        document.getElementById("loginError")
+        document
+            .getElementById("loginError")
             .textContent =
             "Henüz kayıtlı bir hesap yok.";
 
         return;
     }
+
+    forgotPasswordActive = true;
+    securityVerified = false;
 
     document
         .getElementById("forgotModal")
@@ -1471,6 +1418,10 @@ function openForgotPassword(){
 
     document
         .getElementById("questionAnswer")
+        .value = "";
+
+    document
+        .getElementById("newPassword")
         .value = "";
 
     const a =
@@ -1490,14 +1441,19 @@ function openForgotPassword(){
 
 function checkSecurityTest(){
 
+    if(!forgotPasswordActive)
+        return;
+
     const answer =
         Number(
-            document.getElementById(
-                "questionAnswer"
-            ).value
+            document
+                .getElementById("questionAnswer")
+                .value
         );
 
     if(answer === securityAnswer){
+
+        securityVerified = true;
 
         document
             .getElementById("forgotMessage")
@@ -1514,6 +1470,8 @@ function checkSecurityTest(){
 
     }else{
 
+        securityVerified = false;
+
         document
             .getElementById("forgotMessage")
             .style.color = "#ff6464";
@@ -1528,12 +1486,27 @@ function checkSecurityTest(){
 
 function changePassword(){
 
+    /* Güvenlik kontrolü yapılmadan
+       şifre değiştirilemez. */
+
+    if(
+        !forgotPasswordActive ||
+        !securityVerified ||
+        !account
+    ){
+        return;
+    }
+
     const newPassword =
-        document.getElementById(
-            "newPassword"
-        ).value;
+        document
+            .getElementById("newPassword")
+            .value;
 
     if(newPassword.length < 4){
+
+        document
+            .getElementById("forgotMessage")
+            .style.color = "#ff6464";
 
         document
             .getElementById("forgotMessage")
@@ -1556,6 +1529,8 @@ function changePassword(){
         .textContent =
         "Şifren başarıyla değiştirildi!";
 
+    securityVerified = false;
+
     setTimeout(() => {
 
         closeForgotPassword();
@@ -1566,8 +1541,24 @@ function changePassword(){
 
 function closeForgotPassword(){
 
+    forgotPasswordActive = false;
+    securityVerified = false;
+    securityAnswer = 0;
+
     document
         .getElementById("forgotModal")
+        .classList.add("hidden");
+
+    document
+        .getElementById("questionAnswer")
+        .value = "";
+
+    document
+        .getElementById("newPassword")
+        .value = "";
+
+    document
+        .getElementById("newPasswordArea")
         .classList.add("hidden");
 }
 
@@ -1628,9 +1619,7 @@ const mainMarketItems = [
 
 ];
 
-
 let currentMainMarketFilter = "all";
-
 
 function openMainMarket(){
 
@@ -1641,14 +1630,12 @@ function openMainMarket(){
     renderMainMarket();
 }
 
-
 function closeMainMarket(){
 
     document
         .getElementById("mainMarketModal")
         .classList.add("hidden");
 }
-
 
 function filterMainMarket(type,button){
 
@@ -1665,7 +1652,6 @@ function filterMainMarket(type,button){
     renderMainMarket();
 }
 
-
 function renderMainMarket(){
 
     const grid =
@@ -1681,7 +1667,6 @@ function renderMainMarket(){
 
             return item.type === currentMainMarketFilter;
         });
-
 
     items.forEach(item => {
 
@@ -1716,10 +1701,8 @@ function renderMainMarket(){
         `;
 
         grid.appendChild(div);
-
     });
 }
-
 
 function buyMainItem(id){
 
@@ -1759,13 +1742,10 @@ function buyMainItem(id){
 const giftCodes = {
 
     "SILAH100":100,
-
     "OYUN500":500,
-
     "TALHA1000":1000
 
 };
-
 
 function openGiftCode(){
 
@@ -1775,7 +1755,6 @@ function openGiftCode(){
         .getElementById("giftCodeInput")
         .focus();
 }
-
 
 function redeemGiftCode(){
 
@@ -1794,7 +1773,6 @@ function redeemGiftCode(){
         .trim()
         .toUpperCase();
 
-
     if(!code){
 
         message.style.color = "#ff6464";
@@ -1804,7 +1782,6 @@ function redeemGiftCode(){
 
         return;
     }
-
 
     if(currentUser.giftCodes.includes(code)){
 
@@ -1816,7 +1793,6 @@ function redeemGiftCode(){
         return;
     }
 
-
     if(giftCodes[code] === undefined){
 
         message.style.color = "#ff6464";
@@ -1826,7 +1802,6 @@ function redeemGiftCode(){
 
         return;
     }
-
 
     const reward =
         giftCodes[code];
@@ -1859,52 +1834,147 @@ function showHowToPlay(){
         .classList.remove("hidden");
 }
 
-
 function closeHowToPlay(){
 
     document
         .getElementById("howToModal")
         .classList.add("hidden");
 }
+```
+```html
+<!-- 2. PARÇA -->
+
+<script>
+
+let account = JSON.parse(localStorage.getItem("silahOyunuAccount"));
+let currentUser = null;
+
+function saveAccount(){
+    localStorage.setItem(
+        "silahOyunuAccount",
+        JSON.stringify(account)
+    );
+}
 
 
-/* =========================================
-   OYUN DEĞİŞKENLERİ
-========================================= */
+/* =========================
+   ŞİFREMİ UNUTTUM
+========================= */
 
-let playerX = 150;
-let playerY = 150;
+let securityAnswer = 0;
 
-let playerHealth = 100;
+function openForgotPassword(){
 
-let playerShield = 0;
+    alert("ÇALIŞIYOR!");
 
-let score = 0;
+    if(!account){
+        document.getElementById("loginError").textContent =
+            "Henüz kayıtlı bir hesap yok.";
+        return;
+    }
 
-let gameCoins = 0;
+    document.getElementById("forgotModal").classList.remove("hidden");
+    document.getElementById("newPasswordArea").classList.add("hidden");
+    document.getElementById("forgotMessage").textContent = "";
+    document.getElementById("questionAnswer").value = "";
 
-let gameTime = 120;
+    const a = Math.floor(Math.random()*9)+1;
+    const b = Math.floor(Math.random()*9)+1;
 
-let gameRunning = false;
+    securityAnswer = a + b;
 
-let gameLoop = null;
+    document.getElementById("questionText").textContent =
+        `${a} + ${b} = ?`;
+}
 
-let timerLoop = null;
+function checkSecurityTest(){
 
-let keys = {};
+    const answer = Number(
+        document.getElementById("questionAnswer").value
+    );
 
-let bots = [];
+    if(answer === securityAnswer){
 
-let bullets = [];
+        document.getElementById("forgotMessage").style.color =
+            "#45d879";
 
-let mobileDirection = null;
+        document.getElementById("forgotMessage").textContent =
+            "Doğrulama başarılı! Yeni şifreni yaz.";
+
+        document
+            .getElementById("newPasswordArea")
+            .classList.remove("hidden");
+
+    }else{
+
+        document.getElementById("forgotMessage").style.color =
+            "#ff6464";
+
+        document.getElementById("forgotMessage").textContent =
+            "Test cevabı yanlış!";
+    }
+}
+
+function changePassword(){
+
+    const newPassword =
+        document.getElementById("newPassword").value;
+
+    if(newPassword.length < 4){
+
+        document.getElementById("forgotMessage").textContent =
+            "Yeni şifre en az 4 karakter olmalı.";
+
+        return;
+    }
+
+    account.password = newPassword;
+
+    saveAccount();
+
+    document.getElementById("forgotMessage").style.color =
+        "#45d879";
+
+    document.getElementById("forgotMessage").textContent =
+        "Şifren başarıyla değiştirildi!";
+
+    setTimeout(() => {
+        closeForgotPassword();
+    },1000);
+}
+
+function closeForgotPassword(){
+
+    document
+        .getElementById("forgotModal")
+        .classList.add("hidden");
+
+    document
+        .getElementById("questionAnswer")
+        .value = "";
+
+    document
+        .getElementById("newPassword")
+        .value = "";
+
+    document
+        .getElementById("newPasswordArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("forgotMessage")
+        .textContent = "";
+}
 
 
-/* =========================================
-   OYUN BAŞLAT
-========================================= */
+/* =========================
+   OYUNU BAŞLAT
+========================= */
 
 function startGame(){
+
+    /* Şifremi unuttum penceresi açıksa kapat */
+    closeForgotPassword();
 
     document
         .getElementById("menuScreen")
@@ -1928,990 +1998,626 @@ function startGame(){
 
         gameTime--;
 
-        document
-            .getElementById("timeText")
-            .textContent = gameTime;
+        document.getElementById("timeText").textContent =
+            gameTime;
 
         if(gameTime <= 0){
-
             endGame(true);
-
         }
 
     },1000);
 }
 
 
-/* =========================================
-   OYUNU SIFIRLA
-========================================= */
-
-function resetGame(){
-
-    playerX = 150;
-    playerY = 150;
-
-    playerHealth = 100;
-
-    playerShield = 0;
-
-    score = 0;
-
-    gameCoins = 0;
-
-    gameTime = 120;
-
-    bots = [];
-
-    bullets = [];
-
-    document
-        .getElementById("gameOverScreen")
-        .classList.add("hidden");
-
-    updatePlayerPosition();
-
-    updateHealth();
-
-    document
-        .getElementById("scoreText")
-        .textContent = "0";
-
-    document
-        .getElementById("gameCoinsText")
-        .textContent = "0";
-
-    document
-        .getElementById("timeText")
-        .textContent = "120";
-}
-
-
-/* =========================================
-   BOTLAR
-========================================= */
-
-function createBots(){
-
-    const battlefield =
-        document.getElementById(
-            "battlefield"
-        );
-
-    for(let i=0;i<5;i++){
-
-        const bot = {
-
-            id:Date.now()+i,
-
-            x:100+
-                Math.random()*
-                Math.max(
-                    200,
-                    battlefield.clientWidth-200
-                ),
-
-            y:80+
-                Math.random()*
-                Math.max(
-                    150,
-                    battlefield.clientHeight-180
-                ),
-
-            health:100,
-
-            maxHealth:100,
-
-            speed:0.5+
-                Math.random()*0.5,
-
-            attackCooldown:
-                Math.random()*1000
-
-        };
-
-        bots.push(bot);
-
-        drawBot(bot);
-    }
-}
-
-
-function drawBot(bot){
-
-    const element =
-        document.createElement("div");
-
-    element.className = "bot";
-
-    element.id =
-        "bot-"+bot.id;
-
-    element.innerHTML = `
-        <div class="entityHealth">
-            <div id="bot-health-${bot.id}"></div>
-        </div>
-    `;
-
-    element.style.left =
-        bot.x+"px";
-
-    element.style.top =
-        bot.y+"px";
-
-    document
-        .getElementById("battlefield")
-        .appendChild(element);
-}
-
-
-/* =========================================
-   OYUNCU HAREKETİ
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    e => {
-
-        keys[e.key.toLowerCase()] = true;
-
-        if(
-            ["w","a","s","d",
-             "arrowup",
-             "arrowdown",
-             "arrowleft",
-             "arrowright"].includes(
-                e.key.toLowerCase()
-             )
-        ){
-
-            e.preventDefault();
-        }
-    }
-);
-
-
-document.addEventListener(
-    "keyup",
-    e => {
-
-        keys[e.key.toLowerCase()] = false;
-    }
-);
-
-
-function updatePlayerMovement(){
-
-    const speed = 4;
-
-    let dx = 0;
-    let dy = 0;
-
-
-    if(
-        keys["w"] ||
-        keys["arrowup"]
-    )
-        dy -= speed;
-
-
-    if(
-        keys["s"] ||
-        keys["arrowdown"]
-    )
-        dy += speed;
-
-
-    if(
-        keys["a"] ||
-        keys["arrowleft"]
-    )
-        dx -= speed;
-
-
-    if(
-        keys["d"] ||
-        keys["arrowright"]
-    )
-        dx += speed;
-
-
-    if(mobileDirection === "up")
-        dy -= speed;
-
-    if(mobileDirection === "down")
-        dy += speed;
-
-    if(mobileDirection === "left")
-        dx -= speed;
-
-    if(mobileDirection === "right")
-        dx += speed;
-
-
-    playerX += dx;
-    playerY += dy;
-
-
-    const field =
-        document.getElementById(
-            "battlefield"
-        );
-
-
-    const maxX =
-        field.clientWidth - 55;
-
-    const maxY =
-        field.clientHeight - 55;
-
-
-    playerX =
-        Math.max(
-            0,
-            Math.min(maxX,playerX)
-        );
-
-    playerY =
-        Math.max(
-            0,
-            Math.min(maxY,playerY)
-        );
-
-
-    updatePlayerPosition();
-}
-
-
-function updatePlayerPosition(){
-
-    const player =
-        document.getElementById("player");
-
-    player.style.left =
-        playerX+"px";
-
-    player.style.top =
-        playerY+"px";
-}
-
-
-/* =========================================
-   BOT HAREKETİ
-========================================= */
-
-function updateBots(){
-
-    bots.forEach(bot => {
-
-        const dx =
-            playerX - bot.x;
-
-        const dy =
-            playerY - bot.y;
-
-        const distance =
-            Math.sqrt(
-                dx*dx + dy*dy
-            );
-
-
-        if(distance > 80){
-
-            bot.x +=
-                (dx/distance) *
-                bot.speed;
-
-            bot.y +=
-                (dy/distance) *
-                bot.speed;
-        }
-
-
-        bot.attackCooldown -= 16;
-
-
-        if(
-            distance < 400 &&
-            bot.attackCooldown <= 0
-        ){
-
-            damagePlayer(8);
-
-            bot.attackCooldown = 1300;
-        }
-
-
-        const element =
-            document.getElementById(
-                "bot-"+bot.id
-            );
-
-        if(element){
-
-            element.style.left =
-                bot.x+"px";
-
-            element.style.top =
-                bot.y+"px";
-        }
-
-    });
-}
-
-
-/* =========================================
-   ATEŞ ET
-========================================= */
-
-function shoot(){
-
-    if(!gameRunning)
-        return;
-
-
-    const player =
-        document.getElementById("player");
-
-
-    const rect =
-        player.getBoundingClientRect();
-
-
-    const centerX =
-        rect.left +
-        rect.width/2;
-
-    const centerY =
-        rect.top +
-        rect.height/2;
-
-
-    const bullet = {
-
-        x:
-            playerX+25,
-
-        y:
-            playerY+25,
-
-        dx:5,
-
-        dy:0,
-
-        damage:25
-
-    };
-
-
-    bullets.push(bullet);
-
-    createBulletElement(bullet);
-}
-
-
-function createBulletElement(bullet){
-
-    const element =
-        document.createElement("div");
-
-    element.className =
-        "bullet";
-
-    element.style.left =
-        bullet.x+"px";
-
-    element.style.top =
-        bullet.y+"px";
-
-    bullet.element = element;
-
-    document
-        .getElementById("battlefield")
-        .appendChild(element);
-}
-
-
-/* =========================================
-   MERMİLER
-========================================= */
-
-function updateBullets(){
-
-    bullets.forEach(
-        (bullet,index) => {
-
-            bullet.x += bullet.dx;
-            bullet.y += bullet.dy;
-
-
-            if(bullet.element){
-
-                bullet.element.style.left =
-                    bullet.x+"px";
-
-                bullet.element.style.top =
-                    bullet.y+"px";
-            }
-
-
-            for(let i=bots.length-1;i>=0;i--){
-
-                const bot =
-                    bots[i];
-
-
-                const dx =
-                    bullet.x-bot.x;
-
-                const dy =
-                    bullet.y-bot.y;
-
-                const distance =
-                    Math.sqrt(
-                        dx*dx+
-                        dy*dy
-                    );
-
-
-                if(distance < 35){
-
-                    bot.health -=
-                        bullet.damage;
-
-
-                    createExplosion(
-                        bot.x,
-                        bot.y
-                    );
-
-
-                    if(bullet.element)
-                        bullet.element.remove();
-
-
-                    bullets.splice(
-                        index,
-                        1
-                    );
-
-
-                    updateBotHealth(bot);
-
-
-                    if(bot.health <= 0){
-
-                        removeBot(bot);
-
-                        score += 100;
-
-                        gameCoins += 25;
-
-                        document
-                            .getElementById(
-                                "scoreText"
-                            )
-                            .textContent =
-                            score;
-
-                        document
-                            .getElementById(
-                                "gameCoinsText"
-                            )
-                            .textContent =
-                            gameCoins;
-                    }
-
-                    break;
-                }
-            }
-
-
-            if(
-                bullet.x < -30 ||
-                bullet.y < -30 ||
-                bullet.x >
-                document.getElementById(
-                    "battlefield"
-                ).clientWidth+30 ||
-                bullet.y >
-                document.getElementById(
-                    "battlefield"
-                ).clientHeight+30
-            ){
-
-                if(bullet.element)
-                    bullet.element.remove();
-
-                bullets.splice(
-                    index,
-                    1
-                );
-            }
-
-        }
-    );
-}
-
-
-function updateBotHealth(bot){
-
-    const bar =
-        document.getElementById(
-            "bot-health-"+bot.id
-        );
-
-    if(bar){
-
-        bar.style.width =
-            Math.max(
-                0,
-                bot.health
-            )+"%";
-    }
-}
-
-
-function removeBot(bot){
-
-    const element =
-        document.getElementById(
-            "bot-"+bot.id
-        );
-
-    if(element)
-        element.remove();
-
-    bots =
-        bots.filter(
-            b => b.id !== bot.id
-        );
-
-
-    /* Yeni bot oluştur */
-
-    setTimeout(() => {
-
-        if(gameRunning)
-            createOneBot();
-
-    },800);
-}
-
-
-function createOneBot(){
-
-    const field =
-        document.getElementById(
-            "battlefield"
-        );
-
-    const bot = {
-
-        id:Date.now()+Math.random(),
-
-        x:
-            100+
-            Math.random()*
-            Math.max(
-                200,
-                field.clientWidth-200
-            ),
-
-        y:
-            80+
-            Math.random()*
-            Math.max(
-                150,
-                field.clientHeight-180
-            ),
-
-        health:100,
-
-        maxHealth:100,
-
-        speed:
-            .5+
-            Math.random()*.5,
-
-        attackCooldown:1000
-
-    };
-
-    bots.push(bot);
-
-    drawBot(bot);
-}
-
-
-/* =========================================
-   OYUNCU HASAR
-========================================= */
-
-function damagePlayer(amount){
-
-    if(!gameRunning)
-        return;
-
-
-    /* Önce kalkan */
-
-    if(playerShield > 0){
-
-        const shieldDamage =
-            Math.min(
-                playerShield,
-                amount
-            );
-
-        playerShield -=
-            shieldDamage;
-
-        amount -=
-            shieldDamage;
-    }
-
-
-    if(amount > 0){
-
-        playerHealth -=
-            amount;
-    }
-
-
-    updateHealth();
-
-
-    if(playerHealth <= 0){
-
-        playerHealth = 0;
-
-        endGame(false);
-    }
-}
-
-
-function updateHealth(){
-
-    const health =
-        Math.max(
-            0,
-            playerHealth
-        );
-
-    document
-        .getElementById(
-            "playerHealthText"
-        )
-        .textContent =
-        health;
-
-    document
-        .getElementById(
-            "playerHealthFill"
-        )
-        .style.width =
-        health+"%";
-
-    document
-        .getElementById(
-            "playerMiniHealth"
-        )
-        .style.width =
-        health+"%";
-
-    document
-        .getElementById(
-            "playerShieldFill"
-        )
-        .style.width =
-        Math.min(
-            100,
-            playerShield
-        )+"%";
-}
-
-
-/* =========================================
-   PATLAMA EFEKTİ
-========================================= */
-
-function createExplosion(x,y){
-
-    const explosion =
-        document.createElement("div");
-
-    explosion.className =
-        "explosion";
-
-    explosion.style.left =
-        x+"px";
-
-    explosion.style.top =
-        y+"px";
-
-    document
-        .getElementById("battlefield")
-        .appendChild(explosion);
-
-
-    setTimeout(() => {
-
-        explosion.remove();
-
-    },400);
-}
-
-
-/* =========================================
-   OYUN DÖNGÜSÜ
-========================================= */
-
-function updateGame(){
-
-    if(!gameRunning)
-        return;
-
-
-    updatePlayerMovement();
-
-    updateBots();
-
-    updateBullets();
-
-
-    gameLoop =
-        requestAnimationFrame(
-            updateGame
-        );
-}
-
-
-/* =========================================
-   OYUN BİTİŞİ
-========================================= */
-
-function endGame(won){
-
-    if(!gameRunning)
-        return;
-
-    gameRunning = false;
-
-
-    clearInterval(timerLoop);
-
-    cancelAnimationFrame(
-        gameLoop
-    );
-
-
-    /* Kazanılan coinler hesaba eklenir */
-
-    if(won){
-
-        currentUser.coins +=
-            gameCoins;
-
-        currentUser.stats.wins++;
-
-        currentUser.xp += 100;
-
-    }else{
-
-        currentUser.stats.losses++;
-
-        currentUser.xp += 25;
-    }
-
-
-    /* Seviye sistemi */
-
-    const neededXP =
-        currentUser.level * 250;
-
-
-    if(
-        currentUser.xp >= neededXP
-    ){
-
-        currentUser.xp -=
-            neededXP;
-
-        currentUser.level++;
-
-        alert(
-            "⭐ Seviye atladın!"
-        );
-    }
-
-
-    saveAccount();
-
-
-    document
-        .getElementById(
-            "gameOverScreen"
-        )
-        .classList.remove("hidden");
-
-
-    document
-        .getElementById(
-            "gameOverTitle"
-        )
-        .textContent =
-        won
-        ? "🏆 KAZANDIN!"
-        : "💥 OYUN BİTTİ";
-
-
-    document
-        .getElementById(
-            "finalScore"
-        )
-        .textContent =
-        score;
-
-
-    document
-        .getElementById(
-            "finalCoins"
-        )
-        .textContent =
-        gameCoins;
-}
-
-
-/* =========================================
-   ANA MENÜYE DÖN
-========================================= */
+/* =========================
+   MENÜYE DÖN
+========================= */
 
 function returnToMenu(){
 
     gameRunning = false;
 
-    clearInterval(timerLoop);
+    if(gameLoop){
+        cancelAnimationFrame(gameLoop);
+    }
 
-    cancelAnimationFrame(
-        gameLoop
-    );
-
-
-    document
-        .querySelectorAll(
-            ".bot,.bullet,.explosion"
-        )
-        .forEach(
-            element => element.remove()
-        );
-
+    if(timerLoop){
+        clearInterval(timerLoop);
+    }
 
     document
-        .getElementById(
-            "gameScreen"
-        )
+        .getElementById("gameScreen")
         .classList.add("hidden");
 
-
     document
-        .getElementById(
-            "menuScreen"
-        )
+        .getElementById("menuScreen")
         .classList.remove("hidden");
 
+    document
+        .querySelectorAll(".bot")
+        .forEach(bot => bot.remove());
 
-    /*
-       ÖNEMLİ:
-       Savaş ekipmanları burada
-       kaydedilmiyor.
+    document
+        .querySelectorAll(".bullet")
+        .forEach(bullet => bullet.remove());
 
-       Böylece yeni oyuna girince
-       tekrar sadece tabancayla
-       başlanabilecek.
-    */
-
-    updateMenu();
+    document
+        .querySelectorAll(".explosion")
+        .forEach(explosion => explosion.remove());
 }
 
 
-/* =========================================
-   MOBİL HAREKET
-========================================= */
+/* =========================
+   OYUN DEĞİŞKENLERİ
+========================= */
 
-function mobileMove(direction){
+let gameRunning = false;
+let gameLoop = null;
+let timerLoop = null;
 
-    mobileDirection =
-        direction;
+let gameTime = 120;
+
+let score = 0;
+let gameCoins = 0;
+
+let playerHealth = 100;
+let playerShield = 100;
+
+let bots = [];
+let bullets = [];
+let explosions = [];
+
+
+/* =========================
+   KLAVYE
+========================= */
+
+const keys = {};
+
+document.addEventListener("keydown", e => {
+    keys[e.key.toLowerCase()] = true;
+});
+
+document.addEventListener("keyup", e => {
+    keys[e.key.toLowerCase()] = false;
+});
+
+
+/* =========================
+   ATEŞ ETME
+========================= */
+
+document.addEventListener("mousedown", e => {
+
+    if(e.button !== 0) return;
+
+    if(!gameRunning) return;
+
+    shoot();
+});
+
+
+/* =========================
+   OYUNU SIFIRLA
+========================= */
+
+function resetGame(){
+
+    gameTime = 120;
+
+    score = 0;
+    gameCoins = 0;
+
+    playerHealth = 100;
+    playerShield = 100;
+
+    bots = [];
+    bullets = [];
+    explosions = [];
+
+    const player =
+        document.getElementById("player");
+
+    if(player){
+
+        player.style.left = "50%";
+        player.style.top = "50%";
+    }
+
+    document.getElementById("timeText").textContent =
+        gameTime;
+
+    document.getElementById("scoreText").textContent =
+        score;
+
+    document.getElementById("healthText").textContent =
+        playerHealth;
+
+    document.getElementById("shieldText").textContent =
+        playerShield;
 }
 
 
-function stopMobileMove(){
+/* =========================
+   BOTLAR
+========================= */
 
-    mobileDirection = null;
+function createBots(){
+
+    const area =
+        document.getElementById("gameArea");
+
+    for(let i = 0; i < 5; i++){
+
+        const bot =
+            document.createElement("div");
+
+        bot.className = "bot";
+
+        bot.textContent = "🤖";
+
+        bot.style.left =
+            Math.random() * 85 + 5 + "%";
+
+        bot.style.top =
+            Math.random() * 75 + 5 + "%";
+
+        area.appendChild(bot);
+
+        bots.push({
+            element: bot,
+            health: 100,
+            x: parseFloat(bot.style.left),
+            y: parseFloat(bot.style.top)
+        });
+    }
 }
 
 
-/* =========================================
-   SOL TIK İLE ATEŞ
-========================================= */
+/* =========================
+   OYUN DÖNGÜSÜ
+========================= */
 
-document.addEventListener(
-    "mousedown",
-    e => {
+function updateGame(){
+
+    if(!gameRunning) return;
+
+    movePlayer();
+    moveBots();
+    updateBullets();
+    updateExplosions();
+
+    gameLoop =
+        requestAnimationFrame(updateGame);
+}
+
+
+/* =========================
+   OYUNCU HAREKETİ
+========================= */
+
+function movePlayer(){
+
+    const player =
+        document.getElementById("player");
+
+    if(!player) return;
+
+    let x = parseFloat(player.style.left) || 50;
+    let y = parseFloat(player.style.top) || 50;
+
+    const speed = 0.6;
+
+    if(keys["w"] || keys["arrowup"]){
+        y -= speed;
+    }
+
+    if(keys["s"] || keys["arrowdown"]){
+        y += speed;
+    }
+
+    if(keys["a"] || keys["arrowleft"]){
+        x -= speed;
+    }
+
+    if(keys["d"] || keys["arrowright"]){
+        x += speed;
+    }
+
+    x = Math.max(2, Math.min(98,x));
+    y = Math.max(2, Math.min(95,y));
+
+    player.style.left = x + "%";
+    player.style.top = y + "%";
+}
+
+
+/* =========================
+   BOT HAREKETİ
+========================= */
+
+function moveBots(){
+
+    bots.forEach(bot => {
+
+        if(!bot.element) return;
+
+        bot.x += (Math.random()-0.5) * 0.4;
+        bot.y += (Math.random()-0.5) * 0.4;
+
+        bot.x = Math.max(3,Math.min(95,bot.x));
+        bot.y = Math.max(3,Math.min(90,bot.y));
+
+        bot.element.style.left =
+            bot.x + "%";
+
+        bot.element.style.top =
+            bot.y + "%";
+    });
+}
+
+
+/* =========================
+   MERMİ
+========================= */
+
+function shoot(){
+
+    const player =
+        document.getElementById("player");
+
+    if(!player) return;
+
+    const bullet =
+        document.createElement("div");
+
+    bullet.className = "bullet";
+
+    const x =
+        parseFloat(player.style.left) || 50;
+
+    const y =
+        parseFloat(player.style.top) || 50;
+
+    bullet.style.left = x + "%";
+    bullet.style.top = y + "%";
+
+    document
+        .getElementById("gameArea")
+        .appendChild(bullet);
+
+    bullets.push({
+        element: bullet,
+        x: x,
+        y: y,
+        dx: 1,
+        dy: 0
+    });
+}
+
+
+/* =========================
+   MERMİLERİ GÜNCELLE
+========================= */
+
+function updateBullets(){
+
+    bullets.forEach((bullet,index) => {
+
+        bullet.x += bullet.dx * 1.2;
+        bullet.y += bullet.dy * 1.2;
+
+        bullet.element.style.left =
+            bullet.x + "%";
+
+        bullet.element.style.top =
+            bullet.y + "%";
+
+        bots.forEach((bot,botIndex) => {
+
+            const distance =
+                Math.hypot(
+                    bullet.x - bot.x,
+                    bullet.y - bot.y
+                );
+
+            if(distance < 4){
+
+                bot.health -= 50;
+
+                bullet.element.remove();
+
+                bullets.splice(index,1);
+
+                if(bot.health <= 0){
+
+                    bot.element.remove();
+
+                    bots.splice(botIndex,1);
+
+                    score += 100;
+                    gameCoins += 25;
+
+                    document
+                        .getElementById("scoreText")
+                        .textContent = score;
+                }
+            }
+        });
 
         if(
-            gameRunning &&
-            e.button === 0
+            bullet.x < 0 ||
+            bullet.x > 100 ||
+            bullet.y < 0 ||
+            bullet.y > 100
         ){
 
-            shoot();
+            bullet.element.remove();
+
+            bullets.splice(index,1);
+        }
+    });
+}
+
+
+/* =========================
+   PATLAMALAR
+========================= */
+
+function updateExplosions(){
+
+    explosions.forEach((explosion,index) => {
+
+        explosion.life--;
+
+        if(explosion.life <= 0){
+
+            explosion.element.remove();
+
+            explosions.splice(index,1);
+        }
+    });
+}
+
+
+/* =========================
+   OYUNU BİTİR
+========================= */
+
+function endGame(){
+
+    gameRunning = false;
+
+    if(gameLoop){
+        cancelAnimationFrame(gameLoop);
+    }
+
+    if(timerLoop){
+        clearInterval(timerLoop);
+    }
+
+    if(currentUser && account){
+
+        account.coins =
+            (account.coins || 0) + gameCoins;
+
+        saveAccount();
+    }
+
+    const gameOver =
+        document.getElementById("gameOverScreen");
+
+    if(gameOver){
+
+        gameOver.classList.remove("hidden");
+
+        const finalScore =
+            document.getElementById("finalScore");
+
+        if(finalScore){
+            finalScore.textContent = score;
         }
     }
-);
+}
 
 
-/* =========================================
-   OYUN ALANI TIKLAMA
-========================================= */
+/* =========================
+   HEDİYE KODLARI
+========================= */
 
-document
-    .getElementById("battlefield")
-    .addEventListener(
-        "click",
-        function(e){
+function redeemGiftCode(){
 
-            if(!gameRunning)
-                return;
+    const input =
+        document.getElementById("giftCode");
 
-            /*
-               Gelecekte buraya
-               mouse yönüne göre
-               gerçek nişan sistemi
-               eklenebilir.
-            */
-        }
-    );
+    if(!input) return;
 
+    const code =
+        input.value.trim().toUpperCase();
 
-/* =========================================
-   SAYFA KAPATILIRKEN
-========================================= */
+    const codes = {
+        "SILAH100":100,
+        "OYUN500":500,
+        "TALHA1000":1000
+    };
 
-window.addEventListener(
-    "beforeunload",
-    () => {
+    if(!codes[code]){
 
-        if(currentUser){
+        document.getElementById("giftMessage").textContent =
+            "Geçersiz hediye kodu!";
 
-            saveAccount();
-
-        }
-
+        return;
     }
-);
+
+    if(!account){
+
+        document.getElementById("giftMessage").textContent =
+            "Önce giriş yapmalısın.";
+
+        return;
+    }
+
+    account.coins =
+        (account.coins || 0) + codes[code];
+
+    saveAccount();
+
+    document.getElementById("giftMessage").textContent =
+        `${codes[code]} puan hesabına eklendi!`;
+
+    input.value = "";
+}
+
+
+/* =========================
+   MARKET
+========================= */
+
+const shopItems = [
+
+    {
+        id:"clothes_blue",
+        name:"Mavi Kıyafet",
+        price:250,
+        icon:"🔵"
+    },
+
+    {
+        id:"clothes_red",
+        name:"Kırmızı Kıyafet",
+        price:400,
+        icon:"🔴"
+    },
+
+    {
+        id:"clothes_black",
+        name:"Siyah Kıyafet",
+        price:700,
+        icon:"⚫"
+    },
+
+    {
+        id:"skin_gold",
+        name:"Altın Görünüm",
+        price:1000,
+        icon:"🟡"
+    },
+
+    {
+        id:"skin_blue",
+        name:"Mavi Görünüm",
+        price:600,
+        icon:"🔵"
+    },
+
+    {
+        id:"skin_fire",
+        name:"Alev Görünümü",
+        price:1500,
+        icon:"🔥"
+    }
+];
+
+
+function buyItem(id){
+
+    if(!account) return;
+
+    const item =
+        shopItems.find(x => x.id === id);
+
+    if(!item) return;
+
+    account.coins =
+        account.coins || 0;
+
+    if(account.coins < item.price){
+
+        alert("Yeterli puanın yok!");
+
+        return;
+    }
+
+    account.coins -= item.price;
+
+    account.inventory =
+        account.inventory || [];
+
+    if(!account.inventory.includes(id)){
+        account.inventory.push(id);
+    }
+
+    saveAccount();
+
+    updateMenu();
+
+    alert(item.name + " satın alındı!");
+}
+
+
+/* =========================
+   MENÜ GÜNCELLE
+========================= */
+
+function updateMenu(){
+
+    if(!account) return;
+
+    const coins =
+        document.getElementById("menuCoins");
+
+    if(coins){
+        coins.textContent =
+            account.coins || 0;
+    }
+
+    const profileCoins =
+        document.getElementById("profileCoins");
+
+    if(profileCoins){
+        profileCoins.textContent =
+            account.coins || 0;
+    }
+}
+
+
+/* =========================
+   OYUN SONU EKRANI
+========================= */
+
+function closeGameOver(){
+
+    const gameOver =
+        document.getElementById("gameOverScreen");
+
+    if(gameOver){
+        gameOver.classList.add("hidden");
+    }
+
+    returnToMenu();
+}
+
+
+/* =========================
+   SAYFA AÇILINCA
+========================= */
+
+window.addEventListener("load", () => {
+
+    if(account){
+
+        const savedName =
+            account.name || "";
+
+        const username =
+            document.getElementById("username");
+
+        if(username){
+            username.value = savedName;
+        }
+    }
+
+});
 
 </script>
-
-</body>
-</html>
+```

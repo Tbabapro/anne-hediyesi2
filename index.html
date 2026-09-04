@@ -1011,19 +1011,10 @@ let account = JSON.parse(localStorage.getItem("silahOyunuAccount"));
 let currentUser = null; 
  
 function saveAccount(){ 
- 
-    if(!account) return; 
- 
     localStorage.setItem( 
         "silahOyunuAccount", 
         JSON.stringify(account) 
     ); 
- 
-    account = JSON.parse( 
-        localStorage.getItem("silahOyunuAccount") 
-    ); 
- 
-    currentUser = account; 
 } 
  
 /* ========================================= 
@@ -1154,10 +1145,6 @@ function openForgotPassword(){
         .getElementById("questionAnswer") 
         .value = ""; 
  
-    document 
-        .getElementById("newPassword") 
-        .value = ""; 
- 
     const a = 
         Math.floor(Math.random()*9)+1; 
  
@@ -1211,82 +1198,35 @@ function checkSecurityTest(){
  
 function changePassword(){ 
  
-    const passwordInput = 
-        document.getElementById("newPassword"); 
- 
-    const message = 
-        document.getElementById("forgotMessage"); 
- 
-    if(!passwordInput || !message){ 
-        return; 
-    } 
- 
     const newPassword = 
-        passwordInput.value.trim(); 
+        document.getElementById("newPassword").value; 
  
     if(newPassword.length < 4){ 
  
-        message.style.color = "#ff6464"; 
- 
-        message.textContent = 
+        document 
+            .getElementById("forgotMessage") 
+            .textContent = 
             "Yeni şifre en az 4 karakter olmalı."; 
  
         return; 
     } 
  
-    const savedAccount = 
-        JSON.parse( 
-            localStorage.getItem("silahOyunuAccount") 
-        ); 
+    account.password = newPassword; 
  
-    if(!savedAccount){ 
+    saveAccount(); 
  
-        message.style.color = "#ff6464"; 
+    document 
+        .getElementById("forgotMessage") 
+        .style.color = "#45d879"; 
  
-        message.textContent = 
-            "Hesap bulunamadı."; 
+    document 
+        .getElementById("forgotMessage") 
+        .textContent = 
+        "Şifren başarıyla değiştirildi!"; 
  
-        return; 
-    } 
- 
-    savedAccount.password = newPassword; 
- 
-    localStorage.setItem( 
-        "silahOyunuAccount", 
-        JSON.stringify(savedAccount) 
-    ); 
- 
-    const checkAccount = 
-        JSON.parse( 
-            localStorage.getItem("silahOyunuAccount") 
-        ); 
- 
-    if( 
-        checkAccount && 
-        checkAccount.password === newPassword 
-    ){ 
- 
-        account = checkAccount; 
-        currentUser = account; 
- 
-        message.style.color = "#45d879"; 
- 
-        message.textContent = 
-            "Şifren başarıyla değiştirildi!"; 
- 
-        passwordInput.value = ""; 
- 
-        setTimeout(() => { 
-            closeForgotPassword(); 
-        },1000); 
- 
-    }else{ 
- 
-        message.style.color = "#ff6464"; 
- 
-        message.textContent = 
-            "Şifre kaydedilemedi!"; 
-    } 
+    setTimeout(() => { 
+        closeForgotPassword(); 
+    },1000); 
 } 
  
 function closeForgotPassword(){ 
@@ -1613,7 +1553,7 @@ let explosions = [];
 let keys = {};
 
 
-/* ========================================= 
+/* =========================================
    OYUNU BAŞLAT
 ========================================= */
 
@@ -1640,7 +1580,7 @@ function startGame(){
 }
 
 
-/* ========================================= 
+/* =========================================
    OYUNU SIFIRLA
 ========================================= */
 
@@ -1675,7 +1615,7 @@ function resetGame(){
 }
 
 
-/* ========================================= 
+/* =========================================
    BOTLARI OLUŞTUR
 ========================================= */
 
@@ -1708,7 +1648,7 @@ function createBots(){
 }
 
 
-/* ========================================= 
+/* =========================================
    BOT ÇİZ
 ========================================= */
 
@@ -1747,7 +1687,7 @@ function drawBot(bot){
 }
 
 
-/* ========================================= 
+/* =========================================
    OYUNCU ÇİZ
 ========================================= */
 
@@ -1765,7 +1705,7 @@ function drawPlayer(){
 }
 
 
-/* ========================================= 
+/* =========================================
    HAREKET
 ========================================= */
 
@@ -1842,7 +1782,7 @@ function movePlayer(){
 }
 
 
-/* ========================================= 
+/* =========================================
    BOT HAREKETİ
 ========================================= */
 
@@ -1884,7 +1824,7 @@ function moveBots(){
 }
 
 
-/* ========================================= 
+/* =========================================
    ATEŞ ET
 ========================================= */
 
@@ -1917,7 +1857,7 @@ function shoot(){
 }
 
 
-/* ========================================= 
+/* =========================================
    MERMİLER
 ========================================= */
 
@@ -1948,7 +1888,7 @@ function updateBullets(){
 }
 
 
-/* ========================================= 
+/* =========================================
    MERMİ ÇİZ
 ========================================= */
 
@@ -1972,7 +1912,7 @@ function drawBullets(){
 }
 
 
-/* ========================================= 
+/* =========================================
    BOT HASAR
 ========================================= */
 
@@ -2044,7 +1984,7 @@ function checkBulletHits(){
 }
 
 
-/* ========================================= 
+/* =========================================
    OYUNCU HASARI
 ========================================= */
 
@@ -2085,7 +2025,7 @@ function damagePlayer(amount){
 }
 
 
-/* ========================================= 
+/* =========================================
    CAN GÖSTERGESİ
 ========================================= */
 
@@ -2118,7 +2058,7 @@ function updateHealth(){
 }
 
 
-/* ========================================= 
+/* =========================================
    PATLAMA
 ========================================= */
 
@@ -2190,7 +2130,7 @@ function drawExplosions(){
 }
 
 
-/* ========================================= 
+/* =========================================
    SKOR
 ========================================= */
 
@@ -2209,7 +2149,7 @@ function updateScore(){
 }
 
 
-/* ========================================= 
+/* =========================================
    SÜRE
 ========================================= */
 
@@ -2252,7 +2192,7 @@ function updateTimer(){
 }
 
 
-/* ========================================= 
+/* =========================================
    OYUN DÖNGÜSÜ
 ========================================= */
 
@@ -2290,7 +2230,11 @@ function gameLoop(){
         requestAnimationFrame(
             gameLoop
         );
-/* ========================================= 
+
+}
+
+
+/* =========================================
    OYUN BİTTİ
 ========================================= */
 
@@ -2326,7 +2270,7 @@ function endGame(){
 }
 
 
-/* ========================================= 
+/* =========================================
    MENÜYE DÖN
 ========================================= */
 
@@ -2355,7 +2299,7 @@ function returnToMenu(){
 }
 
 
-/* ========================================= 
+/* =========================================
    MOBİL KONTROLLER
 ========================================= */
 
@@ -2381,7 +2325,7 @@ function mobileMove(direction){
 }
 
 
-/* ========================================= 
+/* =========================================
    MOBİL ATEŞ
 ========================================= */
 
@@ -2392,7 +2336,7 @@ function mobileShoot(){
 }
 
 
-/* ========================================= 
+/* =========================================
    FAREYLE ATEŞ
 ========================================= */
 
@@ -2406,7 +2350,7 @@ canvas.addEventListener(
 );
 
 
-/* ========================================= 
+/* =========================================
    SAHA TIKLAMA
 ========================================= */
 
@@ -2424,7 +2368,7 @@ canvas.addEventListener(
 );
 
 
-/* ========================================= 
+/* =========================================
    SAYFA KAPATILIRKEN
 ========================================= */
 
@@ -2441,4 +2385,3 @@ window.addEventListener(
 
 </body>
 </html>
-}

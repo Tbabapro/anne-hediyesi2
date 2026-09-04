@@ -1438,16 +1438,56 @@ let forgotPasswordActive = false;
 let securityVerified = false;
 
 
-<div class="mobileControls" id="joystick">
+function openForgotPassword(){
 
-    <div class="joystickBase"></div>
+    const modal =
+        document.getElementById("forgotModal");
 
-    <div
-        class="joystickStick"
-        id="joystickStick"
-    ></div>
+    if(!modal)
+        return;
 
-</div>
+    if(!account){
+
+        document.getElementById("loginError").textContent =
+            "Henüz kayıtlı bir hesap yok.";
+
+        return;
+    }
+
+    forgotPasswordActive = true;
+    securityVerified = false;
+
+    modal.classList.remove("hidden");
+
+    document
+        .getElementById("newPasswordArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("forgotMessage")
+        .textContent = "";
+
+    document
+        .getElementById("questionAnswer")
+        .value = "";
+
+    document
+        .getElementById("newPassword")
+        .value = "";
+
+    const a =
+        Math.floor(Math.random() * 9) + 1;
+
+    const b =
+        Math.floor(Math.random() * 9) + 1;
+
+    securityAnswer = a + b;
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        `${a} + ${b} = ?`;
+}
 
 
     forgotPasswordActive = true;
